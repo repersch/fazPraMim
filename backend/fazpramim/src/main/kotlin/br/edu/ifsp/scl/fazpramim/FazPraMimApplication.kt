@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class FazpramimApplication
+class FazPraMimApplication
 
 fun main(args: Array<String>) {
-	runApplication<FazpramimApplication>(*args)
+	runApplication<FazPraMimApplication>(*args)
 }
