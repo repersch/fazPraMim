@@ -1,8 +1,7 @@
 package br.edu.ifsp.scl.fazpramim.controller
 
-import br.edu.ifsp.scl.fazpramim.model.User
-import br.edu.ifsp.scl.fazpramim.service.UserService
-import org.springframework.beans.factory.annotation.Autowired
+import br.edu.ifsp.scl.fazpramim.model.Person
+import br.edu.ifsp.scl.fazpramim.service.PersonService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,35 +13,34 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/user")
-class UserController {
-
-    @Autowired
-    private lateinit var service: UserService
+@RequestMapping("/person")
+class PersonController (
+    val service: PersonService
+) {
 
     @GetMapping
-    fun findAllUsers(): List<User> {
-        return service.findAllUsers()
+    fun findAllUsers(): List<Person> {
+        return service.findAllPersons()
     }
 
     @GetMapping("/{id}")
-    fun findUserById(@PathVariable(value = "id") id: Long): User {
-        return service.findUserById(id)
+    fun findUserById(@PathVariable(value = "id") id: Long): Person {
+        return service.findPersonById(id)
     }
 
     @PostMapping
-    fun createUser(@RequestBody user: User): User {
-        return service.createUser(user)
+    fun createUser(@RequestBody person: Person): Person {
+        return service.createPerson(person)
     }
 
     @PutMapping
-    fun updateUser(@RequestBody user: User): User {
-        return service.updateUser(user)
+    fun updateUser(@RequestBody person: Person): Person {
+        return service.updateUser(person)
     }
 
     @DeleteMapping("/{id}")
     fun deleteUser(@PathVariable(value = "id") id: Long): ResponseEntity<*> {
-        service.deleteUser(id)
+        service.deletePerson(id)
         return ResponseEntity.noContent().build<Any>()
     }
 }

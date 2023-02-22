@@ -3,8 +3,8 @@ package br.edu.ifsp.scl.fazpramim.model
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "FPM_user")
-data class User(
+@Table(name = "person")
+data class Person(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
