@@ -1,6 +1,6 @@
 package br.edu.ifsp.scl.fazpramim.service
 
-import br.edu.ifsp.scl.fazpramim.Errors
+import br.edu.ifsp.scl.fazpramim.enums.Errors
 import br.edu.ifsp.scl.fazpramim.exception.NotFoundException
 import br.edu.ifsp.scl.fazpramim.model.Person
 import br.edu.ifsp.scl.fazpramim.repository.PersonRepository
@@ -18,7 +18,7 @@ class PersonService(
 
     fun findPersonById(id: Int): Person {
         return repository.findById(id)
-            .orElseThrow{ NotFoundException(Errors.FPM0001.message.format(id), Errors.FPM0001.code) }
+            .orElseThrow{ NotFoundException(Errors.FPM101.message.format(id), Errors.FPM101.code) }
     }
 
     fun createPerson(person: Person): Person {

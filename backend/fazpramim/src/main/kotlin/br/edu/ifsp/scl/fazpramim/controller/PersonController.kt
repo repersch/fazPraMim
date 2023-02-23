@@ -2,6 +2,7 @@ package br.edu.ifsp.scl.fazpramim.controller
 
 import br.edu.ifsp.scl.fazpramim.model.Person
 import br.edu.ifsp.scl.fazpramim.service.PersonService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -33,12 +34,12 @@ class PersonController (
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createPerson(@RequestBody person: Person): Person {
+    fun createPerson(@RequestBody @Valid person: Person): Person {
         return service.createPerson(person)
     }
 
     @PutMapping("/{id}")
-    fun updatePerson(@PathVariable id: Int, @RequestBody person: Person): Person {
+    fun updatePerson(@PathVariable id: Int, @RequestBody @Valid person: Person): Person {
         return service.updatePerson(id, person)
     }
 
