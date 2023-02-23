@@ -10,7 +10,8 @@ class PersonService(
     val repository: PersonRepository
 ) {
 
-    fun findAllPersons(): List<Person> {
+    fun findAllPersons(name: String?): List<Person> {
+        name?.let { return repository.findByNameContainingIgnoreCase(name) }
         return repository.findAll()
     }
 
@@ -24,13 +25,12 @@ class PersonService(
         return findPersonById(entity.id)
     }
 
-    fun updateUser(person: Person): Person {
-        val entity = findPersonById(person.id)
+    fun updatePerson(id: Long, person: Person): Person {
+        val entity = findPersonById(id)
         entity.name = person.name
         entity.email = person.email
         entity.password = person.password
         entity.phone = person.phone
-        entity.birthDate = person.birthDate
 
         return repository.save(entity)
     }

@@ -8,12 +8,12 @@ data class Person(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Long = 0,
+    var id: Long,
 
     @Column(nullable = false)
     var name: String = "",
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     var email: String = "",
 
     @Column(nullable = false)
@@ -22,7 +22,7 @@ data class Person(
     @Column(nullable = false)
     var phone: String = "",
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     var birthDate: String = ""
 )
 
