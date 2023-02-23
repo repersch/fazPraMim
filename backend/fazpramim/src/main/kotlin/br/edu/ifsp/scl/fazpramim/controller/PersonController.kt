@@ -27,7 +27,7 @@ class PersonController (
     }
 
     @GetMapping("/{id}")
-    fun findPersonById(@PathVariable(value = "id") id: Long): Person {
+    fun findPersonById(@PathVariable(value = "id") id: Int): Person {
         return service.findPersonById(id)
     }
 
@@ -37,15 +37,14 @@ class PersonController (
         return service.createPerson(person)
     }
 
-    @PutMapping
-    fun updatePerson(@PathVariable id: Long, @RequestBody person: Person): Person {
+    @PutMapping("/{id}")
+    fun updatePerson(@PathVariable id: Int, @RequestBody person: Person): Person {
         return service.updatePerson(id, person)
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deletePerson(@PathVariable(value = "id") id: Long): ResponseEntity<*> {
+    fun deletePerson(@PathVariable(value = "id") id: Int) {
         service.deletePerson(id)
-        return ResponseEntity.noContent().build<Any>()
     }
 }

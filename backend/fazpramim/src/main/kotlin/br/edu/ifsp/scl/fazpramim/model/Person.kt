@@ -7,8 +7,8 @@ import jakarta.persistence.*
 data class Person(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Long,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = 0,
 
     @Column(nullable = false)
     var name: String = "",
