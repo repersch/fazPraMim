@@ -14,27 +14,25 @@ data class PersonModel (
 
     @field:NotEmpty(message = "Nome deve ser informado.")
     @Column
-    var name: String?,
+    var name: String,
 
     @field:Email(message = "E-mail deve ser válido.")
     @Column
-    var email: String?,
+    var email: String,
 
     @field:NotEmpty(message = "Senha deve ser informada.")
     @Column
-    var password: String?,
+    var password: String,
 
     @Column
-    var phone: String?,
+    var phone: String,
 
     @Column
-    var birthDate: String?,
+    var birthDate: String,
 
     @Column(name = "person_status")
     @Enumerated(EnumType.STRING)
     var personStatus: PersonStatus?
 ) {
-    constructor() : this(null, null, null, null, null, null, null) {
-
-    }
+    constructor() : this(null, "", "", "", "", "", null) {}
 }

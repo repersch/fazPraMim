@@ -2,6 +2,7 @@ package br.edu.ifsp.scl.fazpramim.extension
 
 import br.edu.ifsp.scl.fazpramim.controller.request.PostPersonRequest
 import br.edu.ifsp.scl.fazpramim.controller.request.PutPersonRequest
+import br.edu.ifsp.scl.fazpramim.controller.response.PersonResponse
 import br.edu.ifsp.scl.fazpramim.enums.PersonStatus
 import br.edu.ifsp.scl.fazpramim.model.PersonModel
 
@@ -25,5 +26,17 @@ fun PutPersonRequest.toPersonModel(previuosValue: PersonModel): PersonModel {
         phone = this.phone ?: previuosValue.phone,
         birthDate = previuosValue.birthDate,
         personStatus = this.personStatus ?: previuosValue.personStatus
+    )
+}
+
+fun PersonModel.toResponse(): PersonResponse {
+    return PersonResponse(
+        id = this.id,
+        name = this.name,
+        email = this.email,
+        password = this.password,
+        phone = this.phone,
+        birthDate = this.birthDate,
+        personStatus = this.personStatus
     )
 }
