@@ -34,4 +34,15 @@ class ControllerAdvice {
         )
         return ResponseEntity(erro, HttpStatus.UNPROCESSABLE_ENTITY)
     }
+
+    @ExceptionHandler(EntityAlreadyExistsExeption::class)
+    fun handleEntityAlreadyExistsException(ex: MethodArgumentNotValidException, request: WebRequest): ResponseEntity<ErrorResponse> {
+        val erro = ErrorResponse(
+            HttpStatus.UNPROCESSABLE_ENTITY.value(),
+            Errors.FPM001.message,
+            Errors.FPM001.code,
+            ex.bindingResult.fieldErrors.map { FieldErrorResponse(it.defaultMessage ?: "invalid", it.field) }
+        )
+        return ResponseEntity(erro, HttpStatus.UNPROCESSABLE_ENTITY)
+    }
 }

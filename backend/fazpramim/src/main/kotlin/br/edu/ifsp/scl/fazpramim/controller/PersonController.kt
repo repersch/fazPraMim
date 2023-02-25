@@ -1,20 +1,13 @@
 package br.edu.ifsp.scl.fazpramim.controller
 
-import br.edu.ifsp.scl.fazpramim.model.Person
+import br.edu.ifsp.scl.fazpramim.controller.request.PostPersonRequest
+import br.edu.ifsp.scl.fazpramim.controller.request.PutPersonRequest
+import br.edu.ifsp.scl.fazpramim.extension.toPersonModel
+import br.edu.ifsp.scl.fazpramim.model.PersonModel
 import br.edu.ifsp.scl.fazpramim.service.PersonService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/person")
@@ -23,24 +16,25 @@ class PersonController (
 ) {
 
     @GetMapping
-    fun findAllUsers(@RequestParam name: String?): List<Person> {
+    fun findAllPersons(@RequestParam name: String?): List<PersonModel> {
         return service.findAllPersons(name)
     }
 
     @GetMapping("/{id}")
-    fun findPersonById(@PathVariable(value = "id") id: Int): Person {
+    fun findPersonById(@PathVariable(value = "id") id: Int): PersonModel {
         return service.findPersonById(id)
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createPerson(@RequestBody @Valid person: Person): Person {
-        return service.createPerson(person)
+    fun createPerson(@RequestBody @Valid person: PostPersonRequest): PersonModel {
+        return service.createPerson(person.toPersonModel())
     }
 
     @PutMapping("/{id}")
-    fun updatePerson(@PathVariable id: Int, @RequestBody @Valid person: Person): Person {
-        return service.updatePerson(id, person)
+    fun updatePerson(@PathVariable id: Int, @RequestBody @Valid person: PutPersonRequest): PersonModel {
+        val personSaved = service.findPersonById(id)
+        return service.updatePerson(person.toPersonModel(personSaved))
     }
 
     @DeleteMapping("/{id}")
