@@ -32,6 +32,6 @@ class ControllerAdvice {
             Errors.FPM001.code,
             ex.bindingResult.fieldErrors.map { FieldErrorResponse(it.defaultMessage ?: "invalid", it.field) }
         )
-        return ResponseEntity(erro, HttpStatus.BAD_REQUEST)
+        return ResponseEntity(erro, HttpStatus.UNPROCESSABLE_ENTITY)
     }
 }

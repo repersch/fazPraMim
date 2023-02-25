@@ -1,5 +1,6 @@
 package br.edu.ifsp.scl.fazpramim.model
 
+import br.edu.ifsp.scl.fazpramim.validation.EmailAvailable
 import jakarta.persistence.*
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotEmpty
@@ -18,6 +19,7 @@ data class Person(
     var name: String = "",
 
     @field:Email(message = "E-mail deve ser válido.")
+    @EmailAvailable
     @Column(nullable = false, unique = true)
     var email: String = "",
 

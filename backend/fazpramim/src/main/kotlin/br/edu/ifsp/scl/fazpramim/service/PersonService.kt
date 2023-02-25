@@ -40,4 +40,8 @@ class PersonService(
         val entity = findPersonById(id)
         repository.delete(entity)
     }
+
+    fun emailAvailable(email: String): Boolean {
+       return !repository.existsByEmail(email)
+    }
 }
