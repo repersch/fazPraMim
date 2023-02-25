@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 
 @Component({
-    selector: 'navPage',
+    selector: 'navTag',
     templateUrl: './nav.component.html'
 })
 

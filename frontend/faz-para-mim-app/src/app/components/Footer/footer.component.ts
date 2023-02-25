@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 
 @Component({
-    selector: 'footerPage',
+    selector: 'footerTag',
     templateUrl: './footer.component.html',
     styleUrls: ['./styles.css']
 
