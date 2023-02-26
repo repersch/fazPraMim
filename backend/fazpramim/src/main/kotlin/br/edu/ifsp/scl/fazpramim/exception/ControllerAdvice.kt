@@ -45,4 +45,15 @@ class ControllerAdvice {
         )
         return ResponseEntity(erro, HttpStatus.UNPROCESSABLE_ENTITY)
     }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException::class)
+    fun handleInvalidJwtAuthenticationException(ex: Exception, request: WebRequest): ResponseEntity<ErrorResponse> {
+        val erro = ErrorResponse(
+            HttpStatus.FORBIDDEN.value(),
+            Errors.FPM103.message,
+            Errors.FPM103.code,
+            null
+        )
+        return ResponseEntity(erro, HttpStatus.FORBIDDEN)
+    }
 }
