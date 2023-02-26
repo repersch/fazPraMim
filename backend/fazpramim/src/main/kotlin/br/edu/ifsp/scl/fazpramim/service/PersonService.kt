@@ -23,18 +23,12 @@ class PersonService(
     }
 
     fun createPerson(person: PersonModel): PersonModel {
-        if (!emailAvailable(person.email!!)) {
-            throw EntityAlreadyExistsExeption(Errors.FPM102.message, Errors.FPM102.code)
-        }
         val entity = repository.save(person)
         return findPersonById(entity.id!!)
     }
 
     fun updatePerson(person: PersonModel): PersonModel {
         val entity = findPersonById(person.id!!)
-        if (!emailAvailable(person.email!!)) {
-            throw EntityAlreadyExistsExeption(Errors.FPM102.message, Errors.FPM102.code)
-        }
         entity.name = person.name
         entity.email = person.email
         entity.password = person.password

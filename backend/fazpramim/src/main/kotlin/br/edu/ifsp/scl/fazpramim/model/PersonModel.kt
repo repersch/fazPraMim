@@ -12,15 +12,12 @@ data class PersonModel (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null,
 
-    @field:NotEmpty(message = "Nome deve ser informado.")
     @Column
     var name: String,
 
-    @field:Email(message = "E-mail deve ser válido.")
     @Column
     var email: String,
 
-    @field:NotEmpty(message = "Senha deve ser informada.")
     @Column
     var password: String,
 
