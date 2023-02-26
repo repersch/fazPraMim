@@ -1,9 +1,8 @@
 package br.edu.ifsp.scl.fazpramim.model
 
 import br.edu.ifsp.scl.fazpramim.enums.PersonStatus
+import br.edu.ifsp.scl.fazpramim.enums.Profile
 import jakarta.persistence.*
-import jakarta.validation.constraints.Email
-import jakarta.validation.constraints.NotEmpty
 
 @Entity(name = "person")
 data class PersonModel (
@@ -29,7 +28,14 @@ data class PersonModel (
 
     @Column(name = "person_status")
     @Enumerated(EnumType.STRING)
-    var personStatus: PersonStatus?
+    var personStatus: PersonStatus?,
+
+    @Column(name = "role")
+    @ElementCollection(targetClass = Profile::class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "profile_roles", joinColumns = [JoinColumn(name = "person_id")])
+    @Enumerated(EnumType.STRING)
+    var roles: Set<Profile> = setOf()
+
 ) {
     constructor() : this(null, "", "", "", "", "", null) {}
 }

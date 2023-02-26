@@ -1,6 +1,7 @@
 package br.edu.ifsp.scl.fazpramim.service
 
 import br.edu.ifsp.scl.fazpramim.enums.Errors
+import br.edu.ifsp.scl.fazpramim.enums.Profile
 import br.edu.ifsp.scl.fazpramim.exception.EntityAlreadyExistsExeption
 import br.edu.ifsp.scl.fazpramim.exception.NotFoundException
 import br.edu.ifsp.scl.fazpramim.model.PersonModel
@@ -23,7 +24,10 @@ class PersonService(
     }
 
     fun createPerson(person: PersonModel): PersonModel {
-        val entity = repository.save(person)
+        val personCopy = person.copy(
+            roles = setOf(Profile.CLIENTE)
+        )
+        val entity = repository.save(personCopy)
         return findPersonById(entity.id!!)
     }
 
