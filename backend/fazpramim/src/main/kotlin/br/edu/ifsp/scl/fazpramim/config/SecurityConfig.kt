@@ -4,10 +4,10 @@ import br.edu.ifsp.scl.fazpramim.security.jwt.JwtConfigurer
 import br.edu.ifsp.scl.fazpramim.security.jwt.JwtTokenProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
-import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -35,20 +35,24 @@ class SecurityConfig(
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .httpBasic().disable()
-            .csrf { obj: CsrfConfigurer<HttpSecurity> -> obj.disable() }
-            .sessionManagement { session: SessionManagementConfigurer<HttpSecurity?> ->
-                session.sessionCreationPolicy(
-                    SessionCreationPolicy.STATELESS
-                )
-            }
+            .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
             .authorizeHttpRequests {
-                it.requestMatchers("/", "home", "/person").permitAll()
-                it.anyRequest().authenticated()
+                it.requestMatchers(
+                    "/",
+                    "home",
+                    "/person",
+                    "/auth/signin",
+                    "/auth/refresh",
+                    "/api-dpcs/**",
+                    "swagger-ui/index.html**"
+                ).permitAll()
+                //it.anyRequest().authenticated()
+                it.requestMatchers("/api/**").authenticated()
+                it.requestMatchers("/person").denyAll()
             }
-            .formLogin {
-                it.loginPage("/login")
-                it.permitAll()
-            }
+
             .cors()
             .and()
             .apply(JwtConfigurer(tokenProvider))
@@ -57,7 +61,10 @@ class SecurityConfig(
         return http.build()
     }
 
-
+    @Bean
+    fun authenticationManagerBean(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager {
+        return authenticationConfiguration.authenticationManager
+    }
 
 
 //    @Bean
