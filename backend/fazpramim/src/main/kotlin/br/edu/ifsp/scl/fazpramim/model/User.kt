@@ -3,17 +3,21 @@ package br.edu.ifsp.scl.fazpramim.model
 import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import java.util.ArrayList
 
 @Entity
 @Table(name = "users")
-class User: UserDetails {
+class User : UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int? = null
+    var id: Long = 0
 
     @Column(name = "user_name", unique = true)
     var userName: String? = null
+
+    @Column(name = "full_name")
+    var fullName: String? = null
 
     @Column(name = "password")
     private var password: String? = null
@@ -39,13 +43,13 @@ class User: UserDetails {
     var permissions: List<Permission>? = null
 
     val roles: List<String?>
-    get() {
-        val roles: MutableList<String?> = ArrayList()
-        for (permission in permissions!!) {
-            roles.add(permission.description)
+        get(){
+            val roles: MutableList<String?> = ArrayList()
+            for (permission in permissions!!) {
+                roles.add(permission.description)
+            }
+            return roles
         }
-        return roles
-    }
 
     override fun getAuthorities(): Collection<GrantedAuthority> {
         return permissions!!
@@ -56,7 +60,7 @@ class User: UserDetails {
     }
 
     override fun getUsername(): String {
-        return username!!
+        return userName!!
     }
 
     override fun isAccountNonExpired(): Boolean {

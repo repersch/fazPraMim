@@ -16,3 +16,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+spring-doc:
+  paths-to-match:
+    - /api/person/**
+    - /auth/**
+  swagger-ui:
+    use-root-path: true
