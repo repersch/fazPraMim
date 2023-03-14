@@ -6,6 +6,7 @@ import { Footer } from './components/Footer/footer.component';
 import { Header } from './components/Header/header.component';
 import { Login } from './components/Login/login.component';
 import { NavigationBar } from './components/NavigationBar/nav.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NavigationBar } from './components/NavigationBar/nav.component';
     Login
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,10 +5,26 @@ import org.springframework.boot.runApplication
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder
-import java.util.*
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.web.filter.CorsFilter
 
 @SpringBootApplication
-class FazPraMimApplication
+class FazPraMimApplication {
+    @Bean
+    fun simpleCorsFilter(): FilterRegistrationBean<CorsFilter> {
+        val source = UrlBasedCorsConfigurationSource()
+        val config = CorsConfiguration()
+        config.allowCredentials = true
+        config.allowedOrigins = listOf("http://localhost:4200")
+        config.allowedMethods = listOf("*")
+        config.allowedHeaders = listOf("*")
+        source.registerCorsConfiguration("/**", config)
+        val bean = FilterRegistrationBean(CorsFilter(source))
+        bean.order = Ordered.HIGHEST_PRECEDENCE
+        return bean
+    }
+}
 
 fun main(args: Array<String>) {
 	runApplication<FazPraMimApplication>(*args)
