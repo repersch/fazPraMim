@@ -1,9 +1,9 @@
-
-import { HttpClient } from '@angular/common/http';
-import { environment } from "src/environment/environment";
-import { Person } from "src/model/person";
-import { Observable } from "rxjs";
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from "rxjs";
+import { Person } from "src/model/person";
+
+import { environment } from "src/environment/environment";
 
 @Injectable({ providedIn: 'root' })
 export class PersonService {

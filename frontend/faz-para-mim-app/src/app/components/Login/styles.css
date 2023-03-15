@@ -12,7 +12,9 @@
     justify-content: center;
 }
 
-label,
-button {
+a,
+button,
+input {
+    margin-top: 7px;
     margin-right: 7px;
 }
