@@ -11,6 +11,7 @@ spring:
     url: jdbc:mysql://localhost:3306/fazpramim?createDatabaseIfNotExist=true
     username: root
     password: berenice
+#    password: 1234
   jackson:
     default-property-inclusion: non_null
   mvc:
