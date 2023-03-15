@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   constructor(private personService: PersonService) { }
 
   ngOnInit() {
-    this.getPeople();
+    /* this.getPeople(); */
   }
 
   public getPeople(): void {
