@@ -21,5 +21,6 @@ spring-doc:
   paths-to-match:
     - /api/person/**
     - /auth/**
+    - /api/registration
   swagger-ui:
     use-root-path: true

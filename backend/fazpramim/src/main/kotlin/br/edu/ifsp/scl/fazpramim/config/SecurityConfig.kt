@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 
-
 @EnableWebSecurity
 @Configuration
 class SecurityConfig {
@@ -56,6 +55,7 @@ class SecurityConfig {
                     "/auth/signin",
                     "/auth/refresh/**",
                     "/v3/api-docs/**",
+                    "/api/registration",
                     "/swagger-ui/**")
                 .permitAll()
                 // aqui só acessa quem estiver autenticado

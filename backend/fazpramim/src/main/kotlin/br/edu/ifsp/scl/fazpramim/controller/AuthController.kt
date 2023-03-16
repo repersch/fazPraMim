@@ -1,6 +1,5 @@
 package br.edu.ifsp.scl.fazpramim.controller
 
-import br.edu.ifsp.scl.fazpramim.controller.request.LoginRequest
 import br.edu.ifsp.scl.fazpramim.data.AccountCredentialsVO
 import br.edu.ifsp.scl.fazpramim.service.AuthService
 import io.swagger.v3.oas.annotations.Operation
@@ -10,7 +9,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-@Tag(name = "Endpoint de autenticação")
+@Tag(name = "Authentication", description = "Endpoint de autenticação")
 @RestController
 @RequestMapping("/auth")
 class AuthController {
@@ -24,7 +23,7 @@ class AuthController {
         return if (data!!.username.isNullOrBlank() || data.password.isNullOrBlank())
             ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body("Invalid client request")
-        else authService.signin(data!!)
+        else authService.signin(data)
     }
 
     @Operation(summary = "Recarrega o token de um usuário autenticado e retorna o token")

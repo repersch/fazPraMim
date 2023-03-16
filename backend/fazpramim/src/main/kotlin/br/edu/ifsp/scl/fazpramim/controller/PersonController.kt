@@ -1,6 +1,5 @@
 package br.edu.ifsp.scl.fazpramim.controller
 
-import br.edu.ifsp.scl.fazpramim.controller.request.PostPersonRequest
 import br.edu.ifsp.scl.fazpramim.controller.request.PutPersonRequest
 import br.edu.ifsp.scl.fazpramim.controller.response.PersonResponse
 import br.edu.ifsp.scl.fazpramim.extension.toPersonModel
@@ -31,13 +30,6 @@ class PersonController (
     @Operation(summary = "Busca uma pessoa por ID", description = "Busca uma pessoa por ID")
     fun findPersonById(@PathVariable(value = "id") id: Int): PersonResponse {
         return service.findPersonById(id).toResponse()
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Cria uma pessoa", description = "Cria uma pessoa")
-    fun createPerson(@RequestBody @Valid person: PostPersonRequest): PersonResponse {
-        return service.createPerson(person.toPersonModel()).toResponse()
     }
 
     @PutMapping("/{id}")
