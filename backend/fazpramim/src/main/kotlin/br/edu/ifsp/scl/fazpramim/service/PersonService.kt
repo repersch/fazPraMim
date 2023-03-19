@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class PersonService(
-    val repository: PersonRepository
+    val repository: PersonRepository,
+    val userService: UserService
 ) {
 
     fun findAllPersons(name: String?): List<PersonModel> {
@@ -28,6 +29,7 @@ class PersonService(
             roles = setOf(Profile.CLIENTE)
         )
         val entity = repository.save(personCopy)
+        userService.createUser(person)
         return findPersonById(entity.id!!)
     }
 

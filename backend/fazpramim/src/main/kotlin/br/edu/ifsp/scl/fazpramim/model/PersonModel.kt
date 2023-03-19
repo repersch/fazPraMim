@@ -4,7 +4,8 @@ import br.edu.ifsp.scl.fazpramim.enums.PersonStatus
 import br.edu.ifsp.scl.fazpramim.enums.Profile
 import jakarta.persistence.*
 
-@Entity(name = "person")
+@Entity
+@Table(name = "persons")
 data class PersonModel (
 
     @Id

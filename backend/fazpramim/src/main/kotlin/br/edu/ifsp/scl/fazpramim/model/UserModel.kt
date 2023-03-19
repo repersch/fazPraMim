@@ -7,7 +7,7 @@ import java.util.ArrayList
 
 @Entity
 @Table(name = "users")
-class User : UserDetails{
+class UserModel : UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +19,9 @@ class User : UserDetails{
     @Column(name = "full_name")
     var fullName: String? = null
 
+    @JvmField
     @Column(name = "password")
-    private var password: String? = null
+    var password: String? = null
 
     @Column(name = "account_non_expired")
     var accountNonExpired: Boolean? = null
@@ -40,7 +41,7 @@ class User : UserDetails{
         joinColumns = [JoinColumn(name = "id_user")],
         inverseJoinColumns = [JoinColumn(name = "id_permission")]
     )
-    var permissions: List<Permission>? = null
+    var permissions: List<PermissionModel>? = null
 
     val roles: List<String?>
         get(){
