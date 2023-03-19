@@ -12,7 +12,13 @@ export class PersonService {
     constructor(private http: HttpClient) { }
 
     public getPeople(): Observable<Person[]> {
-        return this.http.get<Person[]>(`${this.apiServerUrl}/person`);
+        let localStorageItens = JSON.parse(localStorage.getItem('usuarioInfo')!);
+
+        return this.http.get<Person[]>(`${this.apiServerUrl}/person`, {
+            headers: {
+                'Authorization': `Bearer ${localStorageItens.token}`
+            }
+        });
     }
 
     public addPerson(person: Person): Observable<Person> {

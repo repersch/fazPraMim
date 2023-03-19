@@ -14,6 +14,9 @@ import { PersonService } from "src/service/person.service";
 })
 
 export class Login {
+
+    public people: Person[] = [];
+
     constructor(
         private accountCredentialsService: AuthService,
         private personService: PersonService) { }
@@ -23,16 +26,35 @@ export class Login {
         accountCredential = loginForm.value;
 
         document.getElementById('login-user-form')?.click();
-        console.log(accountCredential);
         this.accountCredentialsService.signin(accountCredential).subscribe(
             (response: Token) => {
+                localStorage.setItem('usuarioInfo', JSON.stringify({
+                    'username': response.username,
+                    'token': response.accessToken
+                }));
+                console.log("[LOG-INFO] Usuário autenticado");
                 console.log(response);
                 loginForm.reset();
+
+                console.log("[LOG-INFO] Teste de chamada getPeople");
+                this.getPeople();
             },
             (error: HttpErrorResponse) => {
                 alert(error.message);
                 loginForm.reset();
             });
+    }
+
+    public getPeople(): void {
+        this.personService.getPeople().subscribe(
+            (response: Person[]) => {
+                this.people = response;
+                console.log(this.people);
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+            }
+        );
     }
 
     public onOpenModal(person: Person | undefined, mode: string): void {
