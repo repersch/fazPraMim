@@ -16,6 +16,6 @@ export class PersonService {
     }
 
     public addPerson(person: Person): Observable<Person> {
-        return this.http.post<Person>(`${this.apiServerUrl}/person`, person);
+        return this.http.post<Person>(`${this.apiServerUrl}/registration`, person);
     }
 }
