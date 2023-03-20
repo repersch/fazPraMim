@@ -28,6 +28,10 @@
                         <a class="dropdown-item" href="#">Serviço 03</a>
                     </div>
                 </li>
+
+                <li *ngIf="onLogin()">
+                    <a class="nav-link active" aria-current="page" href="#" (click)="onLogout()">Logout</a>
+                </li>
             </ul>
         </div>
 

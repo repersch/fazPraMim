@@ -1,6 +1,6 @@
 <section id="login-section">
 
-  <div id="login-container">
+  <div id="login-container" *ngIf="!onLogin()">
 
     <form #loginForm="ngForm" (ngSubmit)="onUserLogin(loginForm)">
       <div class="form-group">

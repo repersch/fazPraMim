@@ -5,4 +5,13 @@ import { Component } from "@angular/core";
     templateUrl: './nav.component.html'
 })
 
-export class NavigationBar { }
+export class NavigationBar {
+
+    public onLogin() {
+        return JSON.parse(localStorage.getItem('usuarioInfo')!);
+    }
+
+    public onLogout() {
+        localStorage.removeItem('usuarioInfo');
+    }
+}

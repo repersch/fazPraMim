@@ -84,4 +84,8 @@ export class Login {
                 addPersonForm.reset();
             });
     }
+
+    public onLogin() {
+        return JSON.parse(localStorage.getItem('usuarioInfo')!);
+    }
 }
