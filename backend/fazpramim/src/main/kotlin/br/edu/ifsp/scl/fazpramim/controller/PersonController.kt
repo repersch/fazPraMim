@@ -11,7 +11,6 @@ import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
-
 @RestController
 @RequestMapping("/api/person")
 @Tag(name = "People", description = "Endpoints para gerenciar pessoas")
@@ -37,6 +36,12 @@ class PersonController (
     fun updatePerson(@PathVariable id: Int, @RequestBody @Valid person: PutPersonRequest): PersonResponse {
         val personSaved = service.findPersonById(id)
         return service.updatePerson(person.toPersonModel(personSaved)).toResponse()
+    }
+
+    @PutMapping("/setPrestador/{id}")
+    @Operation(summary = "Edita o tipo de perfil de uma pessoa", description = "Edita o tipo de perfil de uma pessoa")
+    fun updateProfileType(@PathVariable id: Int): PersonResponse {
+        return service.updateProfileTypeToPrestador(id).toResponse()
     }
 
     @DeleteMapping("/{id}")

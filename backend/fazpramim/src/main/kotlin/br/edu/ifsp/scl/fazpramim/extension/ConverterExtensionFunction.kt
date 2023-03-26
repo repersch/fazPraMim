@@ -13,6 +13,8 @@ fun PostPersonRequest.toPersonModel(): PersonModel {
         password = this.password,
         phone = this.phone,
         birthDate = this.birthDate,
+        photo = this.photo,
+        profileType = this.profileType,
         personStatus = PersonStatus.ATIVO
     )
 }
@@ -25,6 +27,8 @@ fun PutPersonRequest.toPersonModel(previuosValue: PersonModel): PersonModel {
         password = this.password ?: previuosValue.password,
         phone = this.phone ?: previuosValue.phone,
         birthDate = previuosValue.birthDate,
+        photo = this.photo ?: previuosValue.photo,
+        profileType = this.profileType ?: previuosValue.profileType,
         personStatus = this.personStatus ?: previuosValue.personStatus
     )
 }
@@ -37,6 +41,7 @@ fun PersonModel.toResponse(): PersonResponse {
         password = this.password,
         phone = this.phone,
         birthDate = this.birthDate,
+        profileType = this.profileType,
         personStatus = this.personStatus
     )
 }

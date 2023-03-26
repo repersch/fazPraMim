@@ -1,8 +1,7 @@
 package br.edu.ifsp.scl.fazpramim.service
 
 import br.edu.ifsp.scl.fazpramim.enums.Errors
-import br.edu.ifsp.scl.fazpramim.enums.Profile
-import br.edu.ifsp.scl.fazpramim.exception.EntityAlreadyExistsExeption
+import br.edu.ifsp.scl.fazpramim.enums.ProfileType
 import br.edu.ifsp.scl.fazpramim.exception.NotFoundException
 import br.edu.ifsp.scl.fazpramim.model.PersonModel
 import br.edu.ifsp.scl.fazpramim.repository.PersonRepository
@@ -25,10 +24,8 @@ class PersonService(
     }
 
     fun createPerson(person: PersonModel): PersonModel {
-        val personCopy = person.copy(
-            roles = setOf(Profile.CLIENTE)
-        )
-        val entity = repository.save(personCopy)
+        person.profileType =ProfileType.CLIENTE
+        val entity = repository.save(person)
         userService.createUser(person)
         return findPersonById(entity.id!!)
     }
@@ -39,6 +36,14 @@ class PersonService(
         entity.email = person.email
         entity.password = person.password
         entity.phone = person.phone
+        entity.photo = person.photo
+        repository.save(entity)
+        return findPersonById(entity.id!!)
+    }
+
+    fun updateProfileTypeToPrestador(id: Int): PersonModel {
+        val entity = findPersonById(id)
+        entity.profileType = ProfileType.PRESTADOR
         repository.save(entity)
         return findPersonById(entity.id!!)
     }

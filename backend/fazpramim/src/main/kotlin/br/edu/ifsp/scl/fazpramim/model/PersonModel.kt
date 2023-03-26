@@ -1,7 +1,7 @@
 package br.edu.ifsp.scl.fazpramim.model
 
 import br.edu.ifsp.scl.fazpramim.enums.PersonStatus
-import br.edu.ifsp.scl.fazpramim.enums.Profile
+import br.edu.ifsp.scl.fazpramim.enums.ProfileType
 import jakarta.persistence.*
 
 @Entity
@@ -27,16 +27,17 @@ data class PersonModel (
     @Column
     var birthDate: String,
 
+    @Column
+    var photo: String,
+
     @Column(name = "person_status")
     @Enumerated(EnumType.STRING)
     var personStatus: PersonStatus?,
 
     @Column(name = "role")
-    @ElementCollection(targetClass = Profile::class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "profile_roles", joinColumns = [JoinColumn(name = "person_id")])
+   // @ElementCollection(targetClass = ProfileType::class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "profile_type_roles", joinColumns = [JoinColumn(name = "person_id")])
     @Enumerated(EnumType.STRING)
-    var roles: Set<Profile> = setOf()
+    var profileType: ProfileType,
 
-) {
-    constructor() : this(null, "", "", "", "", "", null) {}
-}
+    )
