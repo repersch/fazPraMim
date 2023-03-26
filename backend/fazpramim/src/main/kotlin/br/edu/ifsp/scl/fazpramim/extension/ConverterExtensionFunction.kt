@@ -4,6 +4,7 @@ import br.edu.ifsp.scl.fazpramim.controller.request.PostPersonRequest
 import br.edu.ifsp.scl.fazpramim.controller.request.PutPersonRequest
 import br.edu.ifsp.scl.fazpramim.controller.response.PersonResponse
 import br.edu.ifsp.scl.fazpramim.enums.PersonStatus
+import br.edu.ifsp.scl.fazpramim.enums.ProfileType
 import br.edu.ifsp.scl.fazpramim.model.PersonModel
 
 fun PostPersonRequest.toPersonModel(): PersonModel {
@@ -14,7 +15,7 @@ fun PostPersonRequest.toPersonModel(): PersonModel {
         phone = this.phone,
         birthDate = this.birthDate,
         photo = this.photo,
-        profileType = this.profileType,
+        profileType = ProfileType.CLIENTE,
         personStatus = PersonStatus.ATIVO
     )
 }

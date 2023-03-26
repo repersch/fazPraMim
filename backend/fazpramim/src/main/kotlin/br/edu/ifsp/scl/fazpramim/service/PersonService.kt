@@ -24,7 +24,7 @@ class PersonService(
     }
 
     fun createPerson(person: PersonModel): PersonModel {
-        person.profileType =ProfileType.CLIENTE
+        person.profileType = ProfileType.CLIENTE
         val entity = repository.save(person)
         userService.createUser(person)
         return findPersonById(entity.id!!)
@@ -38,6 +38,7 @@ class PersonService(
         entity.phone = person.phone
         entity.photo = person.photo
         repository.save(entity)
+        userService.updateUser(entity)
         return findPersonById(entity.id!!)
     }
 

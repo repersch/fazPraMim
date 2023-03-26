@@ -41,6 +41,14 @@ class UserService : UserDetailsService {
         userRepository.save(user)
     }
 
+    fun updateUser(person: PersonModel) {
+        val user: UserModel = userRepository.findByUsername(person.email)!!
+        user.userName = person.email
+        user.fullName = person.name
+        user.password = passwordEncoder().encode(person.password)
+        userRepository.save(user)
+    }
+
     private fun passwordEncoder() : PasswordEncoder {
         val encoders: MutableMap<String, PasswordEncoder> = HashMap<String, PasswordEncoder>()
         val pbkdf2Encoder = Pbkdf2PasswordEncoder("", 8, 185000, Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256)

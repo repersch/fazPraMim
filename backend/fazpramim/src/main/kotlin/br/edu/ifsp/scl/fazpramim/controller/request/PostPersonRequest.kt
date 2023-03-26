@@ -22,8 +22,6 @@ data class PostPersonRequest (
 
     var photo: String,
 
-    var profileType: ProfileType,
-
     @JsonAlias("birth_date")
     var birthDate: String,
 )
