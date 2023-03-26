@@ -5,4 +5,6 @@ export interface Person {
     password: string;
     phone: string;
     birthDate: string;
+    photo: string;
+    personStatus: string;
 }
