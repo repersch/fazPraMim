@@ -2,6 +2,7 @@ package br.edu.ifsp.scl.fazpramim.service
 
 import br.edu.ifsp.scl.fazpramim.enums.Errors
 import br.edu.ifsp.scl.fazpramim.enums.ProfileType
+import br.edu.ifsp.scl.fazpramim.exception.EntityAlreadyExistsExeption
 import br.edu.ifsp.scl.fazpramim.exception.NotFoundException
 import br.edu.ifsp.scl.fazpramim.model.PersonModel
 import br.edu.ifsp.scl.fazpramim.repository.PersonRepository
@@ -20,14 +21,18 @@ class PersonService(
 
     fun findPersonById(id: Int): PersonModel {
         return repository.findById(id)
-            .orElseThrow{ NotFoundException(Errors.FPM101.message.format(id), Errors.FPM101.code) }
+            .orElseThrow { NotFoundException(Errors.FPM101.message.format(id), Errors.FPM101.code) }
     }
 
     fun createPerson(person: PersonModel): PersonModel {
-        person.profileType = ProfileType.CLIENTE
-        val entity = repository.save(person)
-        userService.createUser(person)
-        return findPersonById(entity.id!!)
+        if (emailAvailable(person.email)) {
+            person.profileType = ProfileType.CLIENTE
+            val entity = repository.save(person)
+            userService.createUser(person)
+            return findPersonById(entity.id!!)
+        } else {
+            throw EntityAlreadyExistsExeption(Errors.FPM102.message.format(person.id), Errors.FPM102.code)
+        }
     }
 
     fun updatePerson(person: PersonModel): PersonModel {

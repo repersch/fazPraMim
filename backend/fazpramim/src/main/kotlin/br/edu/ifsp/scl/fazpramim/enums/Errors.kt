@@ -8,7 +8,9 @@ enum class Errors(val code: String, val message: String) {
     FPM101("FPM-101", "Não existe pessoa cadastrada com o ID: %s."),
     FPM102("FPM-102", "E-mail já cadastrado."),
     FPM103("FPM-103", "Token inválido."),
-    FPM001("FPM-001", "Requisição inválida.")
+    FPM001("FPM-001", "Requisição inválida."),
+
+    FPM201("FPM-201", "Não existe perfil cadastrada com o ID: %s."),
 
 
 }

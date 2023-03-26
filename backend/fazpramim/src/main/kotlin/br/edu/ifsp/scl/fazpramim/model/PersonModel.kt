@@ -34,7 +34,7 @@ data class PersonModel (
     @Enumerated(EnumType.STRING)
     var personStatus: PersonStatus?,
 
-    @Column(name = "role")
+    @Column(name = "profile_type")
    // @ElementCollection(targetClass = ProfileType::class, fetch = FetchType.EAGER)
    // @CollectionTable(name = "profile_type_roles", joinColumns = [JoinColumn(name = "person_id")])
     @Enumerated(EnumType.STRING)
