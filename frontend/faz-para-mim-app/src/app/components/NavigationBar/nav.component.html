@@ -33,10 +33,6 @@
                     <a class="nav-link active" aria-current="page" routerLink="/service">Serviços</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" routerLink="/user">Usuários</a>
-                </li>
-
                 <li *ngIf="onLogin()">
                     <a class="nav-link active" aria-current="page" href="#" (click)="onLogout()">Logout</a>
                 </li>

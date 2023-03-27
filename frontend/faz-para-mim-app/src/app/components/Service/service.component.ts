@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'serviceTag',
@@ -6,4 +7,10 @@ import { Component } from "@angular/core";
     styleUrls: ['./styles.css']
 })
 
-export class ServiceComponentPage { }
+export class ServiceComponentPage {
+    constructor(private router: Router) { }
+
+    public btnClick() {
+        this.router.navigateByUrl('/user');
+    }
+}
