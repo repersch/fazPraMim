@@ -1,7 +1,9 @@
 package br.edu.ifsp.scl.fazpramim.service
 
-import br.edu.ifsp.scl.fazpramim.model.PermissionModel
-import br.edu.ifsp.scl.fazpramim.model.PersonModel
+import br.edu.ifsp.scl.fazpramim.enums.Errors
+import br.edu.ifsp.scl.fazpramim.enums.ProfileType
+import br.edu.ifsp.scl.fazpramim.exception.EntityAlreadyExistsExeption
+import br.edu.ifsp.scl.fazpramim.exception.NotFoundException
 import br.edu.ifsp.scl.fazpramim.model.UserModel
 import br.edu.ifsp.scl.fazpramim.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,35 +20,61 @@ import java.util.logging.Logger
 class UserService : UserDetailsService {
 
     @Autowired
-    private lateinit var userRepository: UserRepository
+    private lateinit var repository: UserRepository
 
     private val logger = Logger.getLogger(UserService::class.toString())
 
+    fun findAllPersons(): List<UserModel> {
+        return repository.findAll().toList()
+    }
+
+    fun findUserById(id: Long): UserModel {
+        return repository.findById(id)
+            .orElseThrow { NotFoundException(Errors.FPM101.message.format(id), Errors.FPM101.code) }
+    }
+
+    fun createUser(user: UserModel): UserModel {
+        if (emailAvailable(user.userName!!)) {
+            user.profileType = ProfileType.CLIENTE
+            user.password = passwordEncoder().encode(user.password)
+            val entity = repository.save(user)
+            return findUserById(entity.id)
+        } else {
+            throw EntityAlreadyExistsExeption(Errors.FPM102.message.format(user.id), Errors.FPM102.code)
+        }
+    }
+
+    fun updateUser(user: UserModel): UserModel {
+        val entity = findUserById(user.id)
+        entity.fullName = user.fullName
+        entity.userName = user.userName
+        entity.password = passwordEncoder().encode(user.password)
+        entity.phone = user.phone
+        entity.photo = user.photo
+        repository.save(entity)
+        return findUserById(entity.id)
+    }
+
+    fun updateProfileTypeToPrestador(id: Long): UserModel {
+        val entity = findUserById(id)
+        entity.profileType = ProfileType.PRESTADOR
+        repository.save(entity)
+        return findUserById(entity.id)
+    }
+
+    fun deleteUser(id: Long) {
+        val entity = findUserById(id)
+        repository.delete(entity)
+    }
+
+    fun emailAvailable(username: String): Boolean {
+        return !repository.existsByEmail(username)
+    }
+
     override fun loadUserByUsername(username: String?): UserDetails {
         logger.info("Buscando um usuário pelo nome: ${username}")
-        val user = userRepository.findByUsername(username)
+        val user = repository.findByUsername(username)
         return user ?: throw UsernameNotFoundException("Nome ${username} não encontrado")
-    }
-
-    fun createUser(person: PersonModel) {
-        val user: UserModel = UserModel()
-        user.userName = person.email
-        user.fullName = person.name
-        user.password = passwordEncoder().encode(person.password)
-        user.accountNonExpired = true
-        user.accountNonLocked = true
-        user.credentialsNonExpired = true
-        user.enabled = true
-
-        userRepository.save(user)
-    }
-
-    fun updateUser(person: PersonModel) {
-        val user: UserModel = userRepository.findByUsername(person.email)!!
-        user.userName = person.email
-        user.fullName = person.name
-        user.password = passwordEncoder().encode(person.password)
-        userRepository.save(user)
     }
 
     private fun passwordEncoder() : PasswordEncoder {

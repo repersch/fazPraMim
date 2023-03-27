@@ -1,5 +1,6 @@
 package br.edu.ifsp.scl.fazpramim.model
 
+import br.edu.ifsp.scl.fazpramim.enums.ProfileType
 import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -22,6 +23,21 @@ class UserModel : UserDetails {
     @JvmField
     @Column(name = "password")
     var password: String? = null
+
+    @Column
+    var phone: String = ""
+
+    @Column
+    var birthDate: String = ""
+
+    @Column
+    var photo: String = ""
+
+    @Column(name = "profile_type")
+    // @ElementCollection(targetClass = ProfileType::class, fetch = FetchType.EAGER)
+    // @CollectionTable(name = "profile_type_roles", joinColumns = [JoinColumn(name = "person_id")])
+    @Enumerated(EnumType.STRING)
+    var profileType: ProfileType = ProfileType.CLIENTE
 
     @Column(name = "account_non_expired")
     var accountNonExpired: Boolean? = null
