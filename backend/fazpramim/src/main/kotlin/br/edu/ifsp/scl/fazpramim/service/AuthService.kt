@@ -1,7 +1,5 @@
 package br.edu.ifsp.scl.fazpramim.service
 
-import br.edu.ifsp.scl.fazpramim.controller.request.LoginRequest
-import br.edu.ifsp.scl.fazpramim.controller.response.LoginResponse
 import br.edu.ifsp.scl.fazpramim.data.AccountCredentialsVO
 import br.edu.ifsp.scl.fazpramim.data.TokenVO
 import br.edu.ifsp.scl.fazpramim.repository.UserRepository
@@ -38,7 +36,7 @@ class AuthService {
             authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password))
             val user = repository.findByUsername(username)
             val tokenResponse: TokenVO = if (user != null) {
-                tokenProvider.createAccessToken(username!!, user.roles)
+                tokenProvider.createAccessToken(username!!, user.id, user.roles)
             } else {
                 throw UsernameNotFoundException("Nome do usuário $username não encontrado!")
             }
@@ -53,7 +51,7 @@ class AuthService {
 
         val user = repository.findByUsername(username)
         val tokenResponse: TokenVO = if (user != null) {
-            tokenProvider.refreshToken(refreshToken)
+            tokenProvider.refreshToken(refreshToken, user.id)
         } else {
             throw UsernameNotFoundException("Nome do usuário $username não encontrado!")
         }

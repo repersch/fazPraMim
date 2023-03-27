@@ -38,13 +38,14 @@ class JwtTokenProvider {
         algorithm = Algorithm.HMAC256(secretKey.toByteArray())
     }
 
-    fun createAccessToken(username: String, roles: List<String?>) : TokenVO {
+    fun createAccessToken(username: String, id: Long, roles: List<String?>) : TokenVO {
         val now = Date()
         val validity = Date(now.time + validityInMilliseconds)
         val accessToken = getAccessToken(username, roles, now, validity)
         val refreshToken = getRefreshToken(username, roles, now)
         return TokenVO(
             username = username,
+            id = id,
             authenticated = true,
             accessToken = accessToken,
             refreshToken = refreshToken,
@@ -53,14 +54,14 @@ class JwtTokenProvider {
         )
     }
 
-    fun refreshToken(refreshToken: String) : TokenVO {
+    fun refreshToken(refreshToken: String, id: Long) : TokenVO {
         var token: String = ""
         if(refreshToken.contains("Bearer ")) token = refreshToken.substring("Bearer ".length)
         val verifier: JWTVerifier = JWT.require(algorithm).build()
         var decodedJWT: DecodedJWT = verifier.verify(token)
         val username: String = decodedJWT.subject
         val roles: List<String> = decodedJWT.getClaim("roles").asList(String::class.java)
-        return createAccessToken(username, roles)
+        return createAccessToken(username, id, roles)
     }
 
     private fun getAccessToken(username: String, roles: List<String?>, now: Date, validity: Date): String {

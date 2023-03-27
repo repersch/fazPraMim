@@ -36,24 +36,24 @@ class ControllerAdvice {
     }
 
     @ExceptionHandler(EntityAlreadyExistsExeption::class)
-    fun handleEntityAlreadyExistsException(ex: MethodArgumentNotValidException, request: WebRequest): ResponseEntity<ErrorResponse> {
+    fun handleEntityAlreadyExistsException(ex: EntityAlreadyExistsExeption, request: WebRequest): ResponseEntity<ErrorResponse> {
         val erro = ErrorResponse(
             HttpStatus.UNPROCESSABLE_ENTITY.value(),
-            Errors.FPM001.message,
-            Errors.FPM001.code,
-            ex.bindingResult.fieldErrors.map { FieldErrorResponse(it.defaultMessage ?: "invalid", it.field) }
+            ex.message,
+            ex.errorCode,
+            null
         )
         return ResponseEntity(erro, HttpStatus.UNPROCESSABLE_ENTITY)
     }
 
     @ExceptionHandler(InvalidJwtAuthenticationException::class)
-    fun handleInvalidJwtAuthenticationException(ex: Exception, request: WebRequest): ResponseEntity<ErrorResponse> {
+    fun handleInvalidJwtAuthenticationException(ex: InvalidJwtAuthenticationException, request: WebRequest): ResponseEntity<ErrorResponse> {
         val erro = ErrorResponse(
-            HttpStatus.FORBIDDEN.value(),
-            Errors.FPM103.message,
-            Errors.FPM103.code,
+            HttpStatus.UNAUTHORIZED.value(),
+            ex.message,
+            ex.errorCode,
             null
         )
-        return ResponseEntity(erro, HttpStatus.FORBIDDEN)
+        return ResponseEntity(erro, HttpStatus.UNAUTHORIZED)
     }
 }
