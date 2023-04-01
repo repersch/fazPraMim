@@ -2,7 +2,8 @@ import { Component } from "@angular/core";
 
 @Component({
     selector: 'navigation-tag',
-    templateUrl: './navigation.component.html'
+    templateUrl: './navigation.component.html',
+    styleUrls: ['./styles.css']
 })
 
 export class NavigationComponent {

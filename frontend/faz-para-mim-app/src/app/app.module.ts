@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/HeaderComponent/header.component';
 import { LoginComponent } from './components/LoginComponent/login.component';
 import { NavigationComponent } from './components/NavigationComponent/navigation.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -12,7 +11,6 @@ import { AppRoutingModule } from './app-routing.module';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     NavigationComponent,
     LoginComponent
   ],

@@ -1,0 +1,17 @@
+img {
+    height: 50px;
+    width: 200px;
+}
+
+form {
+    align-content: right;
+}
+
+a {
+    cursor: pointer;
+}
+
+button > img {
+    width: 16px;
+    height: 16px;
+}

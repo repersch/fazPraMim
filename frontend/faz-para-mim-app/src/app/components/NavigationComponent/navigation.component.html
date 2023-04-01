@@ -1,17 +1,17 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
 
     <div class="container-fluid">
+        <a class="navbar-brand" routerLink="">
+            <img src="../../../assets/img/logo-bg-black.png" alt="Faz Para Mim logo">
+        </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
-            aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toggler"
+            aria-controls="navbar-toggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarToggler">
-
-            <a class="navbar-brand" routerLink="">Faz Pra Mim</a>
-
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="collapse navbar-collapse justify-content-end" id="navbar-toggler">
+            <!--             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" routerLink="about">Sobre</a>
                 </li>
@@ -36,12 +36,15 @@
                 <li *ngIf="getUserInfo()">
                     <a class="nav-link active" aria-current="page" href="#" (click)="onUserLogout()">Logout</a>
                 </li>
-            </ul>
-        </div>
+            </ul> -->
 
-        <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Procurar serviço" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Procurar</button>
-        </form>
+            <button class="btn btn-light" type="button">Login
+                <img src="../../../assets/img/person-icon.svg" alt="Login icon">
+            </button>
+            <!--             <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Procurar serviço" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Procurar</button>
+            </form> -->
+        </div>
     </div>
 </nav>
