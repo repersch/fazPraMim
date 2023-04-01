@@ -9,11 +9,11 @@
 
         <div class="collapse navbar-collapse" id="navbarToggler">
 
-            <a class="navbar-brand" href="#">Faz Pra Mim</a>
+            <a class="navbar-brand" routerLink="">Faz Pra Mim</a>
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="">Sobre</a>
+                    <a class="nav-link active" aria-current="page" routerLink="about">Sobre</a>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -30,11 +30,11 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" routerLink="/service">Serviços</a>
+                    <a class="nav-link active" aria-current="page" routerLink="service">Serviços</a>
                 </li>
 
-                <li *ngIf="onLogin()">
-                    <a class="nav-link active" aria-current="page" href="#" (click)="onLogout()">Logout</a>
+                <li *ngIf="getUserInfo()">
+                    <a class="nav-link active" aria-current="page" href="#" (click)="onUserLogout()">Logout</a>
                 </li>
             </ul>
         </div>

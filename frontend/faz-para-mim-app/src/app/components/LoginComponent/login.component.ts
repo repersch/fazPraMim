@@ -1,25 +1,23 @@
 import { Component } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+
 import { AccountCredentials } from 'src/model/accountCredentials';
 import { Token } from 'src/model/token';
-import { Person } from 'src/model/person';
+import { User } from 'src/model/user';
 import { AuthService } from 'src/service/auth.service';
-import { PersonService } from "src/service/person.service";
+import { UserService } from "src/service/user.service";
 
 @Component({
-    selector: 'loginTag',
     templateUrl: './login.component.html',
     styleUrls: ['./styles.css']
 })
 
-export class Login {
-
-    public people: Person[] = [];
+export class LoginComponent {
 
     constructor(
         private accountCredentialsService: AuthService,
-        private personService: PersonService) { }
+        private userService: UserService) { }
 
     public onUserLogin(loginForm: NgForm): void {
         let accountCredential: AccountCredentials;
@@ -29,15 +27,13 @@ export class Login {
         this.accountCredentialsService.signin(accountCredential).subscribe(
             (response: Token) => {
                 localStorage.setItem('usuarioInfo', JSON.stringify({
+                    'id': response.id,
                     'username': response.username,
                     'token': response.accessToken
                 }));
                 console.log("[LOG-INFO] Usuário autenticado");
                 console.log(response);
                 loginForm.reset();
-
-                console.log("[LOG-INFO] Teste de chamada getPeople");
-                this.getPeople();
             },
             (error: HttpErrorResponse) => {
                 alert(error.message);
@@ -45,47 +41,40 @@ export class Login {
             });
     }
 
-    public getPeople(): void {
-        this.personService.getPeople().subscribe(
-            (response: Person[]) => {
-                this.people = response;
-                console.log(this.people);
-            },
-            (error: HttpErrorResponse) => {
-                alert(error.message);
-            }
-        );
+    public getUserInfo(): string {
+        return JSON.parse(localStorage.getItem('usuarioInfo')!);
     }
 
-    public onOpenModal(person: Person | undefined, mode: string): void {
+    public onOpenModal(user: User | undefined, mode: string): void {
         const container = document.getElementById('login-container');
         const button = document.createElement('button');
         button.type = 'button';
         button.style.display = 'none';
         button.setAttribute('data-toggle', 'modal');
 
-        if (mode === 'createPerson') {
+        if (mode === 'createUser') {
             button.setAttribute('data-bs-toggle', 'modal');
-            button.setAttribute('data-bs-target', '#addPersonModal');
+            button.setAttribute('data-bs-target', '#addUserModal');
         }
         container?.appendChild(button);
         button.click();
     }
 
-    public onAddPerson(addPersonForm: NgForm): void {
-        document.getElementById('add-person-form')?.click();
-        this.personService.addPerson(addPersonForm.value).subscribe(
-            (response: Person) => {
+    public onAddUser(addUserForm: NgForm): void {
+        document.getElementById('add-user-form')?.click();
+
+        console.log("Teste");
+        console.log(addUserForm.value);
+
+
+        this.userService.addUser(addUserForm.value).subscribe(
+            (response: User) => {
                 console.log(response);
-                addPersonForm.reset();
+                addUserForm.reset();
             },
             (error: HttpErrorResponse) => {
                 alert(error.message);
-                addPersonForm.reset();
+                addUserForm.reset();
             });
-    }
-
-    public onLogin() {
-        return JSON.parse(localStorage.getItem('usuarioInfo')!);
     }
 }

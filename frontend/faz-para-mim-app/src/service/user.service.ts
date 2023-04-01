@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { Person } from "src/model/person";
 
 import { environment } from "src/environment/environment";
+import { User } from "src/model/user";
 
 @Injectable({ providedIn: 'root' })
-export class PersonService {
-    private apiServerUrl = environment.apiBaseUrl;
+export class UserService {
+    private serverUrl = environment.apiBaseUrl;
 
     constructor(private http: HttpClient) { }
 
-    public getPeople(): Observable<Person[]> {
+    public addUser(user: User): Observable<User> {
+        return this.http.post<User>(`${this.serverUrl}/registration`, user);
+    }
+
+    public getUsers(): Observable<User[]> {
         let localStorageItens = JSON.parse(localStorage.getItem('usuarioInfo')!);
 
-        return this.http.get<Person[]>(`${this.apiServerUrl}/person`, {
+        return this.http.get<User[]>(`${this.serverUrl}/users`, {
             headers: {
                 'Authorization': `Bearer ${localStorageItens.token}`
             }
         });
-    }
-
-    public addPerson(person: Person): Observable<Person> {
-        return this.http.post<Person>(`${this.apiServerUrl}/registration`, person);
     }
 }

@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 
 @Component({
-    selector: 'userTag',
+    selector: 'user-tag',
     templateUrl: './user.component.html',
     styleUrls: ['./styles.css']
 })
 
-export class UserComponentPage { }
+export class UserComponent { }

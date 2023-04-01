@@ -1,4 +1,4 @@
-export interface Person {
+export interface User {
     id: number;
     name: string;
     email: string;
@@ -7,4 +7,5 @@ export interface Person {
     birthDate: string;
     photo: string;
     personStatus: string;
+    profileType: string;
 }

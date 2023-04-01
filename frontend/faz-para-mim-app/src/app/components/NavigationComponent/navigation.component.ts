@@ -1,17 +1,17 @@
 import { Component } from "@angular/core";
 
 @Component({
-    selector: 'navTag',
-    templateUrl: './nav.component.html'
+    selector: 'navigation-tag',
+    templateUrl: './navigation.component.html'
 })
 
-export class NavigationBar {
+export class NavigationComponent {
 
-    public onLogin() {
+    public getUserInfo(): string {
         return JSON.parse(localStorage.getItem('usuarioInfo')!);
     }
 
-    public onLogout() {
+    public onUserLogout(): void {
         localStorage.removeItem('usuarioInfo');
     }
 }

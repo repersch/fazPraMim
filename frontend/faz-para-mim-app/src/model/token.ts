@@ -1,4 +1,5 @@
 export interface Token {
+    id: number;
     username: string;
     authenticated: boolean;
     created: Date;

@@ -4,19 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { Footer } from './components/Footer/footer.component';
-import { Header } from './components/Header/header.component';
-import { Login } from './components/Login/login.component';
-import { NavigationBar } from './components/NavigationBar/nav.component';
+import { HeaderComponent } from './components/HeaderComponent/header.component';
+import { LoginComponent } from './components/LoginComponent/login.component';
+import { NavigationComponent } from './components/NavigationComponent/navigation.component';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    Footer,
-    Header,
-    NavigationBar,
-    Login
+    HeaderComponent,
+    NavigationComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

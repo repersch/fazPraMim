@@ -22,3 +22,8 @@ input {
 a {
     cursor: pointer;
 }
+
+::-webkit-input-placeholder {
+    font-style: italic;
+    color: gray;
+}

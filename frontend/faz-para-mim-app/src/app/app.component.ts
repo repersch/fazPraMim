@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Person } from 'src/model/person';
-import { PersonService } from 'src/service/person.service';
+import { User } from 'src/model/user';
+import { UserService } from 'src/service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -9,19 +9,19 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  public people: Person[] = [];
+  public users: User[] = [];
 
-  constructor(private personService: PersonService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     localStorage.clear();
     /* this.getPeople(); */
   }
 
-  public getPeople(): void {
-    this.personService.getPeople().subscribe(
-      (response: Person[]) => {
-        this.people = response;
+  public getUsers(): void {
+    this.userService.getUsers().subscribe(
+      (response: User[]) => {
+        this.users = response;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

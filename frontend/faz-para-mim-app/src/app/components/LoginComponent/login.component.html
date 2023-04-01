@@ -1,36 +1,37 @@
 <section id="login-section">
 
-  <div id="login-container" *ngIf="!onLogin()">
+  <div id="login-container" *ngIf="!getUserInfo()">
 
     <form #loginForm="ngForm" (ngSubmit)="onUserLogin(loginForm)">
       <div class="form-group">
         <!-- <label for="usuario-login">Email</label> -->
-        <input type="text" ngModel name="username" class="form-control" id="username" placeholder="Username" required>
+        <input type="text" ngModel name="username" class="form-control" id="username" placeholder="example@email.com.br"
+          required>
       </div>
 
       <div class="form-group">
         <!-- <label for="usuario-senha">Senha</label> -->
-        <input type="password" ngModel name="password" class="form-control" id="passwordLogin" placeholder="Senha"
+        <input type="password" ngModel name="password" class="form-control" id="passwordLogin" placeholder="senha"
           required>
       </div>
 
       <button type="submit" id="login-user-form" class="btn btn-success">Acessar</button>
 
-      <a class="link pe-auto" (click)="onOpenModal(undefined, 'createPerson')">Cadastre-se</a>
+      <a class="link pe-auto" (click)="onOpenModal(undefined, 'createUser')">Cadastre-se</a>
     </form>
   </div>
 </section>
 
-<!-- Add Person Modal -->
-<div class="modal fade" id="addPersonModal" tabindex="-1" aria-labelledby="addPersonModalLabel" aria-hidden="true">
+<!-- Add User Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="addPersonModalLabel">Cadastrar Novo Usuário</h1>
+        <h1 class="modal-title fs-5" id="addUserModalLabel">Cadastrar Novo Usuário</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form #addPersonForm="ngForm" (ngSubmit)="onAddPerson(addPersonForm)">
+        <form #addUserForm="ngForm" (ngSubmit)="onAddUser(addUserForm)">
           <div class="form-group">
             <label for="name">Nome</label>
             <input type="text" ngModel name="name" class="form-control" id="name" placeholder="Nome" required>
@@ -59,7 +60,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            <button [disabled]="addPersonForm.invalid" type="submit" class="btn btn-primary">Cadastrar</button>
+            <button [disabled]="addUserForm.invalid" type="submit" class="btn btn-primary">Cadastrar</button>
           </div>
         </form>
       </div>

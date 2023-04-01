@@ -2,12 +2,12 @@ import { Component } from "@angular/core";
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'serviceTag',
+    selector: 'service-tag',
     templateUrl: './service.component.html',
     styleUrls: ['./styles.css']
 })
 
-export class ServiceComponentPage {
+export class ServiceComponent {
     constructor(private router: Router) { }
 
     public btnClick() {
