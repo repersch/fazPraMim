@@ -1,7 +1,6 @@
 package br.edu.ifsp.scl.fazpramim.repository
 
 import br.edu.ifsp.scl.fazpramim.model.UserModel
-import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
 
