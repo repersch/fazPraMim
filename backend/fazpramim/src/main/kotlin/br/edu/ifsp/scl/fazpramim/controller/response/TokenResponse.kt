@@ -1,8 +1,8 @@
-package br.edu.ifsp.scl.fazpramim.data
+package br.edu.ifsp.scl.fazpramim.controller.response
 
 import java.util.*
 
-data class TokenVO(
+data class TokenResponse (
     val username: String? = null,
     val id: Long? = null,
     val authenticated: Boolean? = null,

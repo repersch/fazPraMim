@@ -1,6 +1,6 @@
 package br.edu.ifsp.scl.fazpramim.controller
 
-import br.edu.ifsp.scl.fazpramim.data.AccountCredentialsVO
+import br.edu.ifsp.scl.fazpramim.controller.request.LoginRequest
 import br.edu.ifsp.scl.fazpramim.service.AuthService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -19,7 +19,7 @@ class AuthController {
 
     @Operation(summary = "Autentica um usuário e retorna um token")
     @PostMapping(value = ["/signin"])
-    fun signin(@RequestBody data: AccountCredentialsVO?) : ResponseEntity<*> {
+    fun signin(@RequestBody data: LoginRequest?) : ResponseEntity<*> {
         return if (data!!.username.isNullOrBlank() || data.password.isNullOrBlank())
             ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body("Invalid client request")

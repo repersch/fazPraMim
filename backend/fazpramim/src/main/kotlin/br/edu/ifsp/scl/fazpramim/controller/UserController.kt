@@ -1,10 +1,12 @@
 package br.edu.ifsp.scl.fazpramim.controller
 
-import br.edu.ifsp.scl.fazpramim.model.UserModel
+import br.edu.ifsp.scl.fazpramim.controller.request.PutPersonRequest
+import br.edu.ifsp.scl.fazpramim.controller.response.UserResponse
+import br.edu.ifsp.scl.fazpramim.extension.toResponse
+import br.edu.ifsp.scl.fazpramim.extension.toUserModel
 import br.edu.ifsp.scl.fazpramim.service.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
-import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -17,33 +19,33 @@ class UserController (
 
     @GetMapping
     @Operation(summary = "Busca todos os usuários", description = "Busca todos os usuários")
-    fun findAllUsers(@RequestHeader("Authorization") token: String?): List<UserModel> {
-        return service.findAllPersons()
+    fun findAllUsers(@RequestHeader("Authorization") token: String?): List<UserResponse> {
+        return service.findAllUsers().map { user -> user.toResponse() }
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Busca um usuário por ID", description = "Busca um usuário por ID")
-    fun findUserById(@PathVariable(value = "id") id: Long): UserModel {
-        return service.findUserById(id)
+    fun findUserById(@PathVariable(value = "id") id: Long): UserResponse {
+        return service.findUserById(id).toResponse()
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Edita uma pessoa", description = "Edita uma pessoa")
-    fun updateUser(@PathVariable id: Long, @RequestBody user: UserModel): UserModel {
-        val personSaved = service.findUserById(id)
-        return service.updateUser(personSaved.id, user)
+    fun updateUser(@PathVariable id: Long, @RequestBody user: PutPersonRequest): UserResponse {
+        val userSaved = service.findUserById(id)
+        return service.updateUser(user.toUserModel(userSaved)).toResponse()
     }
 
     @PutMapping("/setPrestador/{id}")
     @Operation(summary = "Edita o tipo de perfil de uma pessoa", description = "Edita o tipo de perfil de uma pessoa")
-    fun updateProfileType(@PathVariable id: Long): UserModel {
-        return service.updateProfileTypeToPrestador(id)
+    fun updateProfileType(@PathVariable id: Long): UserResponse {
+        return service.updateProfileTypeToPrestador(id).toResponse()
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Exclui uma pessoa", description = "Exclui uma pessoa")
-    fun deletePerson(@PathVariable(value = "id") id: Long) {
+    fun deleteUser(@PathVariable(value = "id") id: Long) {
         service.deleteUser(id)
     }
 }

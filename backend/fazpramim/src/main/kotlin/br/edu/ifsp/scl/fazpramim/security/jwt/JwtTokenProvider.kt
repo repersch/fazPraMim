@@ -1,6 +1,6 @@
 package br.edu.ifsp.scl.fazpramim.security.jwt
 
-import br.edu.ifsp.scl.fazpramim.data.TokenVO
+import br.edu.ifsp.scl.fazpramim.controller.response.TokenResponse
 import br.edu.ifsp.scl.fazpramim.exception.InvalidJwtAuthenticationException
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
@@ -38,12 +38,12 @@ class JwtTokenProvider {
         algorithm = Algorithm.HMAC256(secretKey.toByteArray())
     }
 
-    fun createAccessToken(username: String, id: Long, roles: List<String?>) : TokenVO {
+    fun createAccessToken(username: String, id: Long) : TokenResponse {
         val now = Date()
         val validity = Date(now.time + validityInMilliseconds)
-        val accessToken = getAccessToken(username, roles, now, validity)
-        val refreshToken = getRefreshToken(username, roles, now)
-        return TokenVO(
+        val accessToken = getAccessToken(username, now, validity)
+        val refreshToken = getRefreshToken(username,  now)
+        return TokenResponse(
             username = username,
             id = id,
             authenticated = true,
@@ -54,20 +54,20 @@ class JwtTokenProvider {
         )
     }
 
-    fun refreshToken(refreshToken: String, id: Long) : TokenVO {
+    fun refreshToken(refreshToken: String, id: Long) : TokenResponse {
         var token: String = ""
         if(refreshToken.contains("Bearer ")) token = refreshToken.substring("Bearer ".length)
         val verifier: JWTVerifier = JWT.require(algorithm).build()
         var decodedJWT: DecodedJWT = verifier.verify(token)
         val username: String = decodedJWT.subject
         val roles: List<String> = decodedJWT.getClaim("roles").asList(String::class.java)
-        return createAccessToken(username, id, roles)
+        return createAccessToken(username, id)
     }
 
-    private fun getAccessToken(username: String, roles: List<String?>, now: Date, validity: Date): String {
+    private fun getAccessToken(username: String, now: Date, validity: Date): String {
         val issuerURL: String = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString()
         return JWT.create()
-            .withClaim("roles", roles)
+//            .withClaim("roles", roles)
             .withIssuedAt(now)
             .withExpiresAt(validity)
             .withSubject(username)
@@ -76,10 +76,10 @@ class JwtTokenProvider {
             .trim()
     }
 
-    private fun getRefreshToken(username: String, roles: List<String?>, now: Date): String? {
+    private fun getRefreshToken(username: String, now: Date): String? {
         val validityRefreshToken = Date(now.time + validityInMilliseconds * 3)
         return JWT.create()
-            .withClaim("roles", roles)
+//            .withClaim("roles", roles)
             .withExpiresAt(validityRefreshToken)
             .withSubject(username)
             .sign(algorithm)

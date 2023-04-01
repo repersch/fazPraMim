@@ -1,6 +1,8 @@
 package br.edu.ifsp.scl.fazpramim.controller
 
-import br.edu.ifsp.scl.fazpramim.model.UserModel
+import br.edu.ifsp.scl.fazpramim.controller.request.PostUserRequest
+import br.edu.ifsp.scl.fazpramim.controller.response.UserResponse
+import br.edu.ifsp.scl.fazpramim.extension.toResponse
 import br.edu.ifsp.scl.fazpramim.service.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -18,7 +20,7 @@ class RegistrationController(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Cria uma pessoa", description = "Cria uma pessoa")
-    fun createPerson(@RequestBody @Valid user: UserModel): UserModel {
-        return service.createUser(user)
+    fun createPerson(@RequestBody @Valid user: PostUserRequest): UserResponse {
+        return service.createUser(user).toResponse()
     }
 }

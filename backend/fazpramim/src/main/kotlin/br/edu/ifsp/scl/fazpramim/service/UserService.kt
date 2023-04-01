@@ -1,9 +1,11 @@
 package br.edu.ifsp.scl.fazpramim.service
 
+import br.edu.ifsp.scl.fazpramim.controller.request.PostUserRequest
 import br.edu.ifsp.scl.fazpramim.enums.Errors
 import br.edu.ifsp.scl.fazpramim.enums.ProfileType
 import br.edu.ifsp.scl.fazpramim.exception.EntityAlreadyExistsExeption
 import br.edu.ifsp.scl.fazpramim.exception.NotFoundException
+import br.edu.ifsp.scl.fazpramim.extension.toUserModel
 import br.edu.ifsp.scl.fazpramim.model.UserModel
 import br.edu.ifsp.scl.fazpramim.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,7 +26,7 @@ class UserService : UserDetailsService {
 
     private val logger = Logger.getLogger(UserService::class.toString())
 
-    fun findAllPersons(): List<UserModel> {
+    fun findAllUsers(): List<UserModel> {
         return repository.findAll().toList()
     }
 
@@ -33,31 +35,24 @@ class UserService : UserDetailsService {
             .orElseThrow { NotFoundException(Errors.FPM101.message.format(id), Errors.FPM101.code) }
     }
 
-    fun createUser(user: UserModel): UserModel {
-        if (userNameAvailable(user.userName!!)) {
-            user.profileType = ProfileType.CLIENTE
+    fun createUser(user: PostUserRequest): UserModel {
+        if (userNameAvailable(user.username)) {
             user.password = passwordEncoder().encode(user.password)
-            user.accountNonExpired = true
-            user.accountNonLocked = true
-            user.enabled = true
-            user.credentialsNonExpired = true
-            val entity = repository.save(user)
-            println(">>>>>>>>>>>>>>>>>> entidade salva: ${entity}")
-//            return findUserById(entity.id)
-            return entity
+            val entity = repository.save(user.toUserModel())
+            return findUserById(entity.id)
         } else {
             throw EntityAlreadyExistsExeption(Errors.FPM102.message.format(user.id), Errors.FPM102.code)
         }
     }
 
-    fun updateUser(id: Long, user: UserModel): UserModel {
-        val entity = findUserById(id)
-        entity.fullName = user.fullName ?: entity.fullName
-        entity.userName = user.userName ?: entity.userName
-        entity.password = if (user.password != null) passwordEncoder().encode(user.password) else entity.password
-        entity.phone = user.phone ?: entity.phone
-        entity.photo = user.photo ?: entity.photo
-        entity.birthDate = user.birthDate ?: entity.birthDate
+    fun updateUser(user: UserModel): UserModel {
+        val entity = findUserById(user.id)
+        entity.fullName = user.fullName
+        entity.userName = user.username
+        entity.password = passwordEncoder().encode(user.password)
+        entity.phone = user.phone
+        entity.photo = user.photo
+        entity.birthDate = user.birthDate
         repository.save(entity)
         return findUserById(entity.id)
     }

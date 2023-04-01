@@ -1,48 +1,48 @@
 package br.edu.ifsp.scl.fazpramim.extension
 
-import br.edu.ifsp.scl.fazpramim.controller.request.PostPersonRequest
+import br.edu.ifsp.scl.fazpramim.controller.request.PostUserRequest
 import br.edu.ifsp.scl.fazpramim.controller.request.PutPersonRequest
-import br.edu.ifsp.scl.fazpramim.controller.response.PersonResponse
-import br.edu.ifsp.scl.fazpramim.enums.PersonStatus
+import br.edu.ifsp.scl.fazpramim.controller.response.UserResponse
 import br.edu.ifsp.scl.fazpramim.enums.ProfileType
-import br.edu.ifsp.scl.fazpramim.model.PersonModel
+import br.edu.ifsp.scl.fazpramim.model.UserModel
 
-fun PostPersonRequest.toPersonModel(): PersonModel {
-    return PersonModel(
-        name = this.name,
-        email = this.email,
+fun PostUserRequest.toUserModel(): UserModel {
+    return UserModel(
+        fullName = this.fullName,
+        userName = this.username,
         password = this.password,
         phone = this.phone,
         birthDate = this.birthDate,
         photo = this.photo,
         profileType = ProfileType.CLIENTE,
-        personStatus = PersonStatus.ATIVO
+        accountNonExpired = true,
+        accountNonLocked = true,
+        enabled = true,
+        credentialsNonExpired = true,
     )
 }
 
-fun PutPersonRequest.toPersonModel(previuosValue: PersonModel): PersonModel {
-    return PersonModel(
+fun PutPersonRequest.toUserModel(previuosValue: UserModel): UserModel {
+    return UserModel (
         id = previuosValue.id,
-        name = this.name ?: previuosValue.name,
-        email = this.email ?: previuosValue.email,
+        fullName = this.fullName ?: previuosValue.fullName,
+        userName = this.username ?: previuosValue.userName,
         password = this.password ?: previuosValue.password,
         phone = this.phone ?: previuosValue.phone,
         birthDate = previuosValue.birthDate,
-        photo = this.photo ?: previuosValue.photo,
-        profileType = this.profileType ?: previuosValue.profileType,
-        personStatus = this.personStatus ?: previuosValue.personStatus
+        photo = this.photo ?: previuosValue.photo
     )
 }
 
-fun PersonModel.toResponse(): PersonResponse {
-    return PersonResponse(
+fun UserModel.toResponse(): UserResponse {
+    return UserResponse(
         id = this.id,
-        name = this.name,
-        email = this.email,
-        password = this.password,
-        phone = this.phone,
-        birthDate = this.birthDate,
-        profileType = this.profileType,
-        personStatus = this.personStatus
+        fullName = this.fullName!!,
+        username = this.userName!!,
+        password = this.password!!,
+        phone = this.phone!!,
+        photo = this.photo!!,
+        birthDate = this.birthDate!!,
+        profileType = this.profileType
     )
 }

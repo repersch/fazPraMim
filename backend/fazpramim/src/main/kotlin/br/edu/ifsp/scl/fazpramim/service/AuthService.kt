@@ -1,7 +1,7 @@
 package br.edu.ifsp.scl.fazpramim.service
 
-import br.edu.ifsp.scl.fazpramim.data.AccountCredentialsVO
-import br.edu.ifsp.scl.fazpramim.data.TokenVO
+import br.edu.ifsp.scl.fazpramim.controller.request.LoginRequest
+import br.edu.ifsp.scl.fazpramim.controller.response.TokenResponse
 import br.edu.ifsp.scl.fazpramim.repository.UserRepository
 import br.edu.ifsp.scl.fazpramim.security.jwt.JwtTokenProvider
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,15 +28,15 @@ class AuthService {
 
     private val logger = Logger.getLogger(AuthService::class.java.name)
 
-    fun signin(data: AccountCredentialsVO) : ResponseEntity<*> {
+    fun signin(data: LoginRequest) : ResponseEntity<*> {
         logger.info("Tentando logar o usuário ${data.username}")
         return try {
             val username = data.username
             val password = data.password
             authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password))
             val user = repository.findByUserName(username)
-            val tokenResponse: TokenVO = if (user != null) {
-                tokenProvider.createAccessToken(username!!, user.id, user.roles)
+            val tokenResponse: TokenResponse = if (user != null) {
+                tokenProvider.createAccessToken(username!!, user.id)
             } else {
                 throw UsernameNotFoundException("Nome do usuário $username não encontrado!")
             }
@@ -50,7 +50,7 @@ class AuthService {
         logger.info("Tentando recarregar o token do usuário: $username")
 
         val user = repository.findByUserName(username)
-        val tokenResponse: TokenVO = if (user != null) {
+        val tokenResponse: TokenResponse = if (user != null) {
             tokenProvider.refreshToken(refreshToken, user.id)
         } else {
             throw UsernameNotFoundException("Nome do usuário $username não encontrado!")

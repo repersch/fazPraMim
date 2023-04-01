@@ -4,50 +4,50 @@ import br.edu.ifsp.scl.fazpramim.enums.ProfileType
 import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import java.util.ArrayList
 
 @Entity
 @Table(name = "users")
-class UserModel : UserDetails {
+data class UserModel (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0
+    var id: Long = 0,
 
     @Column(name = "user_name", unique = true)
-    var userName: String? = null
+    var userName: String? = null,
 
     @Column(name = "full_name")
-    var fullName: String? = null
+    var fullName: String? = null,
 
     @JvmField
     @Column(name = "password")
-    var password: String? = null
+    var password: String? = null,
 
     @Column
-    var phone: String? = null
+    var phone: String? = null,
 
     @Column
-    var birthDate: String? = null
+    var birthDate: String? = null,
 
     @Column
-    var photo: String? = null
+    var photo: String? = null,
 
     @Column(name = "profile_type")
     @Enumerated(EnumType.STRING)
-    var profileType: ProfileType = ProfileType.CLIENTE
+    var profileType: ProfileType = ProfileType.CLIENTE,
 
+    // atributos do SpringSecurity (userDetails)
     @Column(name = "account_non_expired")
-    var accountNonExpired: Boolean? = null
+    var accountNonExpired: Boolean? = null,
 
     @Column(name = "account_non_locked")
-    var accountNonLocked: Boolean? = null
+    var accountNonLocked: Boolean? = null,
 
     @Column(name = "credentials_non_expired")
-    var credentialsNonExpired: Boolean? = null
+    var credentialsNonExpired: Boolean? = null,
 
     @Column(name = "enabled")
-    var enabled: Boolean? = null
+    var enabled: Boolean? = null,
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -57,14 +57,7 @@ class UserModel : UserDetails {
     )
     var permissions: List<PermissionModel>? = null
 
-    val roles: List<String?>
-        get(){
-            val roles: MutableList<String?> = ArrayList()
-            for (permission in permissions!!) {
-                roles.add(permission.description)
-            }
-            return roles
-        }
+) : UserDetails {
 
     override fun getAuthorities(): Collection<GrantedAuthority> {
         return permissions!!
