@@ -60,9 +60,9 @@ class SecurityConfig {
                 )
                 .permitAll()
                 // aqui só acessa quem estiver autenticado
-                .requestMatchers("/api/**").authenticated()
+                .requestMatchers("/api/users/**").authenticated()
                 // aqui ninguém pode acessar
-                .requestMatchers("/users").denyAll()
+                //.requestMatchers("/users").denyAll()
             }
             .cors()
             .and()

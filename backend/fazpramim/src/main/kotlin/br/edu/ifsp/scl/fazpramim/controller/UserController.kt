@@ -29,9 +29,9 @@ class UserController (
 
     @PutMapping("/{id}")
     @Operation(summary = "Edita uma pessoa", description = "Edita uma pessoa")
-    fun updateUser(@PathVariable id: Long, @RequestBody @Valid user: UserModel): UserModel {
+    fun updateUser(@PathVariable id: Long, @RequestBody user: UserModel): UserModel {
         val personSaved = service.findUserById(id)
-        return service.updateUser(user)
+        return service.updateUser(personSaved.id, user)
     }
 
     @PutMapping("/setPrestador/{id}")

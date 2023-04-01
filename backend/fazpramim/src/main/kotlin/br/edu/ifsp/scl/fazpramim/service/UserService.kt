@@ -34,23 +34,30 @@ class UserService : UserDetailsService {
     }
 
     fun createUser(user: UserModel): UserModel {
-        if (emailAvailable(user.userName!!)) {
+        if (userNameAvailable(user.userName!!)) {
             user.profileType = ProfileType.CLIENTE
             user.password = passwordEncoder().encode(user.password)
+            user.accountNonExpired = true
+            user.accountNonLocked = true
+            user.enabled = true
+            user.credentialsNonExpired = true
             val entity = repository.save(user)
-            return findUserById(entity.id)
+            println(">>>>>>>>>>>>>>>>>> entidade salva: ${entity}")
+//            return findUserById(entity.id)
+            return entity
         } else {
             throw EntityAlreadyExistsExeption(Errors.FPM102.message.format(user.id), Errors.FPM102.code)
         }
     }
 
-    fun updateUser(user: UserModel): UserModel {
-        val entity = findUserById(user.id)
-        entity.fullName = user.fullName
-        entity.userName = user.userName
-        entity.password = passwordEncoder().encode(user.password)
-        entity.phone = user.phone
-        entity.photo = user.photo
+    fun updateUser(id: Long, user: UserModel): UserModel {
+        val entity = findUserById(id)
+        entity.fullName = user.fullName ?: entity.fullName
+        entity.userName = user.userName ?: entity.userName
+        entity.password = if (user.password != null) passwordEncoder().encode(user.password) else entity.password
+        entity.phone = user.phone ?: entity.phone
+        entity.photo = user.photo ?: entity.photo
+        entity.birthDate = user.birthDate ?: entity.birthDate
         repository.save(entity)
         return findUserById(entity.id)
     }
@@ -67,13 +74,13 @@ class UserService : UserDetailsService {
         repository.delete(entity)
     }
 
-    fun emailAvailable(username: String): Boolean {
-        return !repository.existsByEmail(username)
+    fun userNameAvailable(userName: String): Boolean {
+        return !repository.existsByUserName(userName)
     }
 
     override fun loadUserByUsername(username: String?): UserDetails {
         logger.info("Buscando um usuário pelo nome: ${username}")
-        val user = repository.findByUsername(username)
+        val user = repository.findByUserName(username)
         return user ?: throw UsernameNotFoundException("Nome ${username} não encontrado")
     }
 

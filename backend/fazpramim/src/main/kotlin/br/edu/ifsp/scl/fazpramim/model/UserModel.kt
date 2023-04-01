@@ -25,17 +25,15 @@ class UserModel : UserDetails {
     var password: String? = null
 
     @Column
-    var phone: String = ""
+    var phone: String? = null
 
     @Column
-    var birthDate: String = ""
+    var birthDate: String? = null
 
     @Column
-    var photo: String = ""
+    var photo: String? = null
 
     @Column(name = "profile_type")
-    // @ElementCollection(targetClass = ProfileType::class, fetch = FetchType.EAGER)
-    // @CollectionTable(name = "profile_type_roles", joinColumns = [JoinColumn(name = "person_id")])
     @Enumerated(EnumType.STRING)
     var profileType: ProfileType = ProfileType.CLIENTE
 

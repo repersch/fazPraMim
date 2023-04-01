@@ -10,7 +10,7 @@ class EmailAvailableValidator(val userService: UserService): ConstraintValidator
         if(value.isNullOrEmpty()) {
             return false
         }
-        return userService.emailAvailable(value)
+        return userService.userNameAvailable(value)
     }
 
 }

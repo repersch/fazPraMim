@@ -34,7 +34,7 @@ class AuthService {
             val username = data.username
             val password = data.password
             authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password))
-            val user = repository.findByUsername(username)
+            val user = repository.findByUserName(username)
             val tokenResponse: TokenVO = if (user != null) {
                 tokenProvider.createAccessToken(username!!, user.id, user.roles)
             } else {
@@ -49,7 +49,7 @@ class AuthService {
     fun refreshToken(username: String, refreshToken: String) : ResponseEntity<*> {
         logger.info("Tentando recarregar o token do usuário: $username")
 
-        val user = repository.findByUsername(username)
+        val user = repository.findByUserName(username)
         val tokenResponse: TokenVO = if (user != null) {
             tokenProvider.refreshToken(refreshToken, user.id)
         } else {

@@ -7,10 +7,7 @@ import org.springframework.data.repository.query.Param
 
 interface UserRepository : CrudRepository<UserModel, Long> {
 
-    @Query("select (count(u) > 0) from UserModel u")
-    fun existsByEmail(email: String): Boolean
+    fun existsByUserName(userName: String): Boolean
 
-
-    @Query("SELECT u FROM UserModel u WHERE u.userName =:userName")
-    fun findByUsername(@Param("userName") userName: String?): UserModel?
+    fun findByUserName(@Param("userName") userName: String?): UserModel?
 }
