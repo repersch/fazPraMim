@@ -1,0 +1,12 @@
+#login-card-section {
+    margin-top: 75px;
+}
+
+#login-container {
+    display: none;
+}
+
+.form-control,
+.card-footer {
+    width: fit-content;
+}

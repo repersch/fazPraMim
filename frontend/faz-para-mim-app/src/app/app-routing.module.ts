@@ -2,13 +2,12 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
 import { AboutComponent } from './components/AboutComponent/about.component'
-import { LoginComponent } from './components/LoginComponent/login.component'
 import { NotFoundComponent } from './components/NotFoundComponent/page-not-found.component'
 import { ServiceComponent } from './components/ServiceComponent/service.component'
 import { UserComponent } from './components/UserComponent/user.component'
 
 const routes: Routes = [
-    { path: '', component: LoginComponent },
+    { path: '', component: ServiceComponent },
     { path: 'about', component: AboutComponent },
     //{ path: '', component: HomeComponent },
     { path: 'service', component: ServiceComponent },

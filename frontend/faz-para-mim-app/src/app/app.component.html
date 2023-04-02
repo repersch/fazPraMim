@@ -2,9 +2,12 @@
 <div *ngFor="let person of people">
   <div><b>Person:</b> {{person.name}} | <b>Email:</b> {{person.email}} | <b>Password:</b> {{person.password}}</div>
 </div> -->
-
-<navigation-tag></navigation-tag>
+<header>
+  <navigation-tag></navigation-tag>
+  <login-card-tag></login-card-tag>
+</header>
 
 <main>
   <router-outlet></router-outlet>
+  <user-modal-tag></user-modal-tag>
 </main>

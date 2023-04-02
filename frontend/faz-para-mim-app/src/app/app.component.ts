@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+
 import { User } from 'src/model/user';
 import { UserService } from 'src/service/user.service';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -15,17 +16,17 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     localStorage.clear();
-    /* this.getPeople(); */
+    /* this.getUsers(); */
   }
 
-  public getUsers(): void {
-    this.userService.getUsers().subscribe(
-      (response: User[]) => {
-        this.users = response;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-  }
+  /*   public getUsers(): void {
+      this.userService.getUsers().subscribe(
+        (response: User[]) => {
+          this.users = response;
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+    } */
 }

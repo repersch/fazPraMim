@@ -1,17 +1,52 @@
-img {
+#brand-image {
     height: 50px;
     width: 200px;
 }
 
-form {
+/* form {
     align-content: right;
-}
+} */
 
-a {
+/* a {
     cursor: pointer;
-}
+} */
 
-button > img {
+/* button>img {
     width: 16px;
     height: 16px;
+} */
+
+/* #loginContainer {
+    display: none; */
+/* margin-top: 100px; */
+/*  text-align: center; */
+/* margin: auto; */
+/*  display: flex; */
+/* justify-content: end; */
+/* background-color: black; */
+/*     margin-left: 230px;
+} */
+
+/* #login-section {
+    background-color: #e4e2db; */
+/*  border-radius: 10px;*/
+/*     padding: 30px 10px;
+    margin-top: 30px;
+} */
+
+/* #login-container {
+    text-align: center;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+} */
+
+/* input {
+    margin-top: 7px;
+    margin-right: 7px;
 }
+
+::-webkit-input-placeholder {
+    font-style: italic;
+    color: gray;
+} */
