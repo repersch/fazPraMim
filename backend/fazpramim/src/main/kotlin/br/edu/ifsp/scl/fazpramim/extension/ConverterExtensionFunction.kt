@@ -2,6 +2,7 @@ package br.edu.ifsp.scl.fazpramim.extension
 
 import br.edu.ifsp.scl.fazpramim.controller.request.PostProfileRequest
 import br.edu.ifsp.scl.fazpramim.controller.request.PostUserRequest
+import br.edu.ifsp.scl.fazpramim.controller.request.PutProfileRequest
 import br.edu.ifsp.scl.fazpramim.controller.request.PutUserRequest
 import br.edu.ifsp.scl.fazpramim.controller.response.ProfileResponse
 import br.edu.ifsp.scl.fazpramim.controller.response.UserResponse
@@ -68,6 +69,15 @@ fun ProfileModel.toResponse(): ProfileResponse {
         description = this.description,
         city = this.city,
         user = this.user
+    )
+}
+
+fun PutProfileRequest.toProfileModel(previuosValue: ProfileModel): ProfileModel {
+    return ProfileModel (
+        id = previuosValue.id,
+        description = this.description ?: previuosValue.description,
+        city = this.city ?: previuosValue.city,
+        user = this.user ?: previuosValue.user
     )
 }
 

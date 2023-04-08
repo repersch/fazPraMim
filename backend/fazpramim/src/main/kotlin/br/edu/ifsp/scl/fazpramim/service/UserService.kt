@@ -64,6 +64,13 @@ class UserService : UserDetailsService {
         return findUserById(entity.id)
     }
 
+    fun updateProfileTypeToCliente(id: Long): UserModel {
+        val entity = findUserById(id)
+        entity.profileType = ProfileType.CLIENTE
+        repository.save(entity)
+        return findUserById(entity.id)
+    }
+
     fun deleteUser(id: Long) {
         val entity = findUserById(id)
         repository.delete(entity)

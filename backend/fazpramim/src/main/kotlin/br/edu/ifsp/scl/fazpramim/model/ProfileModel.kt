@@ -9,7 +9,7 @@ data class ProfileModel(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int? = null,
+    var id: Long? = null,
 
     @Column
     var description: String = "",
