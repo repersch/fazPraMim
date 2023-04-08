@@ -1,5 +1,8 @@
 package br.edu.ifsp.scl.fazpramim.controller
 
+import br.edu.ifsp.scl.fazpramim.controller.request.PostProfileRequest
+import br.edu.ifsp.scl.fazpramim.controller.response.ProfileResponse
+import br.edu.ifsp.scl.fazpramim.extension.toResponse
 import br.edu.ifsp.scl.fazpramim.model.ProfileModel
 import br.edu.ifsp.scl.fazpramim.service.ProfileService
 import io.swagger.v3.oas.annotations.Operation
@@ -9,29 +12,28 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/profiles")
-@Tag(name = "People", description = "Endpoints para gerenciar perfis")
+@Tag(name = "Profile", description = "Endpoints para gerenciar perfis")
 class ProfileController (
     val service: ProfileService
 ) {
 
     @GetMapping
     @Operation(summary = "Busca todas os perfis", description = "Busca todas os perfis")
-    fun findAllPersons(@RequestParam name: String?,
-                       @RequestHeader("Authorization") token: String?): List<ProfileModel> {
-        return service.findAllProfiles()
+    fun findAllProfiles(): List<ProfileResponse> {
+        return service.findAllProfiles().map { p -> p.toResponse() }
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Busca um perfil por ID", description = "Busca um perfil por ID")
-    fun findPersonById(@PathVariable(value = "id") id: Int): ProfileModel {
-        return service.findProfileById(id)
+    fun findPersonById(@PathVariable(value = "id") id: Int): ProfileResponse {
+        return service.findProfileById(id).toResponse()
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Cria um perfil", description = "Cria um perfil")
-    fun createPerson(@RequestBody profile: ProfileModel): ProfileModel {
-        return service.createProfile(profile)
+    fun createProfile(@RequestBody profile: PostProfileRequest): ProfileResponse {
+        return service.createProfile(profile).toResponse()
     }
 
 //    @PutMapping("/{id}")

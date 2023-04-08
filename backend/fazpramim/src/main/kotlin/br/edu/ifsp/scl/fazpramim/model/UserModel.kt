@@ -36,6 +36,10 @@ data class UserModel (
     @Enumerated(EnumType.STRING)
     var profileType: ProfileType = ProfileType.CLIENTE,
 
+//    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.EAGER, optional = true)
+////    @JoinColumn(name = "profile_id", nullable = true)
+//    var profile: ProfileModel? = null,
+
     // atributos do SpringSecurity (userDetails)
     @Column(name = "account_non_expired")
     var accountNonExpired: Boolean? = null,
@@ -56,6 +60,8 @@ data class UserModel (
         inverseJoinColumns = [JoinColumn(name = "id_permission")]
     )
     var permissions: List<PermissionModel>? = null
+
+
 
 ) : UserDetails {
 

@@ -60,7 +60,10 @@ class SecurityConfig {
                 )
                 .permitAll()
                 // aqui só acessa quem estiver autenticado
-                .requestMatchers("/api/users/**").authenticated()
+                .requestMatchers(
+                    "/api/users/**",
+                    "/api/profiles/**"
+                ).authenticated()
                 // aqui ninguém pode acessar
                 //.requestMatchers("/users").denyAll()
             }

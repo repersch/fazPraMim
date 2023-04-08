@@ -15,11 +15,11 @@ spring:
   jackson:
     default-property-inclusion: non_null
   mvc:
-    pathmatch:
+    path match:
       matching-strategy: ant_path_matcher
 spring-doc:
   paths-to-match:
-    - /api/person/**
+    - /api/users/**
     - /auth/**
     - /api/registration
   swagger-ui:

@@ -2,7 +2,7 @@ package br.edu.ifsp.scl.fazpramim.controller.request
 
 import com.fasterxml.jackson.annotation.JsonAlias
 
-data class PutPersonRequest (
+data class PutUserRequest (
     var id: Long?,
     var fullName: String?,
     var username: String?,

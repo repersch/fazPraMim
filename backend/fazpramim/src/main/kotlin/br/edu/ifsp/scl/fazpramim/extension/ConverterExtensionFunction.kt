@@ -1,10 +1,14 @@
 package br.edu.ifsp.scl.fazpramim.extension
 
+import br.edu.ifsp.scl.fazpramim.controller.request.PostProfileRequest
 import br.edu.ifsp.scl.fazpramim.controller.request.PostUserRequest
-import br.edu.ifsp.scl.fazpramim.controller.request.PutPersonRequest
+import br.edu.ifsp.scl.fazpramim.controller.request.PutUserRequest
+import br.edu.ifsp.scl.fazpramim.controller.response.ProfileResponse
 import br.edu.ifsp.scl.fazpramim.controller.response.UserResponse
 import br.edu.ifsp.scl.fazpramim.enums.ProfileType
+import br.edu.ifsp.scl.fazpramim.model.ProfileModel
 import br.edu.ifsp.scl.fazpramim.model.UserModel
+import br.edu.ifsp.scl.fazpramim.service.UserService
 
 fun PostUserRequest.toUserModel(): UserModel {
     return UserModel(
@@ -22,7 +26,7 @@ fun PostUserRequest.toUserModel(): UserModel {
     )
 }
 
-fun PutPersonRequest.toUserModel(previuosValue: UserModel): UserModel {
+fun PutUserRequest.toUserModel(previuosValue: UserModel): UserModel {
     return UserModel (
         id = previuosValue.id,
         fullName = this.fullName ?: previuosValue.fullName,
@@ -46,3 +50,24 @@ fun UserModel.toResponse(): UserResponse {
         profileType = this.profileType
     )
 }
+
+fun PostProfileRequest.toModel(): ProfileModel {
+    val userService = UserService()
+
+    val user = userService.findUserById(this.userId)
+    return ProfileModel(
+        description = this.description,
+        city = this.city,
+        user = user
+    )
+}
+
+fun ProfileModel.toResponse(): ProfileResponse {
+    return ProfileResponse(
+        id = this.id,
+        description = this.description,
+        city = this.city,
+        user = this.user
+    )
+}
+

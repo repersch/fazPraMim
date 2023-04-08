@@ -1,6 +1,6 @@
 package br.edu.ifsp.scl.fazpramim.controller
 
-import br.edu.ifsp.scl.fazpramim.controller.request.PutPersonRequest
+import br.edu.ifsp.scl.fazpramim.controller.request.PutUserRequest
 import br.edu.ifsp.scl.fazpramim.controller.response.UserResponse
 import br.edu.ifsp.scl.fazpramim.extension.toResponse
 import br.edu.ifsp.scl.fazpramim.extension.toUserModel
@@ -19,7 +19,7 @@ class UserController (
 
     @GetMapping
     @Operation(summary = "Busca todos os usuários", description = "Busca todos os usuários")
-    fun findAllUsers(@RequestHeader("Authorization") token: String?): List<UserResponse> {
+    fun findAllUsers(): List<UserResponse> {
         return service.findAllUsers().map { user -> user.toResponse() }
     }
 
@@ -31,7 +31,7 @@ class UserController (
 
     @PutMapping("/{id}")
     @Operation(summary = "Edita uma pessoa", description = "Edita uma pessoa")
-    fun updateUser(@PathVariable id: Long, @RequestBody user: PutPersonRequest): UserResponse {
+    fun updateUser(@PathVariable id: Long, @RequestBody user: PutUserRequest): UserResponse {
         val userSaved = service.findUserById(id)
         return service.updateUser(user.toUserModel(userSaved)).toResponse()
     }

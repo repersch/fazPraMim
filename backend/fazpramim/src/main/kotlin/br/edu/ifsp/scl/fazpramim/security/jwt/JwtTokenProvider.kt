@@ -67,7 +67,6 @@ class JwtTokenProvider {
     private fun getAccessToken(username: String, now: Date, validity: Date): String {
         val issuerURL: String = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString()
         return JWT.create()
-//            .withClaim("roles", roles)
             .withIssuedAt(now)
             .withExpiresAt(validity)
             .withSubject(username)
@@ -79,7 +78,6 @@ class JwtTokenProvider {
     private fun getRefreshToken(username: String, now: Date): String? {
         val validityRefreshToken = Date(now.time + validityInMilliseconds * 3)
         return JWT.create()
-//            .withClaim("roles", roles)
             .withExpiresAt(validityRefreshToken)
             .withSubject(username)
             .sign(algorithm)

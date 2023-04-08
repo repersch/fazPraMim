@@ -24,5 +24,8 @@ data class PostUserRequest (
     var photo: String,
 
     @JsonAlias("birth_date")
-    var birthDate: String
+    var birthDate: String,
+
+    @JsonAlias("user_id")
+    var userId: Long
 )
