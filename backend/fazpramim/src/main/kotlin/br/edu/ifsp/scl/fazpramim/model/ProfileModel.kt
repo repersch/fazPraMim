@@ -19,5 +19,9 @@ data class ProfileModel(
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    var user: UserModel
+    var user: UserModel,
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "service_type_id")
+    var serviceType: ServiceTypeModel
 )

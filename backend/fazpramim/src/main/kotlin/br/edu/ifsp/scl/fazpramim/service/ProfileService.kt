@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service
 @Service
 class ProfileService(
     val profileRepository: ProfileRepository,
-    val userService: UserService
+    val userService: UserService,
+    val serviceTypeService: ServiceTypeService
 ) {
 
     fun findAllProfiles(): List<ProfileModel> {
@@ -30,7 +31,8 @@ class ProfileService(
         val profileModel = ProfileModel(
             description = profile.description,
             city = profile.city,
-            user = user
+            user = user,
+            serviceType = serviceTypeService.findServiceTypeById(profile.serviceTypeId)
         )
 
         val entity = profileRepository.save(profileModel)

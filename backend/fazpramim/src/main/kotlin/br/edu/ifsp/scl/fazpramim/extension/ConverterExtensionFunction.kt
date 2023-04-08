@@ -9,6 +9,7 @@ import br.edu.ifsp.scl.fazpramim.controller.response.UserResponse
 import br.edu.ifsp.scl.fazpramim.enums.ProfileType
 import br.edu.ifsp.scl.fazpramim.model.ProfileModel
 import br.edu.ifsp.scl.fazpramim.model.UserModel
+import br.edu.ifsp.scl.fazpramim.service.ServiceTypeService
 import br.edu.ifsp.scl.fazpramim.service.UserService
 
 fun PostUserRequest.toUserModel(): UserModel {
@@ -54,12 +55,14 @@ fun UserModel.toResponse(): UserResponse {
 
 fun PostProfileRequest.toModel(): ProfileModel {
     val userService = UserService()
+    val serviceTypeService = ServiceTypeService()
 
     val user = userService.findUserById(this.userId)
     return ProfileModel(
         description = this.description,
         city = this.city,
-        user = user
+        user = user,
+        serviceType = serviceTypeService.findServiceTypeById(this.serviceTypeId)
     )
 }
 
@@ -68,7 +71,8 @@ fun ProfileModel.toResponse(): ProfileResponse {
         id = this.id,
         description = this.description,
         city = this.city,
-        user = this.user
+        user = this.user,
+        serviceType = this.serviceType
     )
 }
 
@@ -77,7 +81,8 @@ fun PutProfileRequest.toProfileModel(previuosValue: ProfileModel): ProfileModel 
         id = previuosValue.id,
         description = this.description ?: previuosValue.description,
         city = this.city ?: previuosValue.city,
-        user = this.user ?: previuosValue.user
+        user = this.user ?: previuosValue.user,
+        serviceType = this.serviceType ?: previuosValue.serviceType
     )
 }
 
