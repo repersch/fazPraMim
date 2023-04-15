@@ -17,6 +17,9 @@ data class ProfileModel(
     @Column
     var city: String = "",
 
+    @Column
+    var avaliation: Double = 0.0,
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     var user: UserModel,

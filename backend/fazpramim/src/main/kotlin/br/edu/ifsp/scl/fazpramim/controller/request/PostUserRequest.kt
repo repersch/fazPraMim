@@ -1,5 +1,6 @@
 package br.edu.ifsp.scl.fazpramim.controller.request
 
+import br.edu.ifsp.scl.fazpramim.enums.ProfileType
 import br.edu.ifsp.scl.fazpramim.validation.EmailAvailable
 import com.fasterxml.jackson.annotation.JsonAlias
 import jakarta.validation.constraints.Email
@@ -27,5 +28,8 @@ data class PostUserRequest (
     var birthDate: String,
 
     @JsonAlias("user_id")
-    var userId: Long
+    var userId: Long,
+
+    @JsonAlias("profile_type")
+    var profileType: ProfileType
 )

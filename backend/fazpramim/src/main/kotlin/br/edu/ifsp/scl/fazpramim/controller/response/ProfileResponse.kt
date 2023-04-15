@@ -7,7 +7,7 @@ data class ProfileResponse(
     var id: Long?,
     var description: String,
     var city: String,
-    var user: UserModel,
+    var user: UserResponse,
     var serviceType: ServiceTypeModel
 )
 

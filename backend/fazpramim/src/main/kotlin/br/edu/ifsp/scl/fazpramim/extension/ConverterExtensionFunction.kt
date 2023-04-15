@@ -20,7 +20,7 @@ fun PostUserRequest.toUserModel(): UserModel {
         phone = this.phone,
         birthDate = this.birthDate,
         photo = this.photo,
-        profileType = ProfileType.CLIENTE,
+        profileType = this.profileType,
         accountNonExpired = true,
         accountNonLocked = true,
         enabled = true,
@@ -71,7 +71,7 @@ fun ProfileModel.toResponse(): ProfileResponse {
         id = this.id,
         description = this.description,
         city = this.city,
-        user = this.user,
+        user = this.user.toResponse(),
         serviceType = this.serviceType
     )
 }
