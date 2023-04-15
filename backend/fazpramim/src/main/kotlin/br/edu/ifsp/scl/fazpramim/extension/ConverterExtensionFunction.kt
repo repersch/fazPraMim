@@ -20,7 +20,7 @@ fun PostUserRequest.toUserModel(): UserModel {
         phone = this.phone,
         birthDate = this.birthDate,
         photo = this.photo,
-        profileType = this.profileType,
+        profileType = this.profileType ?: ProfileType.CLIENTE,
         accountNonExpired = true,
         accountNonLocked = true,
         enabled = true,
@@ -36,7 +36,8 @@ fun PutUserRequest.toUserModel(previuosValue: UserModel): UserModel {
         password = this.password ?: previuosValue.password,
         phone = this.phone ?: previuosValue.phone,
         birthDate = previuosValue.birthDate,
-        photo = this.photo ?: previuosValue.photo
+        photo = this.photo ?: previuosValue.photo,
+        profileType = this.profileType ?: previuosValue.profileType
     )
 }
 

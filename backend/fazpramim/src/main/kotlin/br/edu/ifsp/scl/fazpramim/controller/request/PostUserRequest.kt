@@ -31,5 +31,5 @@ data class PostUserRequest (
     var userId: Long,
 
     @JsonAlias("profile_type")
-    var profileType: ProfileType
+    var profileType: ProfileType?
 )

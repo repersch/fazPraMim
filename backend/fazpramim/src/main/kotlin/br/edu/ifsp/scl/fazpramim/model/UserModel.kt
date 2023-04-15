@@ -34,7 +34,7 @@ data class UserModel (
 
     @Column(name = "profile_type")
     @Enumerated(EnumType.STRING)
-    var profileType: ProfileType = ProfileType.CLIENTE,
+    var profileType: ProfileType,
 
 //    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.EAGER, optional = true)
 ////    @JoinColumn(name = "profile_id", nullable = true)
