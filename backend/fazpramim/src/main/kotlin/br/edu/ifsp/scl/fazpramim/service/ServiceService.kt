@@ -1,29 +1,26 @@
 package br.edu.ifsp.scl.fazpramim.service
 
 import br.edu.ifsp.scl.fazpramim.controller.request.PostServiceRequest
-import br.edu.ifsp.scl.fazpramim.controller.request.PostUserRequest
+import br.edu.ifsp.scl.fazpramim.controller.request.PutServiceRequest
 import br.edu.ifsp.scl.fazpramim.enums.Errors
-import br.edu.ifsp.scl.fazpramim.exception.EntityAlreadyExistsExeption
+import br.edu.ifsp.scl.fazpramim.enums.ServiceStatus
+import br.edu.ifsp.scl.fazpramim.exception.InvalidDateException
 import br.edu.ifsp.scl.fazpramim.exception.NotFoundException
-import br.edu.ifsp.scl.fazpramim.extension.toUserModel
 import br.edu.ifsp.scl.fazpramim.model.ServiceModel
-import br.edu.ifsp.scl.fazpramim.model.UserModel
 import br.edu.ifsp.scl.fazpramim.repository.ServiceRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.text.DateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.logging.Logger
+import javax.swing.text.DateFormatter
 
 @Service
-class ServiceService {
-
-    @Autowired
-    private lateinit var repository: ServiceRepository
-
-    @Autowired
-    private lateinit var userService: UserService
-
-    @Autowired
-    private lateinit var profileService: ProfileService
+class ServiceService(
+    var repository: ServiceRepository,
+    var userService: UserService,
+    var profileService: ProfileService
+) {
 
     private val logger = Logger.getLogger(ServiceService::class.toString())
 
@@ -39,25 +36,34 @@ class ServiceService {
     fun createService(service: PostServiceRequest): ServiceModel {
         val client = userService.findUserById(service.clientId)
         val provider = profileService.findProfileById(service.providerId)
-        val entity = repository.save(ServiceModel(client = client, provider = provider))
+        val date = LocalDate.parse(service.date, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        if (date <= LocalDate.now()) throw InvalidDateException(Errors.FPM501.message, Errors.FPM501.code)
+
+        val entity = repository.save(
+            ServiceModel (
+                client = client,
+                provider = provider,
+                date = date,
+                status = ServiceStatus.CREATED
+            )
+        )
         return findServiceById(entity.id!!)
     }
 
-//    fun updateUser(user: UserModel): ServiceModel {
-//        val entity = findUserById(user.id)
-//        entity.fullName = user.fullName
-//        entity.userName = user.username
-//        entity.password = passwordEncoder().encode(user.password)
-//        entity.phone = user.phone
-//        entity.photo = user.photo
-//        entity.birthDate = user.birthDate
-//        repository.save(entity)
-//        return findUserById(entity.id)
-//    }
-//
-//    fun deleteUser(id: Long) {
-//        val entity = findUserById(id)
-//        repository.delete(entity)
-//    }
-//
+    // por enquanto atualiza só a data do serviço
+    fun updateService(service: ServiceModel): ServiceModel {
+        val entity = findServiceById(service.id!!)
+        entity.date = service.date
+        repository.save(entity)
+        return findServiceById(entity.id!!)
+    }
+
+    // TODO: pensar numa forma de atualizar o status com um método só
+
+    // TODO: pensar em uma forma de o cliente avaliar o serviço
+    fun deleteService(id: Long) {
+        val entity = findServiceById(id)
+        repository.delete(entity)
+    }
+
 }

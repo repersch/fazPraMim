@@ -14,5 +14,6 @@ enum class Errors(val code: String, val message: String) {
     FPM301("FPM-301", "Não existe tipo de serviço cadastrada com o ID: %s."),
 
     FPM401("FPM-401", "Não existe serviço cadastrada com o ID: %s."),
+    FPM501("FPM-501", "A data do serviço deve ser posterior ao dia de hoje."),
 
 }

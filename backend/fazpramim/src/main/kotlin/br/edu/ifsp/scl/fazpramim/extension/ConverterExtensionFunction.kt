@@ -1,16 +1,17 @@
 package br.edu.ifsp.scl.fazpramim.extension
 
-import br.edu.ifsp.scl.fazpramim.controller.request.PostProfileRequest
-import br.edu.ifsp.scl.fazpramim.controller.request.PostUserRequest
-import br.edu.ifsp.scl.fazpramim.controller.request.PutProfileRequest
-import br.edu.ifsp.scl.fazpramim.controller.request.PutUserRequest
+import br.edu.ifsp.scl.fazpramim.controller.request.*
 import br.edu.ifsp.scl.fazpramim.controller.response.ProfileResponse
+import br.edu.ifsp.scl.fazpramim.controller.response.ServiceResponse
 import br.edu.ifsp.scl.fazpramim.controller.response.UserResponse
 import br.edu.ifsp.scl.fazpramim.enums.ProfileType
 import br.edu.ifsp.scl.fazpramim.model.ProfileModel
+import br.edu.ifsp.scl.fazpramim.model.ServiceModel
 import br.edu.ifsp.scl.fazpramim.model.UserModel
 import br.edu.ifsp.scl.fazpramim.service.ServiceTypeService
 import br.edu.ifsp.scl.fazpramim.service.UserService
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 fun PostUserRequest.toUserModel(): UserModel {
     return UserModel(
@@ -86,4 +87,30 @@ fun PutProfileRequest.toProfileModel(previuosValue: ProfileModel): ProfileModel 
         serviceType = this.serviceType ?: previuosValue.serviceType
     )
 }
+
+fun ServiceModel.toResponse(): ServiceResponse {
+    return ServiceResponse(
+        id = this.id!!,
+        date = this.date,
+        status = this.status,
+        client = this.client.toResponse(),
+        provider = this.provider.toResponse()
+    )
+}
+
+fun PutServiceRequest.toServiceModel(previousValue: ServiceModel): ServiceModel {
+    return ServiceModel(
+        id = previousValue.id,
+        date = if (this.date != null) {
+            LocalDate.parse(this.date, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        } else {
+            previousValue.date
+        },
+        status = previousValue.status,
+        client = previousValue.client,
+        provider = previousValue.provider
+    )
+}
+
+
 
