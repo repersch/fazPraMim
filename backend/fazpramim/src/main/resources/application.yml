@@ -22,5 +22,6 @@ spring-doc:
     - /api/users/**
     - /auth/**
     - /api/registration
+    - /api/services/**
   swagger-ui:
     use-root-path: true

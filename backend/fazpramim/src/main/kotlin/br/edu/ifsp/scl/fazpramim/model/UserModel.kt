@@ -36,9 +36,8 @@ data class UserModel (
     @Enumerated(EnumType.STRING)
     var profileType: ProfileType,
 
-//    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.EAGER, optional = true)
-////    @JoinColumn(name = "profile_id", nullable = true)
-//    var profile: ProfileModel? = null,
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val services: MutableSet<ServiceModel> = mutableSetOf(),
 
     // atributos do SpringSecurity (userDetails)
     @Column(name = "account_non_expired")

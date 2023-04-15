@@ -18,7 +18,7 @@ data class ProfileModel(
     var city: String = "",
 
     @Column
-    var avaliation: Double = 0.0,
+    var rating: Double? = null,
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -26,5 +26,8 @@ data class ProfileModel(
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "service_type_id")
-    var serviceType: ServiceTypeModel
+    var serviceType: ServiceTypeModel,
+
+    @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val services: MutableSet<ServiceModel> = mutableSetOf()
 )
