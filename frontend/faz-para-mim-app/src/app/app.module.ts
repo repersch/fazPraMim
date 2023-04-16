@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { CarouselComponent } from './components/CarouselComponent/carousel.component';
 import { LoginCardComponent } from './components/LoginCardComponent/login-card.component';
 import { NavigationComponent } from './components/NavigationComponent/navigation.component';
 import { UserModalComponent } from './components/UserModalComponent/user-modal.component';
@@ -12,8 +13,9 @@ import { UserModalComponent } from './components/UserModalComponent/user-modal.c
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
+    CarouselComponent,
     LoginCardComponent,
+    NavigationComponent,
     UserModalComponent
   ],
   imports: [

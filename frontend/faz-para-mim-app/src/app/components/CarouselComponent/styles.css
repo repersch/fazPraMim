@@ -1,0 +1,18 @@
+.carousel-image {
+    object-fit: cover;
+    height: 400px
+}
+
+.carousel-image-custom {
+    object-fit: cover;
+    object-position: 0 80%;
+    height: 400px
+}
+
+.darkred-text {
+    color: darkred;
+}
+
+.pacific-title {
+    font-family: 'Pacifico', cursive;
+}

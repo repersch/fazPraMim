@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+import { Observable } from "rxjs";
 
 import { AccountCredentials } from 'src/model/accountCredentials';
 import { Token } from 'src/model/token';
@@ -36,6 +37,12 @@ export class NavigationComponent {
 
     public onUserLogout(): void {
         localStorage.removeItem('usuarioInfo');
+    }
+
+    public getUser(): Observable<User> {
+        let userInfo = JSON.parse(localStorage.getItem('usuarioInfo')!);
+        //this.userAuth = this.userService.getUserById(userInfo.id);
+        return this.userService.getUserById(userInfo.id);
     }
 
     /* public onOpenModal(user: User | undefined, mode: string): void {
