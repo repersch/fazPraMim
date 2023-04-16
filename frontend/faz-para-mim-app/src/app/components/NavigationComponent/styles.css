@@ -3,6 +3,12 @@
     width: 200px;
 }
 
+#profile-image {
+    height: auto;
+    max-width: 95px;
+    cursor: pointer;
+}
+
 /* form {
     align-content: right;
 } */

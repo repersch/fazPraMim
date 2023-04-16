@@ -42,7 +42,7 @@ export class NavigationComponent {
     public getUser(): Observable<User> {
         let userInfo = JSON.parse(localStorage.getItem('usuarioInfo')!);
         //this.userAuth = this.userService.getUserById(userInfo.id);
-        return this.userService.getUserById(userInfo.id);
+        return this.userService.getUserById();
     }
 
     /* public onOpenModal(user: User | undefined, mode: string): void {

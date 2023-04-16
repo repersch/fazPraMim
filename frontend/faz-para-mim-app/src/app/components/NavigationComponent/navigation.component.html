@@ -15,17 +15,12 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" routerLink="about">Sobre</a>
                 </li>
-                <!--                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" routerLink="service">Serviços</a>
-                </li> -->
                 <li *ngIf="getUserInfo()">
                     <a class="nav-link active" aria-current="page" href="#" (click)="onUserLogout()">Logout</a>
                 </li>
                 <li *ngIf="getUserInfo()" class="nav-item dropdown">
-                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    <img class="rounded-circle" id="profile-image" alt="User photo" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        <img src="../../../assets/img/person-icon.svg" alt="User photo">
-                    </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">Perfil</a>
                         <div class="dropdown-divider"></div>

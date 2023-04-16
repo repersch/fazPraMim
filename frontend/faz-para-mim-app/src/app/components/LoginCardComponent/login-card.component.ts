@@ -22,7 +22,6 @@ export class LoginCardComponent {
     public onUserLogin(loginForm: NgForm): void {
         let accountCredential: AccountCredentials;
         accountCredential = loginForm.value;
-
         document.getElementById('login-user-form')?.click();
         this.accountCredentialsService.signin(accountCredential).subscribe(
             (response: Token) => {
@@ -34,11 +33,35 @@ export class LoginCardComponent {
                 console.log("[LOG-INFO] Usuário autenticado");
                 console.log(response);
                 loginForm.reset();
+                this.getUserProfile();
             },
             (error: HttpErrorResponse) => {
                 alert(error.message);
                 loginForm.reset();
             });
+    }
+
+    private getUserProfile(): void {
+        this.userService.getUserById().subscribe(
+            (response: User) => {
+                localStorage.setItem('userProfile', JSON.stringify({
+                    'id': response.id,
+                    'fullName': response.fullName,
+                    'username': response.username,
+                    'phone': response.phone,
+                    'photo': response.photo,
+                    'birthDate': response.birthDate
+                }));
+                this.updateUserProfilePhoto();
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+            });
+    }
+
+    private updateUserProfilePhoto(): void {
+        let localStorageItens = JSON.parse(localStorage.getItem('userProfile')!);
+        document.getElementById('profile-image')?.setAttribute('src', localStorageItens.photo);
     }
 
     public onAddUser(addUserForm: NgForm): void {

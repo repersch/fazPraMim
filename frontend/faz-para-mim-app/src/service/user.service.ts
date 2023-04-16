@@ -24,4 +24,13 @@ export class UserService {
             }
         });
     }
+
+    public getUserById(): Observable<User> {
+        let localStorageItens = JSON.parse(localStorage.getItem('usuarioInfo')!);
+        return this.http.get<User>(`${this.serverUrl}/users/${localStorageItens.id}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorageItens.token}`
+            }
+        });
+    }
 }
