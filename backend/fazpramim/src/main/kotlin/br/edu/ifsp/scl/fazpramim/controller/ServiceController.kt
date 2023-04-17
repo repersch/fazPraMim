@@ -51,6 +51,12 @@ class ServiceController (
         return serviceClass.updateServiceStatus(id, status).toResponse()
     }
 
+    @PutMapping("/evaluate/{id}")
+    @Operation(summary = "Avalia um serviço", description = "Avalia um serviço")
+    fun evaluateService(@PathVariable id: Long, @RequestBody rating: Int): ServiceResponse {
+        return serviceClass.evaluateService(id, rating).toResponse()
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Exclui um serviço", description = "Exclui um serviço")

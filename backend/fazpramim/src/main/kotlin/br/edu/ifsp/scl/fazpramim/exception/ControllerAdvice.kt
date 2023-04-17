@@ -78,4 +78,15 @@ class ControllerAdvice {
         )
         return ResponseEntity(erro, HttpStatus.UNPROCESSABLE_ENTITY)
     }
+
+    @ExceptionHandler(InvalidEvaluationException::class)
+    fun handleInvalidEvaluationException(ex: InvalidEvaluationException, request: WebRequest): ResponseEntity<ErrorResponse> {
+        val erro = ErrorResponse(
+            HttpStatus.NOT_ACCEPTABLE.value(),
+            ex.message,
+            ex.errorCode,
+            null
+        )
+        return ResponseEntity(erro, HttpStatus.NOT_ACCEPTABLE)
+    }
 }

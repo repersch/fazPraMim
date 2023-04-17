@@ -4,6 +4,7 @@ import br.edu.ifsp.scl.fazpramim.controller.request.PostServiceRequest
 import br.edu.ifsp.scl.fazpramim.enums.Errors
 import br.edu.ifsp.scl.fazpramim.enums.ServiceStatus
 import br.edu.ifsp.scl.fazpramim.exception.InvalidDateException
+import br.edu.ifsp.scl.fazpramim.exception.InvalidEvaluationException
 import br.edu.ifsp.scl.fazpramim.exception.InvalidServiceStatusException
 import br.edu.ifsp.scl.fazpramim.exception.NotFoundException
 import br.edu.ifsp.scl.fazpramim.model.ServiceModel
@@ -76,7 +77,15 @@ class ServiceService(
         return repository.save(service)
     }
 
-    // TODO: pensar em uma forma de o cliente avaliar o serviço
+    fun evaluateService(serviceId: Long, rating: Int): ServiceModel {
+        val service = findServiceById(serviceId)
+        if (service.status != ServiceStatus.FINISHED)
+            throw InvalidEvaluationException(Errors.FPM701.message, Errors.FPM701.code)
+
+        service.rating = rating
+        return repository.save(service)
+    }
+
 
     fun deleteService(id: Long) {
         val entity = findServiceById(id)

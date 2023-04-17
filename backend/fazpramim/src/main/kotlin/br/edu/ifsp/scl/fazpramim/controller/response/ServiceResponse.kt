@@ -9,7 +9,7 @@ data class ServiceResponse (
     var hour: String,
     var requestDetails: String,
     var status: ServiceStatus,
-    var rating: Double,
+    var rating: Int,
     var client: UserResponse,
     var provider: ProfileResponse
 )

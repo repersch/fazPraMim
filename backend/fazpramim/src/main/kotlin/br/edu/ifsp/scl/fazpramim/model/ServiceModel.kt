@@ -26,7 +26,7 @@ data class ServiceModel(
     var requestDetails: String,
 
     @Column
-    var rating: Double = 0.0,
+    var rating: Int = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
