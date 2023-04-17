@@ -3,6 +3,7 @@ package br.edu.ifsp.scl.fazpramim.controller
 import br.edu.ifsp.scl.fazpramim.controller.request.PostServiceRequest
 import br.edu.ifsp.scl.fazpramim.controller.request.PutServiceRequest
 import br.edu.ifsp.scl.fazpramim.controller.response.ServiceResponse
+import br.edu.ifsp.scl.fazpramim.enums.ServiceStatus
 import br.edu.ifsp.scl.fazpramim.extension.toResponse
 import br.edu.ifsp.scl.fazpramim.extension.toServiceModel
 import br.edu.ifsp.scl.fazpramim.model.ServiceModel
@@ -42,6 +43,12 @@ class ServiceController (
     fun updateService(@PathVariable id: Long, @RequestBody service: PutServiceRequest): ServiceResponse {
         val serviceSaved = serviceClass.findServiceById(id)
         return serviceClass.updateService(service.toServiceModel(serviceSaved)).toResponse()
+    }
+
+    @PutMapping("/{id}/{status}")
+    @Operation(summary = "Atualiza o status de um serviço", description = "Atualiza o status de um serviço")
+    fun updateServiceStatus(@PathVariable id: Long, @PathVariable status: Int): ServiceResponse {
+        return serviceClass.updateServiceStatus(id, status).toResponse()
     }
 
     @DeleteMapping("/{id}")

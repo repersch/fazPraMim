@@ -1,19 +1,17 @@
 package br.edu.ifsp.scl.fazpramim.service
 
 import br.edu.ifsp.scl.fazpramim.controller.request.PostServiceRequest
-import br.edu.ifsp.scl.fazpramim.controller.request.PutServiceRequest
 import br.edu.ifsp.scl.fazpramim.enums.Errors
 import br.edu.ifsp.scl.fazpramim.enums.ServiceStatus
 import br.edu.ifsp.scl.fazpramim.exception.InvalidDateException
+import br.edu.ifsp.scl.fazpramim.exception.InvalidServiceStatusException
 import br.edu.ifsp.scl.fazpramim.exception.NotFoundException
 import br.edu.ifsp.scl.fazpramim.model.ServiceModel
 import br.edu.ifsp.scl.fazpramim.repository.ServiceRepository
 import org.springframework.stereotype.Service
-import java.text.DateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.logging.Logger
-import javax.swing.text.DateFormatter
 
 @Service
 class ServiceService(
@@ -64,7 +62,19 @@ class ServiceService(
         return findServiceById(entity.id!!)
     }
 
-    // TODO: pensar numa forma de atualizar o status com um método só
+    fun updateServiceStatus(serviceId: Long, status: Int): ServiceModel {
+        val service = findServiceById(serviceId)
+        if (service.status == ServiceStatus.CANCELED || service.status == ServiceStatus.FINISHED)
+            throw InvalidServiceStatusException(Errors.FPM601.message, Errors.FPM601.code)
+
+        when (status) {
+            1 -> service.status = ServiceStatus.CREATED
+            2 -> service.status = ServiceStatus.ACCEPTED
+            3 -> service.status = ServiceStatus.FINISHED
+            4 -> service.status = ServiceStatus.CANCELED
+        }
+        return repository.save(service)
+    }
 
     // TODO: pensar em uma forma de o cliente avaliar o serviço
 

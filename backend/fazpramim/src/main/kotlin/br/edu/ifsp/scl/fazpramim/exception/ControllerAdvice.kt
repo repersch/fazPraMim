@@ -67,4 +67,15 @@ class ControllerAdvice {
         )
         return ResponseEntity(erro, HttpStatus.UNPROCESSABLE_ENTITY)
     }
+
+    @ExceptionHandler(InvalidServiceStatusException::class)
+    fun handleInvalidServiceStatusException(ex: InvalidServiceStatusException, request: WebRequest): ResponseEntity<ErrorResponse> {
+        val erro = ErrorResponse(
+            HttpStatus.UNPROCESSABLE_ENTITY.value(),
+            ex.message,
+            ex.errorCode,
+            null
+        )
+        return ResponseEntity(erro, HttpStatus.UNPROCESSABLE_ENTITY)
+    }
 }
