@@ -10,6 +10,9 @@ import br.edu.ifsp.scl.fazpramim.model.ServiceModel
 import br.edu.ifsp.scl.fazpramim.model.UserModel
 import br.edu.ifsp.scl.fazpramim.service.ServiceTypeService
 import br.edu.ifsp.scl.fazpramim.service.UserService
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -17,7 +20,7 @@ fun PostUserRequest.toUserModel(): UserModel {
     return UserModel(
         fullName = this.fullName,
         userName = this.username,
-        password = this.password,
+        password = passwordEncoder().encode(this.password),
         phone = this.phone,
         birthDate = LocalDate.parse(this.birthDate, DateTimeFormatter.ofPattern("dd/MM/yyyy")),
         photo = this.photo,
@@ -34,7 +37,7 @@ fun PutUserRequest.toUserModel(previuosValue: UserModel): UserModel {
         id = previuosValue.id,
         fullName = this.fullName ?: previuosValue.fullName,
         userName = this.username ?: previuosValue.userName,
-        password = this.password ?: previuosValue.password,
+        password = if (this.password != null) passwordEncoder().encode(this.password) else previuosValue.password,
         phone = this.phone ?: previuosValue.phone,
         birthDate = if (this.birthDate != null) LocalDate.parse(this.birthDate, DateTimeFormatter.ofPattern("dd/MM/yyyy")) else previuosValue.birthDate,
         photo = this.photo ?: previuosValue.photo,
@@ -110,6 +113,15 @@ fun PutServiceRequest.toServiceModel(previousValue: ServiceModel): ServiceModel 
         client = previousValue.client,
         provider = previousValue.provider
     )
+}
+
+private fun passwordEncoder() : PasswordEncoder {
+    val encoders: MutableMap<String, PasswordEncoder> = HashMap<String, PasswordEncoder>()
+    val pbkdf2Encoder = Pbkdf2PasswordEncoder("", 8, 185000, Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256)
+    encoders["pbkdf2"] = pbkdf2Encoder
+    val passwordEncoder = DelegatingPasswordEncoder("pbkdf2", encoders)
+    passwordEncoder.setDefaultPasswordEncoderForMatches(pbkdf2Encoder)
+    return passwordEncoder
 }
 
 

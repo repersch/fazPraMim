@@ -39,8 +39,6 @@ class UserService : UserDetailsService {
 
     fun createUser(user: PostUserRequest): UserModel {
         if (userNameAvailable(user.username)) {
-            //val birthDate = LocalDate.parse(user.birthDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-            user.password = passwordEncoder().encode(user.password)
             val entity = repository.save(user.toUserModel())
             return findUserById(entity.id)
         } else {
@@ -52,7 +50,7 @@ class UserService : UserDetailsService {
         val entity = findUserById(user.id)
         entity.fullName = user.fullName
         entity.userName = user.username
-//        entity.password = passwordEncoder().encode(user.password)
+        entity.password = user.password
         entity.phone = user.phone
         entity.photo = user.photo
         entity.birthDate = user.birthDate
