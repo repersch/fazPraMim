@@ -95,6 +95,9 @@ fun ServiceModel.toResponse(): ServiceResponse {
     return ServiceResponse(
         id = this.id!!,
         date = this.date,
+        hour = this.hour,
+        requestDetails = this.requestDetails,
+        rating = this.rating,
         status = this.status,
         client = this.client.toResponse(),
         provider = this.provider.toResponse()
@@ -109,6 +112,8 @@ fun PutServiceRequest.toServiceModel(previousValue: ServiceModel): ServiceModel 
         } else {
             previousValue.date
         },
+        hour = this.hour ?: previousValue.hour,
+        requestDetails = this.requestDetails ?: previousValue.requestDetails,
         status = previousValue.status,
         client = previousValue.client,
         provider = previousValue.provider

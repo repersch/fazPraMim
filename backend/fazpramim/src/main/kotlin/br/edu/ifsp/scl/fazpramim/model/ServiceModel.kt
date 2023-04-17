@@ -19,6 +19,15 @@ data class ServiceModel(
     @Column
     var date: LocalDate,
 
+    @Column
+    var hour: String,
+
+    @Column(name = "request_details")
+    var requestDetails: String,
+
+    @Column
+    var rating: Double = 0.0,
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     var client: UserModel,
@@ -26,8 +35,4 @@ data class ServiceModel(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provider_id")
     var provider: ProfileModel,
-
-    @Column
-    var rating: Double = 0.0
-
 )

@@ -33,6 +33,8 @@ class ServiceService(
             .orElseThrow { NotFoundException(Errors.FPM401.message.format(id), Errors.FPM401.code) }
     }
 
+    // na criação do serviço não é enviado nem status (nesse momento é sempre CREATED),
+    // nem rating (é definido depois que o serviço é concluído)
     fun createService(service: PostServiceRequest): ServiceModel {
         val client = userService.findUserById(service.clientId)
         val provider = profileService.findProfileById(service.providerId)
@@ -44,16 +46,20 @@ class ServiceService(
                 client = client,
                 provider = provider,
                 date = date,
+                hour = service.hour,
+                requestDetails = service.requestDetails,
                 status = ServiceStatus.CREATED
             )
         )
         return findServiceById(entity.id!!)
     }
 
-    // por enquanto atualiza só a data do serviço
     fun updateService(service: ServiceModel): ServiceModel {
         val entity = findServiceById(service.id!!)
+        if (service.date <= LocalDate.now()) throw InvalidDateException(Errors.FPM501.message, Errors.FPM501.code)
         entity.date = service.date
+        entity.hour = service.hour
+        entity.requestDetails = service.requestDetails
         repository.save(entity)
         return findServiceById(entity.id!!)
     }
@@ -61,6 +67,7 @@ class ServiceService(
     // TODO: pensar numa forma de atualizar o status com um método só
 
     // TODO: pensar em uma forma de o cliente avaliar o serviço
+
     fun deleteService(id: Long) {
         val entity = findServiceById(id)
         repository.delete(entity)
