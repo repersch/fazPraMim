@@ -4,6 +4,7 @@ import br.edu.ifsp.scl.fazpramim.enums.ProfileType
 import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import java.time.LocalDate
 
 @Entity
 @Table(name = "users")
@@ -27,7 +28,7 @@ data class UserModel (
     var phone: String? = null,
 
     @Column
-    var birthDate: String? = null,
+    var birthDate: LocalDate? = null,
 
     @Column
     var photo: String? = null,

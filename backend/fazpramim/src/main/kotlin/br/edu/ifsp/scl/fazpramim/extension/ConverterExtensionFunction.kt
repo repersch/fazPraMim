@@ -19,7 +19,7 @@ fun PostUserRequest.toUserModel(): UserModel {
         userName = this.username,
         password = this.password,
         phone = this.phone,
-        birthDate = this.birthDate,
+        birthDate = LocalDate.parse(this.birthDate, DateTimeFormatter.ofPattern("dd/MM/yyyy")),
         photo = this.photo,
         profileType = this.profileType ?: ProfileType.CLIENTE,
         accountNonExpired = true,
@@ -36,7 +36,7 @@ fun PutUserRequest.toUserModel(previuosValue: UserModel): UserModel {
         userName = this.username ?: previuosValue.userName,
         password = this.password ?: previuosValue.password,
         phone = this.phone ?: previuosValue.phone,
-        birthDate = previuosValue.birthDate,
+        birthDate = if (this.birthDate != null) LocalDate.parse(this.birthDate, DateTimeFormatter.ofPattern("dd/MM/yyyy")) else previuosValue.birthDate,
         photo = this.photo ?: previuosValue.photo,
         profileType = this.profileType ?: previuosValue.profileType
     )
