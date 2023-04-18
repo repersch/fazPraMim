@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ServiceRepository : CrudRepository<ServiceModel, Long> {
 
+    fun findServiceByClientId(clientId: Long): List<ServiceModel>
+
+    fun findServiceByProviderId(providerId: Long): List<ServiceModel>
+
 }

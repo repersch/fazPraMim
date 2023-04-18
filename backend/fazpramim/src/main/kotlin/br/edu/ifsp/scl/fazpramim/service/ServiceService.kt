@@ -3,10 +3,7 @@ package br.edu.ifsp.scl.fazpramim.service
 import br.edu.ifsp.scl.fazpramim.controller.request.PostServiceRequest
 import br.edu.ifsp.scl.fazpramim.enums.Errors
 import br.edu.ifsp.scl.fazpramim.enums.ServiceStatus
-import br.edu.ifsp.scl.fazpramim.exception.InvalidDateException
-import br.edu.ifsp.scl.fazpramim.exception.InvalidEvaluationException
-import br.edu.ifsp.scl.fazpramim.exception.InvalidServiceStatusException
-import br.edu.ifsp.scl.fazpramim.exception.NotFoundException
+import br.edu.ifsp.scl.fazpramim.exception.*
 import br.edu.ifsp.scl.fazpramim.model.ServiceModel
 import br.edu.ifsp.scl.fazpramim.repository.ServiceRepository
 import org.springframework.stereotype.Service
@@ -30,6 +27,20 @@ class ServiceService(
     fun findServiceById(id: Long): ServiceModel {
         return repository.findById(id)
             .orElseThrow { NotFoundException(Errors.FPM401.message.format(id), Errors.FPM401.code) }
+    }
+
+    fun findServiceByClient(clientId: Long): List<ServiceModel> {
+        val servicesByClient = repository.findServiceByClientId(clientId)
+        if (servicesByClient.isEmpty())
+            throw EmptyServiceListException(Errors.FPM801.message.format(clientId), Errors.FPM801.code)
+        return servicesByClient
+    }
+
+    fun findServiceByProvider(providerId: Long): List<ServiceModel> {
+        val servicesByProvider = repository.findServiceByProviderId(providerId)
+        if (servicesByProvider.isEmpty())
+            throw EmptyServiceListException(Errors.FPM802.message.format(providerId), Errors.FPM802.code)
+        return servicesByProvider
     }
 
     // na criação do serviço não é enviado nem status (nesse momento é sempre CREATED),

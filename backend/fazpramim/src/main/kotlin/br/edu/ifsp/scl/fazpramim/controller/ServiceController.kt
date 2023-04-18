@@ -32,6 +32,18 @@ class ServiceController (
         return serviceClass.findServiceById(id).toResponse()
     }
 
+    @GetMapping("/client/{clientId}")
+    @Operation(summary = "Busca todos os serviço vinculados ao cliente", description = "Busca todos os serviços vinculados ao ID do cliente")
+    fun findServiceByClient(@PathVariable clientId: Long): List<ServiceResponse> {
+        return serviceClass.findServiceByClient(clientId).map { s -> s.toResponse() }
+    }
+
+    @GetMapping("/provider/{providerId}")
+    @Operation(summary = "Busca todos os serviço vinculados ao prestador", description = "Busca todos os serviços vinculados ao ID do prestador")
+    fun findServiceByProvider(@PathVariable providerId: Long): List<ServiceResponse> {
+        return serviceClass.findServiceByProvider(providerId).map { s -> s.toResponse() }
+    }
+
     @PostMapping
     @Operation(summary = "Cria um serviço", description = "Cria um serviço")
     fun createService(@RequestBody service: PostServiceRequest): ServiceResponse {

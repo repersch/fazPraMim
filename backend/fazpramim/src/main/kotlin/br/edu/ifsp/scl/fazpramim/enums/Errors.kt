@@ -18,4 +18,7 @@ enum class Errors(val code: String, val message: String) {
 
     FPM601("FPM-601", "Não é possível alterar o status de um serviço finalizado ou cancelado."),
     FPM701("FPM-701", "Não é possível avaliar um serviço que não foi finalizado."),
+
+    FPM801("FPM-801", "Não existem serviços cadastrados para o cliente com ID: %s."),
+    FPM802("FPM-802", "Não existem serviços cadastrados para o prestador com ID: %s."),
 }
