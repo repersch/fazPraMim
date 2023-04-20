@@ -4,12 +4,10 @@
             <img id="brand-image" src="../../../assets/img/logo-bg-black.png"
                 alt="Link contendo o logotipo da empresa para voltar na página inicial. Representado pelo próprio nome da empresa Faz Para Mim">
         </a>
-
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toggler"
             aria-controls="navbar-toggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse justify-content-end" id="navbar-toggler">
             <ul class="navbar-nav me-3">
                 <li class="nav-item">
@@ -19,10 +17,11 @@
                     <a class="nav-link active" aria-current="page" href="#" (click)="onUserLogout()">Logout</a>
                 </li>
                 <li *ngIf="getUserInfo()" class="nav-item dropdown">
-                    <img class="rounded-circle" id="profile-image" alt="User photo" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                    <img class="rounded-circle image-position" id="profile-image" alt="User photo"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Perfil</a>
+                        <a class="dropdown-item" aria-current="page" routerLink="user/:id">Perfil</a>
+                        <!-- <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateUserModal">Perfil</a> -->
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Meus serviços</a>
                         <a class="dropdown-item" href="#">Minhas solicitações</a>
@@ -31,11 +30,9 @@
                     </div>
                 </li>
             </ul>
-
             <button *ngIf="!getUserInfo()" class="btn btn-light" type="button" (click)="onLoginButton()">Login
                 <img src="../../../assets/img/person-icon.svg" alt="Login icon">
             </button>
-
             <!--             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Procurar serviço" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Procurar</button>
@@ -43,53 +40,3 @@
         </div>
     </div>
 </nav>
-
-<!-- Add User Modal -->
-<!-- <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addUserModalLabel">Cadastrar Novo Usuário</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form #addUserForm="ngForm" (ngSubmit)="onAddUser(addUserForm)">
-                    <div class="form-group">
-                        <label for="fullName">Nome completo</label>
-                        <input type="text" ngModel name="fullName" class="form-control" id="fullName"
-                            placeholder="Insira seu nome completo" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Email</label>
-                        <input type="email" ngModel name="username" class="form-control" id="username"
-                            placeholder="exemplo@email.com.br" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Senha</label>
-                        <input type="password" ngModel name="password" class="form-control" id="password"
-                            placeholder="Senha" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Telefone</label>
-                        <input type="text" ngModel name="phone" class="form-control" id="phone"
-                            placeholder="(XX) XXXXX-XXXX" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="birthDate">Data de Nascimento</label>
-                        <input type="text" ngModel name="birthDate" class="form-control" id="birthDate"
-                            placeholder="dd/MM/AAAA" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="photo">Imagem URL</label>
-                        <input type="text" ngModel name="photo" class="form-control" id="photo" required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                        <button [disabled]="addUserForm.invalid" type="submit"
-                            class="btn btn-success">Cadastrar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> -->

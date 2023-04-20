@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ElementRef, ViewChild } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 
@@ -15,17 +15,13 @@ import { UserService } from 'src/service/user.service';
 })
 
 export class UserModalComponent {
-    constructor(
-        private accountCredentialsService: AuthService,
-        private userService: UserService) { }
+    @ViewChild('onUpdateUserModal') onUpdateUserModal: ElementRef | undefined;
+    public editUser: User | undefined;
+
+    constructor(private userService: UserService) { }
 
     public onAddUser(addUserForm: NgForm): void {
         document.getElementById('add-user-form')?.click();
-
-        console.log("Teste");
-        console.log(addUserForm.value);
-
-
         this.userService.addUser(addUserForm.value).subscribe(
             (response: User) => {
                 console.log(response);
@@ -35,5 +31,81 @@ export class UserModalComponent {
                 alert(error.message);
                 addUserForm.reset();
             });
+    }
+
+    ngAfterViewInit(): void {
+        const modalElement = this.onUpdateUserModal!.nativeElement;
+
+        // Adiciona o manipulador de evento ao evento "shown.bs.modal"
+        modalElement.addEventListener('shown.bs.modal', this.onModalShown.bind(this));
+    }
+
+    private onModalShown(event: Event): void {
+        // Função a ser executada quando o modal for aberto
+        this.getUserProfile();
+    }
+
+    public onUpdateUser(updateUserForm: NgForm): void {
+        this.getUserProfile();
+        document.getElementById('update-user-form')?.click();
+
+        console.log("UPDATE FORM");
+        console.log(updateUserForm.value);
+
+        this.userService.updateUser(updateUserForm.value).subscribe(
+            (response: User) => {
+                console.log(response);
+                updateUserForm.reset();
+                this.clearAndCloseLoginForm(updateUserForm);
+                this.setUserProfile(response);
+                this.getUserProfile();
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+                updateUserForm.reset();
+            });
+    }
+
+    private clearAndCloseLoginForm(updateUserForm: NgForm): void {
+        updateUserForm.reset();
+        /*         let modal = document.getElementById('updateUserModal');
+                modal?.hidden; */
+
+        const modalElement = this.onUpdateUserModal!.nativeElement;
+        modalElement.addEventListener('hidden.bs.modal');
+    }
+
+
+    private getUserProfile(): void {
+        let localStorageItens = JSON.parse(localStorage.getItem('userProfile')!);
+        const userData: User = {
+            id: localStorageItens.id,
+            fullName: localStorageItens.fullName,
+            username: localStorageItens.username,
+            password: '',
+            phone: localStorageItens.phone,
+            photo: localStorageItens.photo,
+            birthDate: localStorageItens.birthDate,
+            profileType: localStorageItens.profileType
+        }
+        this.editUser = userData;
+    }
+
+    private setUserProfile(response: User): void {
+        localStorage.removeItem('userProfile');
+        localStorage.setItem('userProfile', JSON.stringify({
+            'id': response.id,
+            'fullName': response.fullName,
+            'username': response.username,
+            'phone': response.phone,
+            'photo': response.photo,
+            'birthDate': response.birthDate
+        }));
+        this.updateUserProfilePhoto();
+    }
+
+    private updateUserProfilePhoto(): void {
+        let localStorageItens = JSON.parse(localStorage.getItem('userProfile')!);
+        document.getElementById('profile-image')?.setAttribute('src', localStorageItens.photo);
     }
 }

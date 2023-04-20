@@ -4,8 +4,12 @@
 }
 
 #profile-image {
-    height: auto;
-    max-width: 95px;
+    height: 40px;
+    max-width: 90px;
+    cursor: pointer;
+}
+
+a {
     cursor: pointer;
 }
 
@@ -13,9 +17,6 @@
     align-content: right;
 } */
 
-/* a {
-    cursor: pointer;
-} */
 
 /* button>img {
     width: 16px;

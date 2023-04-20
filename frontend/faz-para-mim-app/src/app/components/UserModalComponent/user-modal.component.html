@@ -9,38 +9,90 @@
             <div class="modal-body">
                 <form #addUserForm="ngForm" (ngSubmit)="onAddUser(addUserForm)">
                     <div class="form-group">
-                        <label for="fullName">Nome completo</label>
+                        <label for="fullName">Nome Completo *</label>
                         <input type="text" ngModel name="fullName" class="form-control" id="fullName"
                             placeholder="Insira seu nome completo" required>
                     </div>
                     <div class="form-group">
-                        <label for="username">Email</label>
+                        <label for="username">Email *</label>
                         <input type="email" ngModel name="username" class="form-control" id="username"
                             placeholder="exemplo@email.com.br" required>
                     </div>
                     <div class="form-group">
-                        <label for="password">Senha</label>
+                        <label for="password">Senha *</label>
                         <input type="password" ngModel name="password" class="form-control" id="password"
                             placeholder="Senha" required>
                     </div>
                     <div class="form-group">
-                        <label for="phone">Telefone</label>
+                        <label for="phone">Telefone *</label>
                         <input type="text" ngModel name="phone" class="form-control" id="phone"
                             placeholder="(XX) XXXXX-XXXX" required>
                     </div>
                     <div class="form-group">
-                        <label for="birthDate">Data de Nascimento</label>
+                        <label for="birthDate">Data de Nascimento *</label>
                         <input type="text" ngModel name="birthDate" class="form-control" id="birthDate"
                             placeholder="dd/MM/AAAA" required>
                     </div>
                     <div class="form-group">
                         <label for="photo">Imagem URL</label>
-                        <input type="text" ngModel name="photo" class="form-control" id="photo" required>
+                        <input type="text" ngModel name="photo" class="form-control" id="photo" value="">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
                         <button [disabled]="addUserForm.invalid" type="submit"
                             class="btn btn-success">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+</section>
+
+<!-- Update User Modal -->
+<section class="modal fade" id="updateUserModal" tabindex="-1" aria-labelledby="updateUserModalLabel" aria-hidden="true"
+    #onUpdateUserModal>
+    <article class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="updateUserModalLabel">Dados Cadastrais do Usuário</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #updateUserForm="ngForm" (ngSubmit)="onUpdateUser(updateUserForm)">
+                    <div class="form-group">
+                        <label for="fullNameUpdate">Nome completo</label>
+                        <input type="text" ngModel="{{editUser?.fullName}}" name="fullName" class="form-control"
+                            id="fullNameUpdate" placeholder="Insira seu nome completo" required>
+                    </div>
+                    <!--                     <div class="form-group">
+                        <label for="usernameUpdate">Email</label>
+                        <input type="email" ngModel="{{editUser?.username}}" name="username" class="form-control"
+                            id="usernameUpdate" placeholder="exemplo@email.com.br" required>
+                    </div> -->
+                    <!--                     <div class="form-group">
+                        <label for="passwordUpdate">Senha</label>
+                        <input type="password" ngModel name="password" class="form-control" id="passwordUpdate"
+                            placeholder="Senha" required>
+                    </div> -->
+                    <div class="form-group">
+                        <label for="phoneUpdate">Telefone</label>
+                        <input type="text" ngModel="{{editUser?.phone}}" name="phone" class="form-control"
+                            id="phoneUpdate" placeholder="(XX) XXXXX-XXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDateUpdate">Data de Nascimento</label>
+                        <input type="text" ngModel="{{editUser?.birthDate}}" name="birthDate" class="form-control"
+                            id="birthDateUpdate" placeholder="dd/MM/AAAA" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="photoUpdate">Imagem URL</label>
+                        <input type="text" ngModel="{{editUser?.photo}}" name="photo" class="form-control"
+                            id="photoUpdate" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                        <button [disabled]="updateUserForm.invalid" type="submit"
+                            class="btn btn-primary">Atualizar</button>
                     </div>
                 </form>
             </div>

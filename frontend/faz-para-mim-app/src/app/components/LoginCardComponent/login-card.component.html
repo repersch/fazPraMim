@@ -7,7 +7,6 @@
                 <div class="card">
                     <h5 class="card-title mt-3">ACESSE AGORA</h5>
                     <div class="card-body d-flex justify-content-center">
-
                         <form #signinUserForm="ngForm" (ngSubmit)="onUserLogin(signinUserForm)" class="mb-3">
                             <div class="form-group">
                                 <input type="email" ngModel name="username" class="form-control" id="usernameSigning"
@@ -17,13 +16,10 @@
                                 <input type="password" ngModel name="password" class="form-control" id="passwordSigning"
                                     placeholder="Senha" required>
                             </div>
-
                             <button [disabled]="signinUserForm.invalid" type="submit"
                                 class="btn btn-success mt-2 me-1">Acessar</button>
-
                             <button type="button" class="btn btn-warning mt-2" data-bs-toggle="modal"
                                 data-bs-target="#addUserModal">Cadastre-se</button>
-
                             <!-- <button type="button" class="btn btn-warning mt-2"
                                 (click)="onOpenModal(undefined, 'createUser')">Cadastre-se</button> -->
                         </form>
