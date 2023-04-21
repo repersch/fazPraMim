@@ -7,6 +7,7 @@ import br.edu.ifsp.scl.fazpramim.exception.NotFoundException
 import br.edu.ifsp.scl.fazpramim.model.ProfileModel
 import br.edu.ifsp.scl.fazpramim.repository.ProfileRepository
 import org.springframework.stereotype.Service
+import org.yaml.snakeyaml.TypeDescription
 
 @Service
 class ProfileService(
@@ -22,6 +23,10 @@ class ProfileService(
     fun findProfileById(id: Long): ProfileModel {
         return profileRepository.findById(id)
             .orElseThrow{ NotFoundException(Errors.FPM201.message.format(id), Errors.FPM201.code) }
+    }
+
+    fun findProfileByServiceTypeDescription(serviceTypeDescription: String): List<ProfileModel> {
+        return profileRepository.findProfileByServiceTypeDescriptionIgnoreCase(serviceTypeDescription)
     }
 
     fun createProfile(profile: PostProfileRequest): ProfileModel {

@@ -27,8 +27,14 @@ class ProfileController (
 
     @GetMapping("/{id}")
     @Operation(summary = "Busca um perfil por ID", description = "Busca um perfil por ID")
-    fun findPersonById(@PathVariable(value = "id") id: Long): ProfileResponse {
+    fun findProfileById(@PathVariable(value = "id") id: Long): ProfileResponse {
         return service.findProfileById(id).toResponse()
+    }
+
+    @GetMapping("/serviceDescription/{serviceProfileDescription}")
+    @Operation(summary = "Busca perfis pelo tipo de serviço", description = "Busca perfis pelo tipo de serviço")
+    fun findProfileBysetviceTypeDescription(@PathVariable serviceProfileDescription: String): List<ProfileResponse> {
+        return service.findProfileByServiceTypeDescription(serviceProfileDescription).map { p -> p.toResponse() }
     }
 
     @PostMapping
