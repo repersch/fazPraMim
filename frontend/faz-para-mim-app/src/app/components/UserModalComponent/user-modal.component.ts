@@ -4,8 +4,10 @@ import { NgForm } from '@angular/forms';
 
 import { AccountCredentials } from 'src/model/accountCredentials';
 import { Token } from 'src/model/token';
+import { Profile } from 'src/model/profile';
 import { User } from 'src/model/user';
 import { AuthService } from 'src/service/auth.service';
+import { ProfileService } from 'src/service/profile.service';
 import { UserService } from 'src/service/user.service';
 
 @Component({
@@ -18,7 +20,8 @@ export class UserModalComponent {
     @ViewChild('onUpdateUserModal') onUpdateUserModal: ElementRef | undefined;
     public editUser: User | undefined;
 
-    constructor(private userService: UserService) { }
+    constructor(private userService: UserService,
+        private profileService: ProfileService) { }
 
     public onAddUser(addUserForm: NgForm): void {
         //document.getElementById('add-user-form')?.click();
@@ -34,18 +37,17 @@ export class UserModalComponent {
     }
 
     public onAddUserProfile(addUserProfileForm: NgForm): void {
-        //document.getElementById('add-user-form')?.click();
-        console.log("USER PROFILE INFO:");
-        console.log(addUserProfileForm.value);
-        /*         this.userService.addUser(addUserProfileForm.value).subscribe(
-                    (response: User) => {
-                        console.log(response);
-                        addUserProfileForm.reset();
-                    },
-                    (error: HttpErrorResponse) => {
-                        alert(error.message);
-                        addUserProfileForm.reset();
-                    }); */
+        this.profileService.addProfile(addUserProfileForm.value).subscribe(
+            (response: Profile) => {
+                console.log("[LOG-INFO] Profile do Usuário adicionado com sucesso.");
+                console.log(response);
+                addUserProfileForm.reset();
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+                console.log("[LOG-ERROR] Erro ao adicionar Profile do Usuário.");
+                console.log(error);
+            });
     }
 
     ngAfterViewInit(): void {

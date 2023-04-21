@@ -111,6 +111,8 @@
             </div>
             <div class="modal-body">
                 <form #addUserProfileForm="ngForm" (ngSubmit)="onAddUserProfile(addUserProfileForm)">
+                    <input hidden ngModel="{{editUser?.id}}" name="user_id" id="user">
+
                     <div class="form-group">
                         <label for="description">Descrição *</label>
                         <textarea class="form-control" ngModel name="description" placeholder="Descrição do serviço"
@@ -123,7 +125,7 @@
                     </div>
                     <div class="form-group">
                         <label for="serviceTypeId">Tag do Serviço *</label>
-                        <select class="form-select" aria-label="Default select example" ngModel name="serviceTypeId">
+                        <select class="form-select" aria-label="Default select example" ngModel name="service_type_id">
                             <option selected>Escolha o tipo de serviço</option>
                             <option value="1">Encanador</option>
                             <option value="2">Serviços Gerais</option>
