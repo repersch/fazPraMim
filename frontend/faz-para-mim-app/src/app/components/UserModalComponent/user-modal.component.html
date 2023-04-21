@@ -99,3 +99,46 @@
         </div>
     </article>
 </section>
+
+<!-- Add User Profile Modal -->
+<section class="modal fade" id="addUserProfileModal" tabindex="-1" aria-labelledby="addUserProfileModalLabel"
+    aria-hidden="true" #onAddUserProfileModal>
+    <article class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addUserProfileModalLabel">Dados Cadastrais do Prestador</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #addUserProfileForm="ngForm" (ngSubmit)="onAddUserProfile(addUserProfileForm)">
+                    <div class="form-group">
+                        <label for="description">Descrição *</label>
+                        <textarea class="form-control" ngModel name="description" placeholder="Descrição do serviço"
+                            id="description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Cidade *</label>
+                        <input type="text" ngModel name="city" class="form-control" id="city"
+                            placeholder="Insira a cidade em que prestará o serviço" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceTypeId">Tag do Serviço *</label>
+                        <select class="form-select" aria-label="Default select example" ngModel name="serviceTypeId">
+                            <option selected>Escolha o tipo de serviço</option>
+                            <option value="1">Encanador</option>
+                            <option value="2">Serviços Gerais</option>
+                            <option value="3">Jardineiro</option>
+                            <option value="4">Crossfiteiro</option>
+                            <option value="5">Caçador de Insetos</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                        <button [disabled]="addUserProfileForm.invalid" type="submit" class="btn btn-success">Cadastrar
+                            Perfil</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+</section>

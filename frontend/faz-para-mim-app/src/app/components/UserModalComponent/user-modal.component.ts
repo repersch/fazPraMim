@@ -21,7 +21,7 @@ export class UserModalComponent {
     constructor(private userService: UserService) { }
 
     public onAddUser(addUserForm: NgForm): void {
-        document.getElementById('add-user-form')?.click();
+        //document.getElementById('add-user-form')?.click();
         this.userService.addUser(addUserForm.value).subscribe(
             (response: User) => {
                 console.log(response);
@@ -31,6 +31,21 @@ export class UserModalComponent {
                 alert(error.message);
                 addUserForm.reset();
             });
+    }
+
+    public onAddUserProfile(addUserProfileForm: NgForm): void {
+        //document.getElementById('add-user-form')?.click();
+        console.log("USER PROFILE INFO:");
+        console.log(addUserProfileForm.value);
+        /*         this.userService.addUser(addUserProfileForm.value).subscribe(
+                    (response: User) => {
+                        console.log(response);
+                        addUserProfileForm.reset();
+                    },
+                    (error: HttpErrorResponse) => {
+                        alert(error.message);
+                        addUserProfileForm.reset();
+                    }); */
     }
 
     ngAfterViewInit(): void {

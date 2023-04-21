@@ -53,10 +53,13 @@ export class UserComponent implements OnInit {
     public onOfferServiceButton() {
         this.userService.updateProfileTypeToProvider().subscribe(
             (response: User) => {
+                console.log("[LOG-INFO] Usuário atualizado para prestador com sucesso.");
                 console.log(response);
             },
             (error: HttpErrorResponse) => {
                 alert(error.message);
+                console.log("[LOG-ERROR] Erro ao atualizar Usuario para Prestador.");
+                console.log(error);
             });
     }
 }

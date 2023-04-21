@@ -47,7 +47,7 @@ export class UserService {
     public updateProfileTypeToProvider(): Observable<User> {
         let localStorageItens = JSON.parse(localStorage.getItem('userTokenInfo')!);
 
-        return this.http.put<User>(`${this.serverUrl}/users/setPrestador/${localStorageItens.id}`, {
+        return this.http.put<User>(`${this.serverUrl}/users/setPrestador/${localStorageItens.id}`, {}, {
             headers: {
                 'Authorization': `Bearer ${localStorageItens.token}`
             }
@@ -55,6 +55,6 @@ export class UserService {
     }
 
     public getUserInfoStoraged(): string {
-        return JSON.parse(localStorage.getItem('userTokenInfo')!);;
+        return JSON.parse(localStorage.getItem('userTokenInfo')!);
     }
 }

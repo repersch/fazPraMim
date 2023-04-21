@@ -74,11 +74,14 @@ export class LoginCardComponent {
                     'photo': response.photo,
                     'birthDate': response.birthDate,
                     'profileType': response.profileType
+                    //'profileType': response.profileType.charAt(0).toUpperCase() + response.profileType.slice(1).toLowerCase()
                 }));
                 this.setUserProfilePhoto();
             },
             (error: HttpErrorResponse) => {
                 alert(error.message);
+                console.log("[LOG-ERROR] Erro ao atualizar Cliente para Prestador.");
+                console.log(error);
             });
     }
 
