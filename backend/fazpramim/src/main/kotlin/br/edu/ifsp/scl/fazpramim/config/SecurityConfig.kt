@@ -63,7 +63,8 @@ class SecurityConfig {
                 // aqui só acessa quem estiver autenticado
                 .requestMatchers(
                     "/api/users/**",
-                    "/api/services/**"
+                    "/api/services/**",
+                    "/api/service-type/**"
                 ).authenticated()
                 // aqui ninguém pode acessar
                 //.requestMatchers("/users").denyAll()

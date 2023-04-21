@@ -9,8 +9,13 @@ import org.springframework.stereotype.Service
 
 @Service
 class ServiceTypeService {
+
     @Autowired
     private lateinit var repository: ServiceTypeRepository
+
+    fun findAllServiceType(): List<ServiceTypeModel> {
+        return repository.findAll().toList()
+    }
 
     fun findServiceTypeById(id: Long): ServiceTypeModel {
         return repository.findById(id)
