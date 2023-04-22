@@ -35,7 +35,7 @@ export class NavigationComponent {
         localStorage.removeItem('userProfile');
     }
 
-    public getUserInfo(): string {
+    public getUserInfo(): any {
         return this.storageService.getStorageUserTokenInfo();
     }
 }

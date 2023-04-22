@@ -9,6 +9,7 @@ import { StorageService } from './storage.service';
 @Injectable({ providedIn: 'root' })
 export class UserService {
     private serverUrl = environment.apiBaseUrl;
+    public userDTO: User | undefined;
     //private localStorageItens: any;
 
     constructor(private http: HttpClient,

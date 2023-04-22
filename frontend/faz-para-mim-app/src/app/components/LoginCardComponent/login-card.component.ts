@@ -76,6 +76,20 @@ export class LoginCardComponent {
                     'profileType': response.profileType
                     //'profileType': response.profileType.charAt(0).toUpperCase() + response.profileType.slice(1).toLowerCase()
                 }));
+
+                const userData: User = {
+                    id: response.id,
+                    fullName: response.fullName,
+                    username: response.username,
+                    password: '',
+                    phone: response.phone,
+                    photo: response.photo,
+                    birthDate: response.birthDate,
+                    profileType: response.profileType
+                }
+                this.userService.userDTO = userData;
+
+
                 this.setUserProfilePhoto();
             },
             error: (error: HttpErrorResponse) => {

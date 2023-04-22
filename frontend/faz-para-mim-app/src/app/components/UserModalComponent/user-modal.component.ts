@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from "@angular/core";
+import { Component, ElementRef, ViewChild, OnInit } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 
@@ -6,9 +6,12 @@ import { LoginRequest } from 'src/model/loginRequest';
 import { TokenResponse } from 'src/model/tokenResponse';
 import { Profile } from 'src/model/profile';
 import { User } from 'src/model/user';
+import { ServiceType } from "src/model/serviceType";
 import { AuthService } from 'src/service/auth.service';
 import { ProfileService } from 'src/service/profile.service';
 import { UserService } from 'src/service/user.service';
+import { StorageService } from "src/service/storage.service";
+import { ServiceTypeService } from "src/service/serviceType.service";
 
 @Component({
     selector: 'user-modal-tag',
@@ -16,12 +19,46 @@ import { UserService } from 'src/service/user.service';
     styleUrls: ['./styles.css']
 })
 
-export class UserModalComponent {
+export class UserModalComponent implements OnInit {
     @ViewChild('onUpdateUserModal') onUpdateUserModal: ElementRef | undefined;
     public editUser: User | undefined;
+    public profileId = -1;
+    public servicesTypes: ServiceType[] = [];
+
+    ngOnInit(): void {
+        this.getServicesTypes();
+    }
 
     constructor(private userService: UserService,
-        private profileService: ProfileService) { }
+        private profileService: ProfileService,
+        private storageService: StorageService,
+        private serviceTypeService: ServiceTypeService) {
+    }
+
+    private getServicesTypes(): void {
+        this.serviceTypeService.getServicesTypes().subscribe({
+            next: (response: ServiceType[]) => {
+                this.servicesTypes = response;
+                //console.log(response);
+            },
+            error: (error: HttpErrorResponse) => {
+                alert(error.message);
+                //addUserForm.reset();
+            }
+        });
+    }
+
+    private getUserInfo(): any {
+        return this.storageService.getStorageUserTokenInfo();
+    }
+
+    public getUserIdStorage(): number {
+        //return this.userService.userDTO!.id;
+
+
+        this.profileId = this.userService.userDTO!.id;
+        return this.profileId!;
+    }
 
     public onAddUser(addUserForm: NgForm): void {
         //document.getElementById('add-user-form')?.click();
