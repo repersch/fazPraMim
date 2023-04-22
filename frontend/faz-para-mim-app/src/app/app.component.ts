@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    /* localStorage.clear(); */
+    localStorage.clear();
     /* this.getUsers(); */
   }
 

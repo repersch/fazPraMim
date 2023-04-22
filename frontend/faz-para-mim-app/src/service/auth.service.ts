@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
 
 import { environment } from "src/environment/environment";
-import { AccountCredentials } from 'src/model/accountCredentials';
-import { Token } from 'src/model/token';
+import { LoginRequest } from 'src/model/loginRequest';
+import { TokenResponse } from 'src/model/tokenResponse';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -12,7 +12,7 @@ export class AuthService {
 
     constructor(private http: HttpClient) { }
 
-    public signin(accountCredential: AccountCredentials): Observable<Token> {
-        return this.http.post<Token>(`${this.serverUrl}/auth/signin`, accountCredential);
+    public signin(loginRequest: LoginRequest): Observable<TokenResponse> {
+        return this.http.post<TokenResponse>(`${this.serverUrl}/auth/signin`, loginRequest);
     }
 }

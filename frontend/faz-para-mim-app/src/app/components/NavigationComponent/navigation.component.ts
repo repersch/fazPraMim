@@ -3,11 +3,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { Observable } from "rxjs";
 
-import { AccountCredentials } from 'src/model/accountCredentials';
-import { Token } from 'src/model/token';
+import { LoginRequest } from 'src/model/loginRequest';
+import { TokenResponse } from 'src/model/tokenResponse';
 import { User } from 'src/model/user';
 import { AuthService } from 'src/service/auth.service';
 import { UserService } from "src/service/user.service";
+import { StorageService } from "src/service/storage.service";
 
 @Component({
     selector: 'navigation-tag',
@@ -16,7 +17,8 @@ import { UserService } from "src/service/user.service";
 })
 
 export class NavigationComponent {
-    constructor(private userService: UserService) { }
+    constructor(private userService: UserService,
+        private storageService: StorageService) { }
 
     public onLoginButton(): void {
         let container = document.getElementById('login-container');
@@ -34,7 +36,7 @@ export class NavigationComponent {
     }
 
     public getUserInfo(): string {
-        return this.userService.getUserInfoStoraged();
+        return this.storageService.getStorageUserTokenInfo();
     }
 }
 

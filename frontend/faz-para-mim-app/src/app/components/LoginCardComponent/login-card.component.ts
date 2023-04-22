@@ -2,8 +2,8 @@ import { Component } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 
-import { AccountCredentials } from 'src/model/accountCredentials';
-import { Token } from 'src/model/token';
+import { LoginRequest } from 'src/model/loginRequest';
+import { TokenResponse } from 'src/model/tokenResponse';
 import { User } from 'src/model/user';
 import { AuthService } from 'src/service/auth.service';
 import { UserService } from 'src/service/user.service';
@@ -20,26 +20,26 @@ export class LoginCardComponent {
         private userService: UserService) { }
 
     public onAddUser(addUserForm: NgForm): void {
-        document.getElementById('add-user-form')?.click();
-        this.userService.addUser(addUserForm.value).subscribe(
-            (response: User) => {
+        //document.getElementById('add-user-form')?.click();
+        this.userService.addUser(addUserForm.value).subscribe({
+            next: (response: User) => {
                 console.log("[LOG-INFO] Usuário cadastrado com sucesso.");
                 console.log(response);
                 addUserForm.reset();
             },
-            (error: HttpErrorResponse) => {
+            error: (error: HttpErrorResponse) => {
                 console.log("[LOG-ERROR] Erro ao cadastrar novo usuário.");
                 console.log(error);
                 alert(error.message);
-            });
+            }
+        });
     }
 
     public onUserLogin(loginForm: NgForm): void {
-        let accountCredential: AccountCredentials;
-        accountCredential = loginForm.value;
-        document.getElementById('login-user-form')?.click();
-        this.accountCredentialsService.signin(accountCredential).subscribe(
-            (response: Token) => {
+        //let loginRequest = loginForm.value;
+        //document.getElementById('login-user-form')?.click();
+        this.accountCredentialsService.signin(loginForm.value).subscribe({
+            next: (response: TokenResponse) => {
                 localStorage.setItem('userTokenInfo', JSON.stringify({
                     'id': response.id,
                     'token': response.accessToken
@@ -49,12 +49,12 @@ export class LoginCardComponent {
                 this.clearAndCloseLoginForm(loginForm);
                 this.setUserProfileStorage();
             },
-            (error: HttpErrorResponse) => {
-                console.log("[LOG-ERROR] Erro ao cadastrar novo usuário.");
+            error: (error: HttpErrorResponse) => {
+                console.log("[LOG-ERROR] Erro ao autenticar usuário.");
                 console.log(error);
                 alert(error.message);
-                loginForm.reset();
-            });
+            }
+        });
     }
 
     private clearAndCloseLoginForm(loginForm: NgForm): void {
@@ -64,8 +64,8 @@ export class LoginCardComponent {
     }
 
     private setUserProfileStorage(): void {
-        this.userService.getUserById().subscribe(
-            (response: User) => {
+        this.userService.getUserById().subscribe({
+            next: (response: User) => {
                 localStorage.setItem('userProfile', JSON.stringify({
                     'id': response.id,
                     'fullName': response.fullName,
@@ -78,11 +78,12 @@ export class LoginCardComponent {
                 }));
                 this.setUserProfilePhoto();
             },
-            (error: HttpErrorResponse) => {
+            error: (error: HttpErrorResponse) => {
                 alert(error.message);
                 console.log("[LOG-ERROR] Erro ao atualizar Cliente para Prestador.");
                 console.log(error);
-            });
+            }
+        });
     }
 
     private setUserProfilePhoto(): void {

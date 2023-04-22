@@ -2,8 +2,8 @@ import { Component } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 
-import { AccountCredentials } from 'src/model/accountCredentials';
-import { Token } from 'src/model/token';
+import { LoginRequest } from 'src/model/loginRequest';
+import { TokenResponse } from 'src/model/tokenResponse';
 import { User } from 'src/model/user';
 import { AuthService } from 'src/service/auth.service';
 import { UserService } from "src/service/user.service";
@@ -20,15 +20,14 @@ export class LoginComponent {
         private userService: UserService) { }
 
     public onUserLogin(loginForm: NgForm): void {
-        let accountCredential: AccountCredentials;
-        accountCredential = loginForm.value;
+        let loginRequest: LoginRequest;
+        loginRequest = loginForm.value;
 
         document.getElementById('login-user-form')?.click();
-        this.accountCredentialsService.signin(accountCredential).subscribe(
-            (response: Token) => {
+        this.accountCredentialsService.signin(loginRequest).subscribe(
+            (response: TokenResponse) => {
                 localStorage.setItem('usuarioInfo', JSON.stringify({
                     'id': response.id,
-                    'username': response.username,
                     'token': response.accessToken
                 }));
                 console.log("[LOG-INFO] Usuário autenticado");

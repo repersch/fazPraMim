@@ -2,8 +2,8 @@ import { Component, ElementRef, ViewChild } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 
-import { AccountCredentials } from 'src/model/accountCredentials';
-import { Token } from 'src/model/token';
+import { LoginRequest } from 'src/model/loginRequest';
+import { TokenResponse } from 'src/model/tokenResponse';
 import { Profile } from 'src/model/profile';
 import { User } from 'src/model/user';
 import { AuthService } from 'src/service/auth.service';
@@ -25,15 +25,16 @@ export class UserModalComponent {
 
     public onAddUser(addUserForm: NgForm): void {
         //document.getElementById('add-user-form')?.click();
-        this.userService.addUser(addUserForm.value).subscribe(
-            (response: User) => {
+        this.userService.addUser(addUserForm.value).subscribe({
+            next: (response: User) => {
                 console.log(response);
                 addUserForm.reset();
             },
-            (error: HttpErrorResponse) => {
+            error: (error: HttpErrorResponse) => {
                 alert(error.message);
                 addUserForm.reset();
-            });
+            }
+        });
     }
 
     public onAddUserProfile(addUserProfileForm: NgForm): void {
