@@ -6,7 +6,6 @@
     display: none;
 }
 
-.form-control,
-.card-footer {
+#signinCard {
     width: fit-content;
 }

@@ -2,16 +2,13 @@ import { Component, ElementRef, ViewChild, OnInit } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 
-import { LoginRequest } from 'src/model/loginRequest';
-import { TokenResponse } from 'src/model/tokenResponse';
 import { Profile } from 'src/model/profile';
-import { User } from 'src/model/user';
 import { ServiceType } from "src/model/serviceType";
-import { AuthService } from 'src/service/auth.service';
+import { User } from 'src/model/user';
 import { ProfileService } from 'src/service/profile.service';
-import { UserService } from 'src/service/user.service';
-import { StorageService } from "src/service/storage.service";
 import { ServiceTypeService } from "src/service/serviceType.service";
+import { StorageService } from "src/service/storage.service";
+import { UserService } from 'src/service/user.service';
 
 @Component({
     selector: 'user-modal-tag',
@@ -39,53 +36,50 @@ export class UserModalComponent implements OnInit {
         this.serviceTypeService.getServicesTypes().subscribe({
             next: (response: ServiceType[]) => {
                 this.servicesTypes = response;
-                //console.log(response);
             },
             error: (error: HttpErrorResponse) => {
                 alert(error.message);
-                //addUserForm.reset();
             }
         });
     }
 
-    private getUserInfo(): any {
-        return this.storageService.getStorageUserTokenInfo();
-    }
-
     public getUserIdStorage(): number {
-        //return this.userService.userDTO!.id;
-
-
-        this.profileId = this.userService.userDTO!.id;
-        return this.profileId!;
+        if (this.userService.userDTO?.id) {
+            this.profileId = this.userService.userDTO.id;
+            return this.profileId;
+        } else {
+            return 0;
+        }
     }
 
     public onAddUser(addUserForm: NgForm): void {
-        //document.getElementById('add-user-form')?.click();
         this.userService.addUser(addUserForm.value).subscribe({
             next: (response: User) => {
+                console.log("[LOG-INFO] Usuário adicionado com sucesso.");
                 console.log(response);
                 addUserForm.reset();
             },
             error: (error: HttpErrorResponse) => {
                 alert(error.message);
-                addUserForm.reset();
+                console.log("[LOG-ERROR] Erro ao adicionar Usuário.");
+                console.log(error);
             }
         });
     }
 
     public onAddUserProfile(addUserProfileForm: NgForm): void {
-        this.profileService.addProfile(addUserProfileForm.value).subscribe(
-            (response: Profile) => {
+        this.profileService.addProfile(addUserProfileForm.value).subscribe({
+            next: (response: Profile) => {
                 console.log("[LOG-INFO] Profile do Usuário adicionado com sucesso.");
                 console.log(response);
                 addUserProfileForm.reset();
             },
-            (error: HttpErrorResponse) => {
+            error: (error: HttpErrorResponse) => {
                 alert(error.message);
                 console.log("[LOG-ERROR] Erro ao adicionar Profile do Usuário.");
                 console.log(error);
-            });
+            }
+        });
     }
 
     ngAfterViewInit(): void {
@@ -102,37 +96,29 @@ export class UserModalComponent implements OnInit {
 
     public onUpdateUser(updateUserForm: NgForm): void {
         this.getUserProfile();
-        document.getElementById('update-user-form')?.click();
-
-        console.log("UPDATE FORM");
-        console.log(updateUserForm.value);
-
-        this.userService.updateUser(updateUserForm.value).subscribe(
-            (response: User) => {
+        this.userService.updateUser(updateUserForm.value).subscribe({
+            next: (response: User) => {
+                console.log("[LOG-INFO] Usuário alterado com sucesso.");
                 console.log(response);
                 updateUserForm.reset();
                 this.clearAndCloseLoginForm(updateUserForm);
                 this.setUserProfile(response);
                 this.getUserProfile();
             },
-            (error: HttpErrorResponse) => {
+            error: (error: HttpErrorResponse) => {
                 alert(error.message);
-                updateUserForm.reset();
-            });
+                console.log("[LOG-ERROR] Erro ao alterar Usuário.");
+                console.log(error);
+            }
+        });
     }
 
     private clearAndCloseLoginForm(updateUserForm: NgForm): void {
         updateUserForm.reset();
-        /*         let modal = document.getElementById('updateUserModal');
-                modal?.hidden; */
-
-        const modalElement = this.onUpdateUserModal!.nativeElement;
-        modalElement.addEventListener('hidden.bs.modal');
     }
 
-
     private getUserProfile(): void {
-        let localStorageItens = JSON.parse(localStorage.getItem('userProfile')!);
+        let localStorageItens = this.storageService.getStorageUserData();
         const userData: User = {
             id: localStorageItens.id,
             fullName: localStorageItens.fullName,
@@ -147,20 +133,13 @@ export class UserModalComponent implements OnInit {
     }
 
     private setUserProfile(response: User): void {
-        localStorage.removeItem('userProfile');
-        localStorage.setItem('userProfile', JSON.stringify({
-            'id': response.id,
-            'fullName': response.fullName,
-            'username': response.username,
-            'phone': response.phone,
-            'photo': response.photo,
-            'birthDate': response.birthDate
-        }));
+        localStorage.removeItem('userDTO');
+        this.storageService.setStorageUserDTO(response);
         this.updateUserProfilePhoto();
     }
 
     private updateUserProfilePhoto(): void {
-        let localStorageItens = JSON.parse(localStorage.getItem('userProfile')!);
+        let localStorageItens = JSON.parse(localStorage.getItem('userDTO')!);
         document.getElementById('profile-image')?.setAttribute('src', localStorageItens.photo);
     }
 }

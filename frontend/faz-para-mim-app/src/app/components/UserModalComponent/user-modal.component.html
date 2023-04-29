@@ -64,16 +64,6 @@
                         <input type="text" ngModel="{{editUser?.fullName}}" name="fullName" class="form-control"
                             id="fullNameUpdate" placeholder="Insira seu nome completo" required>
                     </div>
-                    <!--                     <div class="form-group">
-                        <label for="usernameUpdate">Email</label>
-                        <input type="email" ngModel="{{editUser?.username}}" name="username" class="form-control"
-                            id="usernameUpdate" placeholder="exemplo@email.com.br" required>
-                    </div> -->
-                    <!--                     <div class="form-group">
-                        <label for="passwordUpdate">Senha</label>
-                        <input type="password" ngModel name="password" class="form-control" id="passwordUpdate"
-                            placeholder="Senha" required>
-                    </div> -->
                     <div class="form-group">
                         <label for="phoneUpdate">Telefone</label>
                         <input type="text" ngModel="{{editUser?.phone}}" name="phone" class="form-control"
@@ -129,10 +119,6 @@
                             <option value="" selected>Escolha o tipo de serviço</option>
                             <option *ngFor="let serviceType of servicesTypes" [value]="serviceType.id">
                                 {{serviceType.description}}</option>
-                            <!--                             <option value="2">Serviços Gerais</option>
-                            <option value="3">Jardineiro</option>
-                            <option value="4">Crossfiteiro</option>
-                            <option value="5">Caçador de Insetos</option> -->
                         </select>
                     </div>
                     <div class="modal-footer">

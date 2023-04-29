@@ -1,7 +1,6 @@
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { ActivatedRoute, ParamMap } from "@angular/router";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
-import { NgForm } from '@angular/forms';
 
 import { User } from 'src/model/user';
 import { UserService } from 'src/service/user.service';
@@ -15,7 +14,7 @@ import { UserService } from 'src/service/user.service';
 export class UserComponent implements OnInit {
     @ViewChild('profileDetail') onProfileDetailOpen: ElementRef | undefined;
     private id: number | undefined;
-    public userProfile: User | undefined;
+    public userData: User | undefined;
 
     constructor(private route: ActivatedRoute,
         private userService: UserService) { }
@@ -24,19 +23,11 @@ export class UserComponent implements OnInit {
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.id = +params.get('id')!;
         })
-        this.getUserProfile();
+        this.getUserData();
     }
 
-    ngAfterViewInit(): void {
-        const modalElement = this.onProfileDetailOpen!.nativeElement;
-
-        // Adiciona o manipulador de evento ao evento "shown.bs.modal"
-        //this.getUserProfile();
-        //modalElement.addEventListener('shown.bs.modal', this.onModalShown.bind(this));
-    }
-
-    private getUserProfile(): void {
-        let localStorageItens = JSON.parse(localStorage.getItem('userProfile')!);
+    private getUserData(): void {
+        let localStorageItens = JSON.parse(localStorage.getItem('userDTO')!);
         const userData: User = {
             id: localStorageItens.id,
             fullName: localStorageItens.fullName,
@@ -47,19 +38,20 @@ export class UserComponent implements OnInit {
             birthDate: localStorageItens.birthDate,
             profileType: localStorageItens.profileType
         }
-        this.userProfile = userData;
+        this.userData = userData;
     }
 
     public onOfferServiceButton() {
-        this.userService.updateProfileTypeToProvider().subscribe(
-            (response: User) => {
+        this.userService.updateProfileTypeToProvider().subscribe({
+            next: (response: User) => {
                 console.log("[LOG-INFO] Usuário atualizado para prestador com sucesso.");
                 console.log(response);
             },
-            (error: HttpErrorResponse) => {
+            error: (error: HttpErrorResponse) => {
                 alert(error.message);
                 console.log("[LOG-ERROR] Erro ao atualizar Usuario para Prestador.");
                 console.log(error);
-            });
+            }
+        });
     }
 }

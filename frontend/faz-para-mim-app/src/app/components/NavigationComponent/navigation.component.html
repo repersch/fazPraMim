@@ -13,24 +13,21 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" routerLink="about">Sobre</a>
                 </li>
-                <li *ngIf="getUserInfo()">
-                    <a class="nav-link active" aria-current="page" href="#" (click)="onUserLogout()">Logout</a>
-                </li>
-                <li *ngIf="getUserInfo()" class="nav-item dropdown">
+                <li *ngIf="getStorageUserTokenInfo()" class="nav-item dropdown">
                     <img class="rounded-circle image-position" id="profile-image" alt="User photo"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" aria-current="page" routerLink="user/:id">Perfil</a>
-                        <!-- <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateUserModal">Perfil</a> -->
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" aria-current="page" routerLink="user/{{getStorageUserTokenInfo().id}}">Perfil</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Meus serviços</a>
                         <a class="dropdown-item" href="#">Minhas solicitações</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="#">Logout</a>
+                        <a class="dropdown-item text-danger" href="#" (click)="onUserLogout()">Logout</a>
                     </div>
                 </li>
             </ul>
-            <button *ngIf="!getUserInfo()" class="btn btn-light" type="button" (click)="onLoginButton()">Login
+            <button *ngIf="!getStorageUserTokenInfo()" class="btn btn-light" type="button"
+                (click)="onLoginButton()">Login
                 <img src="../../../assets/img/person-icon.svg" alt="Login icon">
             </button>
             <!--             <form class="d-flex" role="search">
