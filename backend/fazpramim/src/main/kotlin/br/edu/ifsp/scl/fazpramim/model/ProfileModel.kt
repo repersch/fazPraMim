@@ -1,6 +1,7 @@
 package br.edu.ifsp.scl.fazpramim.model
 
 import br.edu.ifsp.scl.fazpramim.controller.response.UserResponse
+import br.edu.ifsp.scl.fazpramim.service.ServiceService
 import jakarta.persistence.*
 
 @Entity
@@ -18,7 +19,7 @@ data class ProfileModel(
     var city: String = "",
 
     @Column
-    var rating: Double? = null,
+    var rating: Int = 0,
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")

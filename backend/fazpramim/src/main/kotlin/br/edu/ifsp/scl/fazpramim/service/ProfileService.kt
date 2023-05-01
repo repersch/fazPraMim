@@ -3,18 +3,24 @@ package br.edu.ifsp.scl.fazpramim.service
 import br.edu.ifsp.scl.fazpramim.controller.request.PostProfileRequest
 import br.edu.ifsp.scl.fazpramim.enums.Errors
 import br.edu.ifsp.scl.fazpramim.enums.ProfileType
+import br.edu.ifsp.scl.fazpramim.enums.ServiceStatus
 import br.edu.ifsp.scl.fazpramim.exception.NotFoundException
 import br.edu.ifsp.scl.fazpramim.model.ProfileModel
 import br.edu.ifsp.scl.fazpramim.repository.ProfileRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import org.yaml.snakeyaml.TypeDescription
 
 @Service
-class ProfileService(
-    val profileRepository: ProfileRepository,
-    val userService: UserService,
-    val serviceTypeService: ServiceTypeService
-) {
+class ProfileService {
+
+    @Autowired
+    private lateinit var profileRepository: ProfileRepository
+
+    @Autowired
+    private lateinit var userService: UserService
+
+    @Autowired
+    private lateinit var serviceTypeService: ServiceTypeService
 
     fun findAllProfiles(): List<ProfileModel> {
         return profileRepository.findAll().toList()
@@ -49,6 +55,7 @@ class ProfileService(
         entity.description = profile.description
         entity.city = profile.city
         entity.user = profile.user
+        entity.rating = profile.rating
         profileRepository.save(entity)
         return findProfileById(entity.id!!)
     }

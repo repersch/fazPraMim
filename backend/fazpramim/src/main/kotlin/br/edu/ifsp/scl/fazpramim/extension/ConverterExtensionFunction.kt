@@ -39,7 +39,8 @@ fun PutUserRequest.toUserModel(previuosValue: UserModel): UserModel {
         userName = this.username ?: previuosValue.userName,
         password = if (this.password != null) passwordEncoder().encode(this.password) else previuosValue.password,
         phone = this.phone ?: previuosValue.phone,
-        birthDate = if (this.birthDate != null) LocalDate.parse(this.birthDate, DateTimeFormatter.ofPattern("dd/MM/yyyy")) else previuosValue.birthDate,
+        birthDate = if (this.birthDate != null) LocalDate.parse(this.birthDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+            else LocalDate.parse(previuosValue.birthDate.toString(), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
         photo = this.photo ?: previuosValue.photo,
         profileType = this.profileType ?: previuosValue.profileType
     )
@@ -77,7 +78,8 @@ fun ProfileModel.toResponse(): ProfileResponse {
         description = this.description,
         city = this.city,
         user = this.user.toResponse(),
-        serviceType = this.serviceType
+        serviceType = this.serviceType,
+        rating = this.rating
     )
 }
 

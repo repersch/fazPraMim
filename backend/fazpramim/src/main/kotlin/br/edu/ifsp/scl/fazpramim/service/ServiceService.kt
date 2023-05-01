@@ -6,17 +6,23 @@ import br.edu.ifsp.scl.fazpramim.enums.ServiceStatus
 import br.edu.ifsp.scl.fazpramim.exception.*
 import br.edu.ifsp.scl.fazpramim.model.ServiceModel
 import br.edu.ifsp.scl.fazpramim.repository.ServiceRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.logging.Logger
 
 @Service
-class ServiceService(
-    var repository: ServiceRepository,
-    var userService: UserService,
-    var profileService: ProfileService
-) {
+class ServiceService {
+
+    @Autowired
+    private lateinit var repository: ServiceRepository
+
+    @Autowired
+    private lateinit var userService: UserService
+
+    @Autowired
+    private lateinit var profileService: ProfileService
 
     private val logger = Logger.getLogger(ServiceService::class.toString())
 
@@ -94,13 +100,28 @@ class ServiceService(
             throw InvalidEvaluationException(Errors.FPM701.message, Errors.FPM701.code)
 
         service.rating = rating
-        return repository.save(service)
+        repository.save(service)
+
+        updateAverageRating(service.provider.id!!)
+
+        return findServiceById(serviceId)
     }
 
 
     fun deleteService(id: Long) {
         val entity = findServiceById(id)
         repository.delete(entity)
+    }
+
+    private fun updateAverageRating(providerId: Long) {
+        val servicesByProvider = findServiceByProvider(providerId)
+            .filter { s -> s.status == ServiceStatus.FINISHED && s.rating != 0 }
+        val size = servicesByProvider.size
+        val sumOfRating = servicesByProvider.sumOf { s -> s.rating }
+        val mediaRating = sumOfRating / size
+        val profile = profileService.findProfileById(providerId)
+        profile.rating = mediaRating
+        profileService.updateProfile(profile)
     }
 
 }

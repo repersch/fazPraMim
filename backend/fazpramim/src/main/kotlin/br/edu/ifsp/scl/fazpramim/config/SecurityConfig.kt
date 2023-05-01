@@ -57,14 +57,14 @@ class SecurityConfig {
                     "/v3/api-docs/**",
                     "/api/registration",
                     "/swagger-ui/**",
-                    "/api/profiles/**"
+                    "/api/profiles/**",
+                    "/api/service-type/**"
                 )
                 .permitAll()
                 // aqui só acessa quem estiver autenticado
                 .requestMatchers(
                     "/api/users/**",
-                    "/api/services/**",
-                    "/api/service-type/**"
+                    "/api/services/**"
                 ).authenticated()
                 // aqui ninguém pode acessar
                 //.requestMatchers("/users").denyAll()
