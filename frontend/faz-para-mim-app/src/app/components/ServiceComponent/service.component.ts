@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { ProfileResponse } from "src/model/profileResponse";
 import { ProfileService } from "src/service/profile.service";
+import { StorageService } from "src/service/storage.service";
 
 @Component({
     selector: 'service-tag',
@@ -13,9 +14,11 @@ import { ProfileService } from "src/service/profile.service";
 
 export class ServiceComponent implements OnInit {
     public profiles: ProfileResponse[] = [];
+    public profileDetail: ProfileResponse | undefined;
 
     constructor(private router: Router,
-        private profileService: ProfileService) { }
+        private profileService: ProfileService,
+        private storageService: StorageService) { }
 
     ngOnInit() {
         localStorage.clear();
@@ -33,7 +36,9 @@ export class ServiceComponent implements OnInit {
         });
     }
 
-    public btnClick() {
-        this.router.navigateByUrl('/user');
+    public btnClick(profile: ProfileResponse) {
+        this.profileDetail = profile;
+        this.storageService.setStorageProfileDetail(profile);
+        this.router.navigateByUrl('/profile/{{this.profileDetail.id}}');
     }
 }

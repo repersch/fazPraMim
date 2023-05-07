@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { TokenResponse } from 'src/model/tokenResponse';
 import { User } from "src/model/user";
+import { ProfileResponse } from 'src/model/profileResponse';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
@@ -32,5 +33,20 @@ export class StorageService {
             /* 'profileType': userDTO.profileType */
             'profileType': userDTO.profileType.charAt(0).toUpperCase() + userDTO.profileType.slice(1).toLowerCase()
         }));
+    }
+
+    public setStorageProfileDetail(profile: ProfileResponse): void {
+        localStorage.setItem('profileDetail', JSON.stringify({
+            'id': profile.id,
+            'description': profile.description,
+            'city': profile.city,
+            'user': profile.user,
+            'serviceType': profile.serviceType,
+            'rating': profile.rating
+        }));
+    }
+
+    public getStorageProfileDetail(): ProfileResponse {
+        return JSON.parse(localStorage.getItem('profileDetail')!);
     }
 }
