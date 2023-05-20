@@ -41,4 +41,14 @@ export class ServiceComponent implements OnInit {
         this.storageService.setStorageProfileDetail(profile);
         this.router.navigateByUrl('/profile/{{this.profileDetail.id}}');
     }
+
+    public btnRequestClick(profile: ProfileResponse) {
+        this.profileService.profileId = profile.id;
+        this.profileDetail = profile;
+        this.storageService.setStorageProfileDetail(profile);
+    }
+
+    public getStorageUserTokenInfo(): any {
+        return this.storageService.getStorageUserTokenInfo();
+    }
 }

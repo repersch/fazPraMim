@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CarouselComponent } from './components/CarouselComponent/carousel.component';
 import { LoginCardComponent } from './components/LoginCardComponent/login-card.component';
 import { NavigationComponent } from './components/NavigationComponent/navigation.component';
+import { ProfileModalComponent } from './components/ProfileModalComponent/profile-modal.component';
 import { ServiceComponent } from './components/ServiceComponent/service.component';
 import { UserModalComponent } from './components/UserModalComponent/user-modal.component';
 
@@ -17,6 +18,7 @@ import { UserModalComponent } from './components/UserModalComponent/user-modal.c
     CarouselComponent,
     LoginCardComponent,
     NavigationComponent,
+    ProfileModalComponent,
     ServiceComponent,
     UserModalComponent
   ],

@@ -1,0 +1,39 @@
+<!-- Add Service Modal -->
+<section class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel"
+    aria-hidden="true">
+    <article class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addServiceModalLabel">Solicitar Serviço</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #addServiceForm="ngForm" (ngSubmit)="onAddService(addServiceForm)">
+                    <input hidden ngModel="{{getUserIdStorage()}}" name="client_id" id="client_id">
+                    <input hidden ngModel="{{getProfileIdStorage()}}" name="providerId" id="providerId">
+
+                    <div class="form-group">
+                        <label for="date">Data *</label>
+                        <input type="text" ngModel name="date" class="form-control" id="date" placeholder="dd/MM/AAAA"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hour">Hora *</label>
+                        <input type="text" ngModel name="hour" class="form-control" id="hour" placeholder="HH:mm"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="request_details">Observações gerais</label>
+                        <input type="text" ngModel name="request_details" class="form-control" id="request_details"
+                            placeholder="Insira detalhes para serviço">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                        <button [disabled]="addServiceForm.invalid" type="submit"
+                            class="btn btn-success">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+</section>

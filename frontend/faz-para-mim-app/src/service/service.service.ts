@@ -3,29 +3,23 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 
 import { environment } from "src/environment/environment";
-import { Profile } from "src/model/profile";
+import { ServiceRequest } from 'src/model/serviceRequest';
+import { ServiceResponse } from 'src/model/serviceResponse';
 import { StorageService } from './storage.service';
-import { ProfileResponse } from 'src/model/profileResponse';
 
 @Injectable({ providedIn: 'root' })
-export class ProfileService {
+export class ServiceService {
     private serverUrl = environment.apiBaseUrl;
-
-    public profileId: number | undefined;
 
     constructor(private http: HttpClient,
         private storageService: StorageService) { }
 
-    public addProfile(profile: Profile): Observable<Profile> {
+    public addService(serviceRequest: ServiceRequest): Observable<ServiceResponse> {
         let localStorageItens = this.storageService.getStorageUserTokenInfo();
-        return this.http.post<Profile>(`${this.serverUrl}/profiles`, profile, {
+        return this.http.post<ServiceResponse>(`${this.serverUrl}/services`, serviceRequest, {
             headers: {
                 'Authorization': `Bearer ${localStorageItens.token}`
             }
         });
-    }
-
-    public getProfiles(): Observable<ProfileResponse[]> {
-        return this.http.get<ProfileResponse[]>(`${this.serverUrl}/profiles`);
     }
 }
