@@ -22,4 +22,22 @@ export class ServiceService {
             }
         });
     }
+
+    public getServiceRequests(): Observable<ServiceResponse[]> {
+        let localStorageItens = this.storageService.getStorageUserTokenInfo();
+        return this.http.get<ServiceResponse[]>(`${this.serverUrl}/services/client/${localStorageItens.id}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorageItens.token}`
+            }
+        });
+    }
+
+    public getProvidedServices(): Observable<ServiceResponse[]> {
+        let localStorageItens = this.storageService.getStorageUserTokenInfo();
+        return this.http.get<ServiceResponse[]>(`${this.serverUrl}/services/provider/${localStorageItens.id}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorageItens.token}`
+            }
+        });
+    }
 }

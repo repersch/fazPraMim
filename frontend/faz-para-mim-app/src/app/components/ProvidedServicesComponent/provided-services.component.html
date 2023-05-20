@@ -1,0 +1,29 @@
+<section id="service-requests-section">
+
+    <div class="container" #serviceRequestsTable>
+        <div class="main-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Detalhes da Solicitação</th>
+                        <th>Status</th>
+                        <th>Avaliação</th>
+                        <th>Cliente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let providedService of providedServices">
+                        <td>{{providedService.date}}</td>
+                        <td>{{providedService.hour}}</td>
+                        <td>{{providedService.requestDetails}}</td>
+                        <td>{{providedService.status}}</td>
+                        <td>{{providedService.rating}}</td>
+                        <td>{{providedService.client.fullName}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

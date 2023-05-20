@@ -10,6 +10,8 @@ import { LoginCardComponent } from './components/LoginCardComponent/login-card.c
 import { NavigationComponent } from './components/NavigationComponent/navigation.component';
 import { ProfileModalComponent } from './components/ProfileModalComponent/profile-modal.component';
 import { ServiceComponent } from './components/ServiceComponent/service.component';
+import { ServiceRequestsComponent } from './components/ServiceRequestsComponent/service-requests.component';
+import { ProvidedServicesComponent } from './components/ProvidedServicesComponent/provided-services.component';
 import { UserModalComponent } from './components/UserModalComponent/user-modal.component';
 
 @NgModule({
@@ -20,6 +22,8 @@ import { UserModalComponent } from './components/UserModalComponent/user-modal.c
     NavigationComponent,
     ProfileModalComponent,
     ServiceComponent,
+    ServiceRequestsComponent,
+    ProvidedServicesComponent,
     UserModalComponent
   ],
   imports: [
