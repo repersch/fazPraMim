@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { Profile } from 'src/model/profile';
 import { ServiceType } from "src/model/serviceType";
 import { User } from 'src/model/user';
+
 import { ProfileService } from 'src/service/profile.service';
 import { ServiceTypeService } from "src/service/serviceType.service";
 import { StorageService } from "src/service/storage.service";

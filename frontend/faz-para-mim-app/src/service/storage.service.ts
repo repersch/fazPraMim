@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { ProfileResponse } from 'src/model/profileResponse';
 import { TokenResponse } from 'src/model/tokenResponse';
 import { User } from "src/model/user";
-import { ProfileResponse } from 'src/model/profileResponse';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {

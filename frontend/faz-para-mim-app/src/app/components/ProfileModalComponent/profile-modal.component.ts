@@ -3,9 +3,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 
 import { ServiceResponse } from "src/model/serviceResponse";
+
+import { ProfileService } from "src/service/profile.service";
 import { ServiceService } from "src/service/service.service";
 import { UserService } from 'src/service/user.service';
-import { ProfileService } from "src/service/profile.service";
 
 @Component({
     selector: 'profile-modal-tag',

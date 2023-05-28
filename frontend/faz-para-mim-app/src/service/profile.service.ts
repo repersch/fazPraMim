@@ -3,9 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 
 import { environment } from "src/environment/environment";
+
 import { Profile } from "src/model/profile";
-import { StorageService } from './storage.service';
 import { ProfileResponse } from 'src/model/profileResponse';
+
+import { StorageService } from './storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProfileService {

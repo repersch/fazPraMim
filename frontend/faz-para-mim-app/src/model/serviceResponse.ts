@@ -1,5 +1,5 @@
-import { User } from "./user";
 import { ProfileResponse } from "./profileResponse";
+import { User } from "./user";
 
 export interface ServiceResponse {
     id: number;

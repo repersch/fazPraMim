@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { ProfileResponse } from "src/model/profileResponse";
+
 import { ProfileService } from "src/service/profile.service";
 import { StorageService } from "src/service/storage.service";
 
@@ -21,7 +22,6 @@ export class ServiceComponent implements OnInit {
         private storageService: StorageService) { }
 
     ngOnInit() {
-        localStorage.clear();
         this.getProfiles();
     }
 

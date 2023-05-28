@@ -9,9 +9,9 @@ import { CarouselComponent } from './components/CarouselComponent/carousel.compo
 import { LoginCardComponent } from './components/LoginCardComponent/login-card.component';
 import { NavigationComponent } from './components/NavigationComponent/navigation.component';
 import { ProfileModalComponent } from './components/ProfileModalComponent/profile-modal.component';
+import { ProvidedServicesComponent } from './components/ProvidedServicesComponent/provided-services.component';
 import { ServiceComponent } from './components/ServiceComponent/service.component';
 import { ServiceRequestsComponent } from './components/ServiceRequestsComponent/service-requests.component';
-import { ProvidedServicesComponent } from './components/ProvidedServicesComponent/provided-services.component';
 import { UserModalComponent } from './components/UserModalComponent/user-modal.component';
 
 @NgModule({
@@ -21,16 +21,16 @@ import { UserModalComponent } from './components/UserModalComponent/user-modal.c
     LoginCardComponent,
     NavigationComponent,
     ProfileModalComponent,
+    ProvidedServicesComponent,
     ServiceComponent,
     ServiceRequestsComponent,
-    ProvidedServicesComponent,
     UserModalComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
-    HttpClientModule,
     FormsModule,
-    AppRoutingModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

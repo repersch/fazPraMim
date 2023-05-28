@@ -3,6 +3,7 @@ import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { User } from 'src/model/user';
+
 import { UserService } from 'src/service/user.service';
 
 @Component({
