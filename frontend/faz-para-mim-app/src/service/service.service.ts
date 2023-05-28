@@ -47,8 +47,14 @@ export class ServiceService {
         let localStorageItens = this.storageService.getStorageUserTokenInfo();
         let serviceStatusCode = 0;
 
-        if (serviceStatus === "FINISH") {
+        if (serviceStatus === "CREATE") {
+            serviceStatusCode = 1;
+        } else if (serviceStatus === "ACCEPT") {
+            serviceStatusCode = 2;
+        } else if (serviceStatus === "FINISH") {
             serviceStatusCode = 3;
+        } else if (serviceStatus === "CANCEL") {
+            serviceStatusCode = 4;
         }
 
         return this.http.put<ServiceResponse>(`${this.serverUrl}/services/${serviceId}/${serviceStatusCode}`, {}, {

@@ -33,16 +33,20 @@ export class ServiceRequestsComponent implements OnInit {
         });
     }
 
-    public evaluateService(serviceId: number): void {
+    public setSelectedRequestId(serviceId: number): void {
         this.selectedRequestId = serviceId;
-        this.serviceService.updateServiceStatus(serviceId, "FINISH").subscribe({
+    }
+
+    public updateServiceStatus(serviceId: number, serviceStatusToUpdate: string): void {
+        this.selectedRequestId = serviceId;
+        this.serviceService.updateServiceStatus(serviceId, serviceStatusToUpdate).subscribe({
             next: (response: ServiceResponse) => {
-                console.log("[LOG-INFO] Status do serviço atualizado para FINALIZADO com sucesso.");
+                console.log(`[LOG-INFO] Status do serviço atualizado para ${serviceStatusToUpdate} com sucesso.`);
                 console.log(response);
             },
             error: (error: HttpErrorResponse) => {
                 alert(error.message);
-                console.log("[LOG-ERROR] Erro ao atualizar o status do serviço.");
+                console.log(`[LOG-ERROR] Erro ao atualizar o status ${serviceStatusToUpdate} do serviço.`);
                 console.log(error);
             }
         });
@@ -60,5 +64,26 @@ export class ServiceRequestsComponent implements OnInit {
                 console.log(error);
             }
         });
+    }
+
+    public isAccepted(serviceStatus: string): boolean {
+        if (serviceStatus === 'ACCEPTED') {
+            return true;
+        }
+        return false;
+    }
+
+    public isFinished(serviceStatus: string): boolean {
+        if (serviceStatus === 'FINISHED') {
+            return true;
+        }
+        return false;
+    }
+
+    public isCanceled(serviceStatus: string): boolean {
+        if (serviceStatus === 'CANCELED') {
+            return true;
+        }
+        return false;
     }
 }

@@ -11,6 +11,8 @@
                         <th>Status</th>
                         <th>Avaliação</th>
                         <th>Cliente</th>
+                        <th>Cancelar Solicitação</th>
+                        <th>Aceitar Solicitação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,6 +23,20 @@
                         <td>{{providedService.status}}</td>
                         <td>{{providedService.rating}}</td>
                         <td>{{providedService.client.fullName}}</td>
+                        <td>
+                            <a class="btn" type="button" (click)="updateServiceStatus(providedService.id, 'CANCEL')"
+                                *ngIf="!isCanceled(providedService.status) && !isFinished(providedService.status)">
+                                <img id="rate-image" src="../../../assets/img/cancel-icon.png"
+                                    alt="Link para cancelar o serviço solicitado. Representado por um 'x' branco dentro de um círculo vermelho.">
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn" type="button" (click)="updateServiceStatus(providedService.id, 'ACCEPT')"
+                                *ngIf="isCreated(providedService.status)">
+                                <img id="rate-image" src="../../../assets/img/work-icon.png"
+                                    alt="Link para confirmar o serviço solicitado. Representado por uma mão segurando uma chave inglesa.">
+                            </a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

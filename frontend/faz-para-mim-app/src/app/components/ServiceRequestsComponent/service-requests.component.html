@@ -10,7 +10,9 @@
                         <th>Status</th>
                         <th>Avaliação</th>
                         <th>Prestador</th>
-                        <th>Avaliar</th>
+                        <th>Confirmar Solicitação</th>
+                        <th>Cancelar Solicitação</th>
+                        <th>Avaliar Solicitação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,10 +24,25 @@
                         <td>{{userServiceRequest.rating}}</td>
                         <td>{{userServiceRequest.provider.user.fullName}}</td>
                         <td>
-                            <a class="btn" type="button" data-bs-toggle="modal"
-                                (click)="evaluateService(userServiceRequest.id)" data-bs-target="#evaluateServiceModal">
+                            <a class="btn" type="button" (click)="updateServiceStatus(userServiceRequest.id, 'FINISH')"
+                                *ngIf="isAccepted(userServiceRequest.status) && !isCanceled(userServiceRequest.status)">
+                                <img id="rate-image" src="../../../assets/img/confirm-icon.png"
+                                    alt="Link para finalizar o serviço solicitado. Representado por um check verde dentro de um quadrado.">
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn" type="button" (click)="updateServiceStatus(userServiceRequest.id, 'CANCEL')"
+                                *ngIf="!isCanceled(userServiceRequest.status) && !isFinished(userServiceRequest.status)">
+                                <img id="rate-image" src="../../../assets/img/cancel-icon.png"
+                                    alt="Link para cancelar o serviço solicitado. Representado por um 'x' branco dentro de um círculo vermelho.">
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn" type="button" data-bs-toggle="modal" data-bs-target="#evaluateServiceModal"
+                                (click)="setSelectedRequestId(userServiceRequest.id)"
+                                *ngIf="isFinished(userServiceRequest.status)">
                                 <img id="rate-image" src="../../../assets/img/rating-icon.png"
-                                    alt="Link para finalizar e avaliar o serviço solicitado. Representado pelo contorno de uma estrela dentro de um quadrado.">
+                                    alt="Link para avaliar o serviço solicitado. Representado pelo contorno de uma estrela dentro de um quadrado.">
                             </a>
                         </td>
                     </tr>
