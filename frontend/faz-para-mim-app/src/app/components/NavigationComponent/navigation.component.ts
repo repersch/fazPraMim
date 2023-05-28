@@ -15,6 +15,25 @@ export class NavigationComponent {
         return this.storageService.getStorageUserTokenInfo();
     }
 
+    public isCustomer(): boolean {
+        if (this.getUserDTOProfileType() === "Cliente") {
+            return true;
+        }
+        return false;
+    }
+
+    private getUserDTOProfileType(): string {
+        return this.getStorageUserDTO().profileType;
+    }
+
+    private getStorageUserDTO(): any {
+        const userDTO = this.storageService.getStorageUserData();
+        if (userDTO) {
+            return userDTO;
+        }
+        return '';
+    }
+
     public onLoginButton(): void {
         let container = document.getElementById('login-container');
 
