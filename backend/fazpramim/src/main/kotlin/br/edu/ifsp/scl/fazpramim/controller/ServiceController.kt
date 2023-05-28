@@ -3,10 +3,8 @@ package br.edu.ifsp.scl.fazpramim.controller
 import br.edu.ifsp.scl.fazpramim.controller.request.PostServiceRequest
 import br.edu.ifsp.scl.fazpramim.controller.request.PutServiceRequest
 import br.edu.ifsp.scl.fazpramim.controller.response.ServiceResponse
-import br.edu.ifsp.scl.fazpramim.enums.ServiceStatus
 import br.edu.ifsp.scl.fazpramim.extension.toResponse
 import br.edu.ifsp.scl.fazpramim.extension.toServiceModel
-import br.edu.ifsp.scl.fazpramim.model.ServiceModel
 import br.edu.ifsp.scl.fazpramim.service.ServiceService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -38,10 +36,10 @@ class ServiceController (
         return serviceClass.findServiceByClient(clientId).map { s -> s.toResponse() }
     }
 
-    @GetMapping("/provider/{providerId}")
-    @Operation(summary = "Busca todos os serviço vinculados ao prestador", description = "Busca todos os serviços vinculados ao ID do prestador")
-    fun findServiceByProvider(@PathVariable providerId: Long): List<ServiceResponse> {
-        return serviceClass.findServiceByProvider(providerId).map { s -> s.toResponse() }
+    @GetMapping("/provider/{userId}")
+    @Operation(summary = "Busca todos os serviço vinculados ao prestador", description = "Busca todos os serviços vinculados ao userID do prestador")
+    fun findServiceByUserId(@PathVariable userId: Long): List<ServiceResponse> {
+        return serviceClass.findServiceByProvider(userId).map { s -> s.toResponse() }
     }
 
     @PostMapping
