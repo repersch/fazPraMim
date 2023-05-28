@@ -5,6 +5,7 @@ import br.edu.ifsp.scl.fazpramim.enums.Errors
 import br.edu.ifsp.scl.fazpramim.enums.ServiceStatus
 import br.edu.ifsp.scl.fazpramim.exception.*
 import br.edu.ifsp.scl.fazpramim.model.ServiceModel
+import br.edu.ifsp.scl.fazpramim.repository.ProfileRepository
 import br.edu.ifsp.scl.fazpramim.repository.ServiceRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -16,7 +17,7 @@ import java.util.logging.Logger
 class ServiceService {
 
     @Autowired
-    private lateinit var repository: ServiceRepository
+    private lateinit var serviceRepository: ServiceRepository
 
     @Autowired
     private lateinit var userService: UserService
@@ -27,25 +28,26 @@ class ServiceService {
     private val logger = Logger.getLogger(ServiceService::class.toString())
 
     fun findAllServices(): List<ServiceModel> {
-        return repository.findAll().toList()
+        return serviceRepository.findAll().toList()
     }
 
     fun findServiceById(id: Long): ServiceModel {
-        return repository.findById(id)
+        return serviceRepository.findById(id)
             .orElseThrow { NotFoundException(Errors.FPM401.message.format(id), Errors.FPM401.code) }
     }
 
     fun findServiceByClient(clientId: Long): List<ServiceModel> {
-        val servicesByClient = repository.findServiceByClientId(clientId)
+        val servicesByClient = serviceRepository.findServiceByClientId(clientId)
         if (servicesByClient.isEmpty())
             throw EmptyServiceListException(Errors.FPM801.message.format(clientId), Errors.FPM801.code)
         return servicesByClient
     }
 
-    fun findServiceByProvider(providerId: Long): List<ServiceModel> {
-        val servicesByProvider = repository.findServiceByProviderId(providerId)
+    fun findServiceByProvider(userId: Long): List<ServiceModel> {
+        val providerId = profileService.findProfileByUserId(userId).id
+        val servicesByProvider = serviceRepository.findServiceByProviderId(providerId!!)
         if (servicesByProvider.isEmpty())
-            throw EmptyServiceListException(Errors.FPM802.message.format(providerId), Errors.FPM802.code)
+            throw EmptyServiceListException(Errors.FPM802.message.format(userId), Errors.FPM802.code)
         return servicesByProvider
     }
 
@@ -57,7 +59,7 @@ class ServiceService {
         val date = LocalDate.parse(service.date, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
         if (date <= LocalDate.now()) throw InvalidDateException(Errors.FPM501.message, Errors.FPM501.code)
 
-        val entity = repository.save(
+        val entity = serviceRepository.save(
             ServiceModel (
                 client = client,
                 provider = provider,
@@ -76,7 +78,7 @@ class ServiceService {
         entity.date = service.date
         entity.hour = service.hour
         entity.requestDetails = service.requestDetails
-        repository.save(entity)
+        serviceRepository.save(entity)
         return findServiceById(entity.id!!)
     }
 
@@ -91,7 +93,7 @@ class ServiceService {
             3 -> service.status = ServiceStatus.FINISHED
             4 -> service.status = ServiceStatus.CANCELED
         }
-        return repository.save(service)
+        return serviceRepository.save(service)
     }
 
     fun evaluateService(serviceId: Long, rating: Int): ServiceModel {
@@ -100,7 +102,7 @@ class ServiceService {
             throw InvalidEvaluationException(Errors.FPM701.message, Errors.FPM701.code)
 
         service.rating = rating
-        repository.save(service)
+        serviceRepository.save(service)
 
         updateAverageRating(service.provider.id!!)
 
@@ -110,7 +112,7 @@ class ServiceService {
 
     fun deleteService(id: Long) {
         val entity = findServiceById(id)
-        repository.delete(entity)
+        serviceRepository.delete(entity)
     }
 
     private fun updateAverageRating(providerId: Long) {

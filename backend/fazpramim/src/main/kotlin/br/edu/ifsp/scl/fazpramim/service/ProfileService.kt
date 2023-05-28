@@ -35,6 +35,11 @@ class ProfileService {
         return profileRepository.findProfileByServiceTypeDescriptionIgnoreCase(serviceTypeDescription)
     }
 
+    fun findProfileByUserId(userId: Long): ProfileModel {
+        return profileRepository.findProfileByUserId(userId)
+            .orElseThrow{ NotFoundException(Errors.FPM201.message.format(userId), Errors.FPM201.code) }
+    }
+
     fun createProfile(profile: PostProfileRequest): ProfileModel {
         val user = userService.findUserById(profile.userId)
         if (user.profileType != ProfileType.PRESTADOR) userService.updateProfileTypeToPrestador(user.id)
