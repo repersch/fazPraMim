@@ -25,7 +25,7 @@ export class ServiceRequestsComponent implements OnInit {
                 console.log(this.userServiceRequests);
             },
             error: (error: HttpErrorResponse) => {
-                alert(error.message);
+                alert(error.error.message);
                 console.log("[LOG-ERROR] Erro ao procurar os serviços vinculados ao usuário.");
                 console.log(error);
             }

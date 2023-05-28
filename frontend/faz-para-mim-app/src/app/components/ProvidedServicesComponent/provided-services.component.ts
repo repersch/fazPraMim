@@ -23,7 +23,7 @@ export class ProvidedServicesComponent implements OnInit {
                 console.log(this.providedServices);
             },
             error: (error: HttpErrorResponse) => {
-                alert(error.message);
+                alert(error.error.message);
                 console.log("[LOG-ERROR] Erro ao procurar os serviços vinculados ao prestador.");
                 console.log(error);
             }
