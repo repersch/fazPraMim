@@ -40,4 +40,29 @@ export class ServiceService {
             }
         });
     }
+
+    public updateServiceStatus(serviceId: number, serviceStatus: string): Observable<ServiceResponse> {
+        let localStorageItens = this.storageService.getStorageUserTokenInfo();
+        let serviceStatusCode = 0;
+
+        if (serviceStatus === "FINISH") {
+            serviceStatusCode = 3;
+        }
+
+        return this.http.put<ServiceResponse>(`${this.serverUrl}/services/${serviceId}/${serviceStatusCode}`, {}, {
+            headers: {
+                'Authorization': `Bearer ${localStorageItens.token}`
+            }
+        });
+    }
+
+    public evaluateService(serviceId: number, ratingRequest: any): Observable<ServiceResponse> {
+        let localStorageItens = this.storageService.getStorageUserTokenInfo();
+
+        return this.http.put<ServiceResponse>(`${this.serverUrl}/services/evaluate/${serviceId}`, ratingRequest.rating, {
+            headers: {
+                'Authorization': `Bearer ${localStorageItens.token}`
+            }
+        });
+    }
 }
