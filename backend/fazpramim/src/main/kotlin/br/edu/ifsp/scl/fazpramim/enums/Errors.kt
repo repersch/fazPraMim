@@ -21,4 +21,7 @@ enum class Errors(val code: String, val message: String) {
 
     FPM801("FPM-801", "Não existem serviços cadastrados para o cliente com ID: %s."),
     FPM802("FPM-802", "Não existem serviços cadastrados para o prestador com ID: %s."),
+
+    FPM901("FPM-901", "Não existe comentário cadastrado com o ID: %s."),
+    FPM902("FPM-902", "Não existem comentários cadastrados para o prestador com ID: %s.")
 }

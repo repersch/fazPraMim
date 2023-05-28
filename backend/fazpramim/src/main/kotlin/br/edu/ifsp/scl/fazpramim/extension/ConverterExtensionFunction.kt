@@ -1,10 +1,12 @@
 package br.edu.ifsp.scl.fazpramim.extension
 
 import br.edu.ifsp.scl.fazpramim.controller.request.*
+import br.edu.ifsp.scl.fazpramim.controller.response.CommentResponse
 import br.edu.ifsp.scl.fazpramim.controller.response.ProfileResponse
 import br.edu.ifsp.scl.fazpramim.controller.response.ServiceResponse
 import br.edu.ifsp.scl.fazpramim.controller.response.UserResponse
 import br.edu.ifsp.scl.fazpramim.enums.ProfileType
+import br.edu.ifsp.scl.fazpramim.model.CommentModel
 import br.edu.ifsp.scl.fazpramim.model.ProfileModel
 import br.edu.ifsp.scl.fazpramim.model.ServiceModel
 import br.edu.ifsp.scl.fazpramim.model.UserModel
@@ -119,6 +121,15 @@ fun PutServiceRequest.toServiceModel(previousValue: ServiceModel): ServiceModel 
         status = previousValue.status,
         client = previousValue.client,
         provider = previousValue.provider
+    )
+}
+
+fun CommentModel.toResponse(): CommentResponse {
+    return CommentResponse(
+        id = this.id,
+        client = this.client.toResponse(),
+        provider = this.provider.toResponse(),
+        comment = this.comment!!
     )
 }
 
