@@ -1,3 +1,9 @@
 .container {
     margin-top: 37px;
 }
+
+input,
+select,
+textarea {
+    margin-bottom: 7px;
+}

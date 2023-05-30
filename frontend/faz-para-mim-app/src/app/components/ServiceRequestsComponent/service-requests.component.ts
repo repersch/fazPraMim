@@ -2,8 +2,10 @@ import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 
+import { CommentResponse } from "src/model/commentResponse";
 import { ServiceResponse } from "src/model/serviceResponse";
 
+import { CommentService } from "src/service/comment.service";
 import { ServiceService } from "src/service/service.service";
 
 @Component({
@@ -16,7 +18,8 @@ export class ServiceRequestsComponent implements OnInit {
     public userServiceRequests: ServiceResponse[] = [];
     public selectedRequestId = -1;
 
-    constructor(private serviceService: ServiceService) { }
+    constructor(private commentService: CommentService,
+        private serviceService: ServiceService) { }
 
     ngOnInit(): void {
         this.serviceService.getServiceRequests().subscribe({
@@ -64,6 +67,20 @@ export class ServiceRequestsComponent implements OnInit {
                 console.log(error);
             }
         });
+
+        if (evaluateServiceForm.value.comment) {
+            this.commentService.addComment(this.selectedRequestId, evaluateServiceForm.value.comment).subscribe({
+                next: (response: CommentResponse) => {
+                    console.log("[LOG-INFO] Comentário do serviço selecionado enviado com sucesso.");
+                    console.log(response);
+                },
+                error: (error: HttpErrorResponse) => {
+                    alert(error.message);
+                    console.log("[LOG-ERROR] Erro ao enviar comentário do serviço selecionado.");
+                    console.log(error);
+                }
+            });
+        }
     }
 
     public isAccepted(serviceStatus: string): boolean {
