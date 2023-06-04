@@ -103,4 +103,11 @@ export class ServiceRequestsComponent implements OnInit {
         }
         return false;
     }
+
+    public isRated(rate: number): boolean {
+        if (rate == 0) {
+            return false;
+        }
+        return true;
+    }
 }

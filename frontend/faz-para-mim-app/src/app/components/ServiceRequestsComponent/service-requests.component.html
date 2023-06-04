@@ -40,7 +40,7 @@
                         <td>
                             <a class="btn" type="button" data-bs-toggle="modal" data-bs-target="#evaluateServiceModal"
                                 (click)="setSelectedRequestId(userServiceRequest.id)"
-                                *ngIf="isFinished(userServiceRequest.status)">
+                                *ngIf="isFinished(userServiceRequest.status) && !isRated(userServiceRequest.rating)">
                                 <img id="rate-image" src="../../../assets/img/rating-icon.png"
                                     alt="Link para avaliar o serviço solicitado. Representado pelo contorno de uma estrela dentro de um quadrado.">
                             </a>
