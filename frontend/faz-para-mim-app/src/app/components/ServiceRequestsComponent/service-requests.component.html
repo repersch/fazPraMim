@@ -13,6 +13,7 @@
                         <th>Confirmar Solicitação</th>
                         <th>Cancelar Solicitação</th>
                         <th>Avaliar Solicitação</th>
+                        <th>Comentário Solicitação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,14 @@
                                     alt="Link para avaliar o serviço solicitado. Representado pelo contorno de uma estrela dentro de um quadrado.">
                             </a>
                         </td>
+                        <td>
+                            <a class="btn" type="button" data-bs-toggle="modal" data-bs-target="#commentServiceModal"
+                                (click)="setSelectedRequestId(userServiceRequest.id)"
+                                *ngIf="isFinished(userServiceRequest.status)">
+                                <img id="rate-image" src="../../../assets/img/comment-icon.png"
+                                    alt="Link para comentar o serviço solicitado. Representado por um balão de conversa com reticências dentro.">
+                            </a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -70,13 +79,41 @@
                     </div>
                     <div class="form-group">
                         <label for="comment">Comentário Sobre o Serviço</label>
-                        <textarea class="form-control" ngModel name="comment" placeholder="Comentário sobre o atendimento do serviço solicitado"
-                            id="comment"></textarea>
+                        <textarea class="form-control" ngModel name="comment"
+                            placeholder="Comentário sobre o atendimento do serviço solicitado" id="comment"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
                         <button [disabled]="evaluateServiceForm.invalid" type="submit"
                             class="btn btn-success">Avaliar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+</section>
+
+<!-- Comment Service Modal -->
+<section class="modal fade" id="commentServiceModal" tabindex="-1" aria-labelledby="commentServiceModalLabel"
+    aria-hidden="true">
+    <article class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="commentServiceModalLabel">Comentar Serviço</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #commentServiceForm="ngForm" (ngSubmit)="onCommentService(commentServiceForm)">
+                    <div class="form-group">
+                        <label for="comment">Comentário Sobre o Serviço</label>
+                        <textarea class="form-control" ngModel name="comment"
+                            placeholder="Comentário sobre o atendimento do serviço solicitado" id="comment"
+                            required></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                        <button [disabled]="commentServiceForm.invalid" type="submit"
+                            class="btn btn-success">Comentar</button>
                     </div>
                 </form>
             </div>

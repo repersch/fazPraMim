@@ -83,6 +83,20 @@ export class ServiceRequestsComponent implements OnInit {
         }
     }
 
+    public onCommentService(commentServiceForm: NgForm) {
+        this.commentService.addComment(this.selectedRequestId, commentServiceForm.value.comment).subscribe({
+            next: (response: CommentResponse) => {
+                console.log("[LOG-INFO] Comentário do serviço selecionado enviado com sucesso.");
+                console.log(response);
+            },
+            error: (error: HttpErrorResponse) => {
+                alert(error.message);
+                console.log("[LOG-ERROR] Erro ao enviar comentário do serviço selecionado.");
+                console.log(error);
+            }
+        });
+    }
+
     public isAccepted(serviceStatus: string): boolean {
         if (serviceStatus === 'ACCEPTED') {
             return true;
